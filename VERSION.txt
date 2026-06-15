@@ -1,0 +1,39 @@
+GeoPackage Creator v0.29.0
+Release date: 2026-06-15
+
+NEW in v0.29.0 (false-failure fixes — files were already valid):
+- Fix: converter reported "success": false on fully successful runs. The
+  success flag is now set immediately BEFORE report generation, so every
+  *_report.json/html records the true outcome. (core/converter.py)
+- Fix (DGIWG Validator): Req 24 "Data Validity" false FAIL. The bundled
+  validator decoded Z/M dimensionality from the GeoPackage header flags byte,
+  whose bits 1-3 are the envelope indicator, NOT Z/M flags. Any 2D geometry
+  carrying an XY envelope was mis-read as 3D, failing Req 24 on every
+  line/polygon layer. Z/M is now derived from the WKB geometry type code
+  (ISO 1000/2000/3000 offsets or EWKB high bits).
+  (DGIWG_Validator_v1_55_updated/dgiwg_validator/utils.py + checks.py)
+- Version strings unified to 0.29.0 across config, reports, GUI and packaging.
+  Reports previously stamped a stale "0.26".
+- No source re-conversion required: existing *.gpkg files are valid and now
+  validate as CONFORMANT with the corrected validator.
+
+GeoPackage Creator v0.28.0
+Release date: 2026-06-12
+
+NEW in v0.28.0 (DGIWG Req 24 full compliance fix):
+- Fix: bounding box mismatch — gpkg_contents bbox now recalculated from the
+  actual RTree aggregate extents after all features are written, guaranteeing
+  the declared envelope exactly matches the spatial index (Req 24 PASS).
+- Fix: Z/M consistency — a post-write pass re-opens the GPKG in GDAL update
+  mode and calls FlattenTo2D() on any geometry whose binary header still
+  carries a Z flag in layers declared as z=0 (Z prohibited) in
+  gpkg_geometry_columns (Req 24 PASS).
+  Both fixes are applied inside _finalize_dgiwg_compliance() which already
+  handles Req 3 (application_id, WAL, extensions) and Req 13 (WKT2 CRS).
+  The step is idempotent and transparent to the caller.
+
+GeoPackage Creator v0.27.0
+Release date: 2026-06-11
+
+NEW in v0.27.0 (DGIWG concept-review release):
+- Per-data-type DGIWG CRS policy (2D vector = EPSG:4326 only per 
