@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GML (Geographic Markup Language) 3.2.1 Schema - Minimal Version -->
+<!-- Only includes basic elements needed for ISO 19115 integration -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.opengis.net/gml/3.2"
+           elementFormDefault="qualified">
+
+  <!-- Stub schema - GML is a large specification -->
+  <!-- In production, this would reference the full OGC GML 3.2.1 specification -->
+  <!-- For validation purposes, we provide minimal elements -->
+
+  <xs:element name="Point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pos" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
