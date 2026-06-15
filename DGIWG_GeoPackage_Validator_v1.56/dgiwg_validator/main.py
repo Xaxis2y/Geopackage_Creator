@@ -1,0 +1,514 @@
+"""Entry-point logic for the DGIWG GeoPackage validator (v1.56).
+
+process_file() validates a single GeoPackage and writes its report.
+main() parses CLI args and drives batch or interactive mode.
+"""
+import os
+import sys
+import json
+import textwrap
+import builtins
+from pathlib import Path
+from . import constants as _constants
+from .constants import REQUIREMENTS, NET_TIMEOUT
+from .utils import (
+    open_gpkg, collect_file_profile, _probe_optional_libraries,
+    pick_files_dialog, score_results, LIBRARY_STATUS,
+)
+from .checks import run_all_checks
+from .forensics import detect_source_software, run_forensic_checks
+from .html_report import render_html
+from .rollup import _write_rollup
+def process_file(
+    gpkg_path: str,
+    reports_dir: str | None = None,
+) -> tuple[str, dict, str] | None:
+    """Run all checks on one GeoPackage, write per-file HTML report, return results.
+
+    reports_dir — if supplied, HTML is written there instead of next to the .gpkg.
+                  Used by batch/rollup runs so all per-file reports land in reports/.
+    """
+    stem    = Path(gpkg_path).stem
+    gpkg_dir = os.path.dirname(os.path.abspath(gpkg_path))
+    if reports_dir:
+        out_dir = reports_dir
+    else:
+        out_dir = gpkg_dir
+    # Fall back to script directory if target folder is read-only
+    test_path = os.path.join(out_dir, ".write_test")
+    try:
+        os.makedirs(out_dir, exist_ok=True)
+        f = open(test_path, 'w')
+        try:
+            f.close()
+        finally:
+            try:
+                os.remove(test_path)
+            except OSError:
+                pass
+    except OSError:
+        out_dir = os.path.dirname(os.path.abspath(__file__))
+    html_out = os.path.join(out_dir, f"{stem}_DGIWG_Report.html")
+
+    import builtins as _b_quiet
+    _quiet = getattr(_b_quiet, "_DGIWG_QUIET", False)
+
+    if not _quiet:
+        print(f"\n{'='*60}")
+        print(f"  DGIWG GeoPackage Compliance Report Generator")
+        print(f"  File : {os.path.basename(gpkg_path)}")
+        print(f"  Folder: {out_dir}")
+        print(f"{'='*60}\n")
+
+    if not _quiet:
+        print("→ Opening GeoPackage …")
+    try:
+        conn = open_gpkg(gpkg_path)
+    except ValueError as exc:
+        print(f"  ERROR: {exc}")
+        print("  File skipped — not a valid GeoPackage.")
+        return None
+
+    # v1.41 fix: structural validity gate — verify this is a real GeoPackage.
+    # Empty SQLite stubs (zero tables) pass PRAGMA integrity_check but lack
+    # gpkg_contents / gpkg_spatial_ref_sys, causing every requirement check to
+    # raise "no such table" → caught by check_req() → false FAIL.  Reject early.
+    _cur41 = conn.cursor()
+    _missing_core = [
+        t for t in ("gpkg_contents", "gpkg_spatial_ref_sys")
+        if not _cur41.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (t,)
+        ).fetchone()
+    ]
+    if _missing_core:
+        conn.close()
+        print(
+            f"  File skipped — not a valid GeoPackage "
+            f"(missing core tables: {', '.join(_missing_core)})."
+        )
+        return None
+
+    try:
+        if not _quiet:
+            print("→ Collecting file profile …")
+        profile = collect_file_profile(conn, gpkg_path)
+
+        if not _quiet:
+            print("→ Detecting source software (forensic analysis) …")
+        forensic = detect_source_software(conn)
+        profile["source_software"] = (
+            f"{forensic['software']} (confidence: {forensic['confidence']})"
+        )
+        software_tag = {
+            "QGIS/GDAL": "_QGIS",
+            "ArcGIS":    "_ARCGIS",
+            "UNKNOWN":   "_UNKNOWN",
+        }.get(forensic["software"], "_UNKNOWN")
+
+        # Re-derive output filenames with software tag
+        html_out = os.path.join(out_dir, f"{stem}{software_tag}_DGIWG_Report.html")
+        report_filename = f"{stem}{software_tag}_DGIWG_Report.html"
+
+        # Guard against filename collision when two .gpkg files from different
+        # folders share the same basename (e.g. folder_a/map.gpkg, folder_b/map.gpkg).
+        # Append _2, _3 … until the name is unique in out_dir.
+        _collision = 2
+        while os.path.exists(html_out):
+            report_filename = f"{stem}{software_tag}_DGIWG_Report_{_collision}.html"
+            html_out = os.path.join(out_dir, report_filename)
+            _collision += 1
+        if not _quiet:
+            print(f"   Source software: {forensic['software']} ({forensic['confidence']} confidence) → tag: {software_tag}")
+
+        if not _quiet:
+            print("→ Running requirement checks (Req 1–37) …")
+        results = run_all_checks(conn)
+
+        if not _quiet:
+            print("→ Running forensic deep-dive checks …")
+        forensic_checks = run_forensic_checks(conn, forensic["software"])
+        results["__forensic_checks__"] = forensic_checks
+
+    finally:
+        conn.close()   # guaranteed even if any check above throws
+
+    # Attach forensic hints to result details for affected requirements
+    for req_num, hint in forensic["hints"].items():
+        if req_num in results:
+            existing_detail = results[req_num]["detail"]
+            results[req_num]["detail"] = f"{existing_detail}\n\n🔬 SOFTWARE AUDIT HINT [{forensic['software']}]: {hint}"
+
+    # Store forensic data for rendering
+    results["__forensic__"] = forensic
+
+    counts, total, verdict, _ = score_results(results)
+    if _quiet:
+        print(f"  {os.path.basename(gpkg_path):60s} {verdict:12s} "
+              f"PASS={counts['PASS']} FAIL={counts['FAIL']} PASS*={counts['PASS*']} "
+              f"SKIP={counts['SKIPPED']}")
+    else:
+        print(f"\n  Verdict : {verdict}")
+        print(f"  PASS    : {counts['PASS']}")
+        print(f"  FAIL    : {counts['FAIL']}")
+        print(f"  PASS*   : {counts['PASS*']}")
+        print(f"  SKIPPED : {counts['SKIPPED']}\n")
+
+    if not _quiet:
+        print("→ Generating HTML report …")
+    render_html(profile, results, html_out)
+    if not _quiet:
+        print(f"   Saved → {html_out}")
+
+    # ── v1.53: JSON always generated (--json flag retained for compat, now no-op) ──
+    import builtins as _b_json
+    if True:  # v1.53: unconditional — JSON written for every report
+        try:
+            _json_path = os.path.splitext(html_out)[0] + ".json"
+            _req_export = {}
+            for _rk, _rv in results.items():
+                if isinstance(_rk, int):
+                    _req_tuple = REQUIREMENTS.get(_rk)
+                    if _req_tuple:
+                        _req_export[str(_rk)] = {
+                            "name":       _req_tuple[0],
+                            "identifier": _req_tuple[1],
+                            "compliance": _req_tuple[2],
+                            "status":     _rv.get("status", ""),
+                            "detail":     (_rv.get("detail") or "")[:1000],
+                        }
+            _json_payload = {
+                "schema_version": "1.56",
+                "file":      os.path.basename(gpkg_path),
+                "software":  profile.get("source_software", "UNKNOWN"),
+                "verdict":   verdict,
+                "counts":    counts,
+                "requirements": _req_export,
+                "forensic":  forensic,
+                "internet_checks": {
+                    k: list(v) if isinstance(v, tuple) else v
+                    for k, v in results.get("__internet__", {}).items()
+                },
+                "cascade_root_cause": results.get("__cascade_note__", None),
+            }
+            with open(_json_path, "w", encoding="utf-8") as _jf:
+                json.dump(_json_payload, _jf, indent=2, ensure_ascii=False)
+            if not _quiet:
+                print(f"   JSON → {_json_path}")
+        except Exception as _json_err:
+            print(f"   JSON export failed: {_json_err}")
+
+    if not _quiet:
+        print(f"\n{'='*60}")
+        print("  Done.")
+        print(f"{'='*60}\n")
+
+    # Return data needed for rollup aggregation
+    return (os.path.basename(gpkg_path), results, report_filename)
+
+
+def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="dgiwg_validator",
+        description="DGIWG GeoPackage Compliance Report Generator — STD-DP-19-005 v1.1 (script v1.56)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent("""\
+            Examples:
+              # Validate a single file (interactive file picker if omitted)
+              python dgiwg_validator.py myfile.gpkg
+
+              # Validate all .gpkg files in a folder
+              python dgiwg_validator.py /path/to/folder/
+
+              # Explicit --file and --dir flags (identical to positional arguments)
+              python dgiwg_validator.py --file map_data.gpkg
+              python dgiwg_validator.py --dir "C:\\Data\\Project_Alpha"
+
+              # Combine --file and --dir with other flags
+              python dgiwg_validator.py --offline --file map_data.gpkg
+              python dgiwg_validator.py --dir "C:\\Data\\Project_Alpha" --json
+
+              # Air-gapped machine — skip all EPSG/OGC internet checks
+              python dgiwg_validator.py --offline myfile.gpkg
+
+              # Skip the optional-library install prompts on locked-down systems
+              python dgiwg_validator.py --no-install myfile.gpkg
+
+              # Sample more geometry blobs per table for deeper Req 24 coverage
+              python dgiwg_validator.py --sample-size 50 myfile.gpkg
+        """),
+    )
+    parser.add_argument(
+        "inputs",
+        nargs="*",
+        metavar="FILE_OR_FOLDER",
+        help="GeoPackage file(s) or folder(s) containing .gpkg files. "
+             "Omit to open the interactive file-picker dialog.",
+    )
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        default=False,
+        help="Disable all internet checks (EPSG URI verification, OGC TMS validation). "
+             "Useful on air-gapped / 국방망 networks. Affected checks return PASS* with "
+             "an 'offline mode' note instead of querying external endpoints.",
+    )
+    parser.add_argument(
+        "--no-install",
+        action="store_true",
+        default=False,
+        dest="no_install",
+        help="Skip the optional-library install prompts entirely. "
+             "Libraries that are already installed will still be used; "
+             "missing ones will produce PASS* results as normal.",
+    )
+    parser.add_argument(
+        "--sample-size",
+        type=int,
+        default=None,
+        dest="sample_size",
+        metavar="N",
+        help="Number of geometry/tile BLOBs to sample per table for Req 24 and Req 26 "
+             "(default: 25). Higher values give broader coverage at the cost of speed.",
+    )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=None,
+        dest="timeout",
+        metavar="SECONDS",
+        help=f"Network timeout in seconds for all HTTP checks — EPSG API, OGC TMS URI "
+             f"verification, etc. (default: {NET_TIMEOUT}s). Increase on slow connections; "
+             f"decrease to fail faster on unresponsive endpoints.",
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        default=False,
+        dest="emit_json",
+        help="Write a machine-readable JSON companion report alongside each HTML file. "
+             "Filename: {stem}_DGIWG_Report.json. Contains verdict, counts, software, "
+             "and per-requirement status/detail/compliance. Useful for CI/CD pipelines "
+             "or downstream QA tooling that should not parse HTML.",
+    )
+    parser.add_argument(
+        "--dir",
+        action="append",
+        default=[],
+        dest="dir_inputs",
+        metavar="FOLDER",
+        help="Explicit folder path containing .gpkg files to validate. "
+             "All .gpkg files inside the folder are processed. "
+             "Equivalent to supplying FOLDER as a positional argument. "
+             "May be repeated to process multiple folders.",
+    )
+    parser.add_argument(
+        "--file",
+        action="append",
+        default=[],
+        dest="file_inputs",
+        metavar="FILE",
+        help="Explicit path to a single .gpkg file to validate. "
+             "Equivalent to supplying FILE as a positional argument. "
+             "May be repeated to process multiple files.",
+    )
+    # v1.52: --version flag (bumped)
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s 1.55",
+    )
+    # v1.49: --output-dir flag — write all reports to this folder
+    parser.add_argument(
+        "--output-dir",
+        default=None,
+        dest="output_dir",
+        metavar="FOLDER",
+        help="Write all HTML/JSON/CSV reports to this folder instead of the "
+             "default 'reports/' subfolder alongside each GeoPackage.",
+    )
+    # v1.49: --recursive flag — search folders recursively for .gpkg files
+    parser.add_argument(
+        "--recursive",
+        action="store_true",
+        default=False,
+        dest="recursive",
+        help="When a folder is given, use rglob('**/*.gpkg') instead of "
+             "glob('*.gpkg') to find GeoPackages in nested subdirectories.",
+    )
+    # v1.49: --quiet flag — suppress per-file progress banners
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        default=False,
+        dest="quiet",
+        help="Suppress per-file progress banner output. Only final summary "
+             "counts and errors are shown.",
+    )
+    # v1.49: --fail-fast flag — stop after first file with FAIL result
+    parser.add_argument(
+        "--fail-fast",
+        action="store_true",
+        default=False,
+        dest="fail_fast",
+        help="Stop processing after the first file that has any FAIL result. "
+             "Exits with code 1 after printing a clear message.",
+    )
+
+    args = parser.parse_args()
+
+    # Merge --dir / --file explicit flags into the positional inputs list so that
+    # all three input methods share a single processing path below.
+    # Example: --dir "C:\Data\Project_Alpha"  is identical to passing the folder
+    # as a positional argument.
+    all_inputs = list(args.inputs) + list(args.dir_inputs) + list(args.file_inputs)
+
+    # ── Push parsed flags into the runtime config ──────────────────────────────
+    if args.offline:
+        import builtins as _builtins
+        _builtins._DGIWG_OFFLINE = True          # checked by _net_get() at call time
+        print("  [--offline] Internet checks disabled.")
+
+    if args.emit_json:
+        import builtins as _builtins
+        _builtins._DGIWG_EMIT_JSON = True
+        print("  [--json] JSON companion reports enabled.")
+
+    if args.sample_size is not None:
+        if args.sample_size < 1:
+            parser.error("--sample-size must be at least 1")
+        import builtins as _builtins
+        _builtins._DGIWG_SAMPLE_SIZE = args.sample_size
+        print(f"  [--sample-size] Geometry/tile sample size set to {args.sample_size}.")
+
+    if args.timeout is not None:
+        if args.timeout < 1:
+            parser.error("--timeout must be at least 1 second")
+        # Patch constants module so all submodules pick up the new timeout
+        _constants.NET_TIMEOUT = args.timeout
+        print(f"  [--timeout] Network timeout set to {args.timeout}s.")
+
+    # v1.49: push new flags into builtins for access from process_file
+    import builtins as _builtins_v149
+    _builtins_v149._DGIWG_QUIET     = args.quiet
+    _builtins_v149._DGIWG_FAIL_FAST = args.fail_fast
+    if args.quiet:
+        print("  [--quiet] Per-file progress banners suppressed.")
+    if args.fail_fast:
+        print("  [--fail-fast] Will stop after first non-conformant file.")
+
+    # ── Command-line mode (file paths or folders supplied) ─────────────────────
+    if all_inputs:
+        _probe_optional_libraries(
+            interactive_mode=False,
+            skip_install=args.no_install,
+        )
+
+        gpkg_paths = []
+        for inp in all_inputs:
+            if os.path.isdir(inp):
+                # v1.49: --recursive uses rglob; default uses glob (top-level only)
+                # v1.50 fix: filter out double-extension .gpkg.gpkg files (Bug #1)
+                if args.recursive:
+                    found = sorted(
+                        p for p in Path(inp).rglob("*.gpkg")
+                        if not p.name.endswith(".gpkg.gpkg")
+                    )
+                else:
+                    found = sorted(
+                        p for p in Path(inp).glob("*.gpkg")
+                        if not p.name.endswith(".gpkg.gpkg")
+                    )
+                if not found:
+                    print(f"WARNING: No .gpkg files found in folder: {inp}"
+                          + (" (try --recursive for subdirectories)" if not args.recursive else ""))
+                else:
+                    print(f"  Folder '{inp}': found {len(found)} GeoPackage(s)"
+                          + (" (recursive)" if args.recursive else ""))
+                    gpkg_paths.extend(str(p) for p in found)
+            elif os.path.isfile(inp):
+                gpkg_paths.append(inp)
+            else:
+                print(f"ERROR: Not a file or folder: {inp}")
+
+        if not gpkg_paths:
+            print("No valid GeoPackage files to process.")
+            return
+
+        rollup_dir  = os.path.dirname(os.path.abspath(gpkg_paths[0]))
+        # v1.49: --output-dir overrides the default reports/ subfolder
+        if args.output_dir:
+            reports_dir = os.path.abspath(args.output_dir)
+            rollup_dir  = reports_dir
+        else:
+            reports_dir = os.path.join(rollup_dir, "reports")
+        os.makedirs(reports_dir, exist_ok=True)
+
+        n_total = len(gpkg_paths)
+        all_results = []
+        for i, gpkg_path in enumerate(gpkg_paths, 1):
+            if not args.quiet:
+                print(f"\n  ── File {i} of {n_total} ──")
+            result = process_file(gpkg_path, reports_dir=reports_dir)
+            if result:
+                all_results.append(result)
+                # v1.49: --fail-fast: stop after first file with any FAIL
+                if args.fail_fast:
+                    _fname, _res, _rpt = result
+                    if any(
+                        v.get("status") == "FAIL"
+                        for k, v in _res.items()
+                        if isinstance(k, int)
+                    ):
+                        print(
+                            f"\nFAIL-FAST: stopping after first non-conformant "
+                            f"file — {_fname}"
+                        )
+                        _write_rollup(all_results, rollup_dir,
+                                      reports_dir=reports_dir)
+                        sys.exit(1)
+
+        if all_results:
+            _write_rollup(all_results, rollup_dir, reports_dir=reports_dir)
+        return
+
+    # ── Interactive mode (no arguments — show file picker) ────────────────────
+    print("\n" + "="*60)
+    print("  DGIWG GeoPackage Compliance Report Generator")
+    print("="*60)
+    print("\n  No file specified — opening file picker …\n")
+
+    _probe_optional_libraries(
+        interactive_mode=True,
+        skip_install=args.no_install,
+    )
+
+    gpkg_paths = pick_files_dialog()
+    if not gpkg_paths:
+        sys.exit(0)
+
+    n_total = len(gpkg_paths)
+    print(f"\n  {n_total} file(s) selected.\n")
+
+    rollup_dir  = os.path.dirname(os.path.abspath(gpkg_paths[0]))
+    reports_dir = os.path.join(rollup_dir, "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+
+    all_results = []
+    for i, gpkg_path in enumerate(gpkg_paths, 1):
+        print(f"\n  ── File {i} of {n_total} ──")  # interactive always verbose
+        if not os.path.isfile(gpkg_path):
+            print(f"  ERROR: File not found: {gpkg_path} — skipping.")
+            continue
+        result = process_file(gpkg_path, reports_dir=reports_dir)
+        if result:
+            all_results.append(result)
+
+    if all_results:
+        _write_rollup(all_results, rollup_dir)
+
+    print("\n  All files processed.")
+    input("  Press Enter to close …")
+
+
