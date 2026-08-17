@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (c) 2026 Eui Soo SON
 """
-GeoPackage Creator v0.30.23 - Enhanced GUI
+GeoPackage Creator v0.33.44 - Enhanced GUI
 
 Features:
 - CRS Automatic Conversion (3 modes)
@@ -64,7 +64,7 @@ class _GuiLogHandler(logging.Handler):
 
 
 class GeoPackageCreatorGUI:
-    """Enhanced GUI application for GeoPackage Creator v0.30.23."""
+    """Enhanced GUI application for GeoPackage Creator v0.33.44."""
 
     APP_VERSION = "0.33.44"
 

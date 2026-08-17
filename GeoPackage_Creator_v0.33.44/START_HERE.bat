@@ -3,7 +3,7 @@ REM SPDX-License-Identifier: GPL-2.0-or-later
 REM Copyright (c) 2026 Eui Soo SON
 setlocal enabledelayedexpansion
 
-REM GeoPackage Creator - Simple Launcher v0.30.19
+REM GeoPackage Creator - Simple Launcher v0.33.44
 
 REM Always run from this script's own folder so 'core' imports resolve
 cd /d "%~dp0"
@@ -21,7 +21,7 @@ if not exist "%PYTHON%" (
 cls
 echo.
 echo ================================================================================
-echo  GeoPackage Creator v0.30.19
+echo  GeoPackage Creator v0.33.44
 echo ================================================================================
 echo.
 echo What would you like to do?
@@ -177,7 +177,7 @@ goto menu
 cls
 echo.
 echo ================================================================================
-echo  Thank you for using GeoPackage Creator v0.30.19!
+echo  Thank you for using GeoPackage Creator v0.33.44!
 echo ================================================================================
 echo.
 echo What would you like to do?

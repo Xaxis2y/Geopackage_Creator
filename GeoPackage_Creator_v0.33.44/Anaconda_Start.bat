@@ -6,7 +6,7 @@ chcp 65001 >nul
 title GeoPackage Creator - Anaconda Start
 
 REM ============================================================================
-REM  Anaconda_Start.bat  -  GeoPackage Creator v0.30.19
+REM  Anaconda_Start.bat  -  GeoPackage Creator v0.33.44
 REM
 REM  One-click launcher that:
 REM    1. Locates your Anaconda / Miniconda installation

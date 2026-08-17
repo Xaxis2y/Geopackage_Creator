@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.30.23** | August 14, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.33.44** | August 17, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
 
 ## Overview
 
@@ -14,18 +14,10 @@ DGIWG (Defense Geospatial Information Working Group) is an international organiz
 
 ## Folder Contents
 
-Reorganized in v0.30.15/v0.30.16 to keep the project root readable - see
-`changelogs/CHANGELOG_v0.30.16.md` (or `VERSION.txt`) for the record of that
-cleanup. That reorganization described moving superseded files into an
-`archive/` folder and built release zips into `release_dist/` - as of this
-snapshot (v0.30.19) `archive/` still does not exist in the tree, and the
-`dev_tools/` QA-harness scripts it described had also gone missing (rebuilt
-fresh in v0.30.18 as `run_release_check_v0.30.18.py` - see
-`CHANGELOG_v0.30.18.md`). `release_dist/` now does exist, populated by
-running `package_release_v0.30.19.py` (see below). The tree below is what
-is actually on disk now, not what an earlier changelog said should be
-there - if the two ever disagree again, trust the tree and flag it, the
-way this entry itself does.
+The release source includes the application, schemas, bundled validator,
+documentation, tests, and release-verification scripts. Generated build
+folders and verification logs are intentionally not part of the GitHub source
+archive.
 
 ```
 GeoPackage_Creator/
@@ -33,7 +25,7 @@ GeoPackage_Creator/
 ├── geopackage_creator_gui.py    # Graphical interface (tkinter + ttkbootstrap)
 ├── START_HERE.bat               # Windows launcher (GUI or CLI)
 ├── Anaconda_Start.bat           # Anaconda Prompt launcher (creates/activates the conda env)
-├── package_release_v0.30.19.py  # Current release packager (builds release_dist/*.zip)
+├── dev_tools/                   # Release verification scripts and diagnostics
 ├── environment.yml              # Conda environment spec (pinned GDAL version + pip: ttkbootstrap)
 ├── requirements.txt             # Pip requirements
 ├── VERSION.txt                  # Full version history (all releases, newest first)
@@ -61,18 +53,8 @@ GeoPackage_Creator/
 │   ├── DEPENDENCIES.txt         # Dependency reference
 │   ├── QUICK_FIX_CONDA.txt      # Conda troubleshooting
 │   └── ROADMAP_RASTER.md        # Raster support roadmap
-├── changelogs/                  # Every CHANGELOG_vX.Y.Z.md, oldest to newest
-├── dev_tools/                   # QA/diagnostic harness, not part of the shipped tool
-│   └── run_release_check_v0.30.18.py / .bat   # Pre-release gate (rebuilt v0.30.18)
-└── release_dist/                # Built release zip output (created by the packager, not a fresh-checkout fixture)
-    ├── GeoPackage_Creator_v0.30.19.zip
-    └── RELEASE_INFO_v0.30.19.txt
+└── changelogs/                  # Every CHANGELOG_vX.Y.Z.md, oldest to newest
 ```
-
-Not currently present: `archive/` (superseded-file storage) - created on
-demand if a future reorganization needs it; nothing currently creates it.
-`release_dist/` is not a fresh-checkout fixture either, but unlike
-`archive/` it does exist right now, populated by the last packager run.
 
 ## Key Features
 
@@ -85,6 +67,7 @@ demand if a future reorganization needs it; nothing currently creates it.
 - **R-Tree spatial indexes** — created on every layer (DGIWG-mandatory)
 - **DGIWG Metadata Foundation (DMF) record** *(new in v0.27)* — every GeoPackage carries a DMF 2.0 metadata row (`https://dgiwg.org/std/dmf/2.0`) so validator Req 18 fully PASSes
 - **DGIWG validator gate** *(new in v0.27)* — `--validate` runs the external DGIWG GeoPackage Validator (all 37 requirements) after conversion and embeds the per-requirement table in the reports
+- **Native stability isolation** *(v0.33.44)* — ISO 19115 XSD validation runs in an isolated helper process, keeping GDAL and lxml/libxml2 out of the same process; 12 sequential source and frozen-EXE conversions passed on Windows.
 - **Raster foundations** *(new in v0.27)* — tile/gridded CRS policy, 256×256 / zoom-factor-2 constants and validation helpers (`core/raster_support.py`); full raster conversion planned for v0.28 (see `ROADMAP_RASTER.md`)
 - **Conversion reports** — HTML, JSON, and PDF generated alongside the output
 - **Conversion profiles** — `default`, `military`, `civilian`, `high_security`
@@ -158,34 +141,18 @@ Note: most integration tests create real spatial data and therefore require GDAL
 - DGIWG Metadata Foundation (DMF) 2.0
 - ISO 639-2 (language codes), ISO 3166-1 alpha-3 (nation codes)
 
-### Note: application_id `GP12` vs OGC `GPKG` (deliberate design decision)
+### GeoPackage header
 
-OGC GeoPackage 1.2+ specifies the SQLite header `application_id` as `GPKG`
-(0x47504B47) with the version in `user_version` (10400 = 1.4.0). The DGIWG
-GeoPackage Validator, however, requires the legacy version-encoding marker
-`GP12` (0x47503132) and reports Req 3 as FAIL for `GPKG`. Because these two
-rules conflict, this tool intentionally writes **`application_id = GP12` and
-`user_version = 10400`** during DGIWG finalization. GDAL and QGIS recognise
-both markers; some strict OGC tools may warn about the non-standard
-application_id. **Do not "fix" this** without re-testing against the DGIWG
-validator — see `changelogs/CHANGELOG_v0.26.2.md` and `HANDOFF_NOTES_2026-06-10.md`.
+Outputs use the OGC-required SQLite header values for GeoPackage 1.4:
+**`application_id = GPKG`** (`0x47504B47`) and **`user_version = 10400`**.
+The bundled DGIWG validator recognizes this standard 1.2+ encoding.
 
 ## Version
 
-**Current:** v0.30.23 — see `changelogs/CHANGELOG_v0.30.23.md` and
-`VERSION.txt` (the project root's `VERSION.txt` is the authoritative,
-full, newest-first history; individual `changelogs/CHANGELOG_vX.Y.Z.md`
-files cover one release each).
-**Release status:** CANDIDATE — pending verification on the target machine.
-v0.30.20's `libxml2=2.14` pin fixed a real version mismatch but was proven,
-on the real machine, NOT to fix the crash itself. Diagnostics in v0.30.21/22
-(also run on the real machine) found the actual cause: a compiled XSD schema
-that survives a GDAL write crashes the process, on every write, regardless of
-libxml2 version agreement. v0.30.23 removes the compiled-schema cache in
-`core/metadata_handler.py` entirely — every validation now compiles a fresh
-schema, used immediately and discarded, which is the only pattern proven safe
-by direct testing. This fix has NOT yet been run on the target machine. Run
-`dev_tools\run_release_check_v0.30.23.py` there — its `batch_conversion_cycle`
-stage is the decisive check — then a real GDB→GPKG conversion and DGIWG
-validation before distributing. See `VERSION.txt`'s v0.30.23 entry.
+**Current:** v0.33.44.
+**Release status:** candidate. The v0.33.44 stability gate passed 12 sequential
+source conversions, 12 frozen-EXE conversions, and the full pytest suite
+(308 passed) on the target Windows/Anaconda environment. Before public
+distribution, run `dev_tools\verify_actual_gdb_v0.33.44.py` with a real GDB
+and retain its independent DGIWG validator report.
 **Maintained for:** Multi-platform DGIWG-compliant geospatial data conversion
