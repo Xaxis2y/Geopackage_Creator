@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.30.19** | August 6, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.30.23** | August 14, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
 
 ## Overview
 
@@ -172,13 +172,20 @@ validator — see `changelogs/CHANGELOG_v0.26.2.md` and `HANDOFF_NOTES_2026-06-1
 
 ## Version
 
-**Current:** v0.30.19 — see `changelogs/CHANGELOG_v0.30.19.md` and
+**Current:** v0.30.23 — see `changelogs/CHANGELOG_v0.30.23.md` and
 `VERSION.txt` (the project root's `VERSION.txt` is the authoritative,
 full, newest-first history; individual `changelogs/CHANGELOG_vX.Y.Z.md`
 files cover one release each).
-**Release status:** NOT shippable as of v0.30.19 - a libxml2/GDAL ABI
-mismatch (see `changelogs/CHANGELOG_v0.30.13.md`) blocks every conversion
-and has been re-confirmed on the real target machine three times; see
-`VERSION.txt`'s v0.30.19 entry for the exact evidence before distributing
-a build.
+**Release status:** CANDIDATE — pending verification on the target machine.
+v0.30.20's `libxml2=2.14` pin fixed a real version mismatch but was proven,
+on the real machine, NOT to fix the crash itself. Diagnostics in v0.30.21/22
+(also run on the real machine) found the actual cause: a compiled XSD schema
+that survives a GDAL write crashes the process, on every write, regardless of
+libxml2 version agreement. v0.30.23 removes the compiled-schema cache in
+`core/metadata_handler.py` entirely — every validation now compiles a fresh
+schema, used immediately and discarded, which is the only pattern proven safe
+by direct testing. This fix has NOT yet been run on the target machine. Run
+`dev_tools\run_release_check_v0.30.23.py` there — its `batch_conversion_cycle`
+stage is the decisive check — then a real GDB→GPKG conversion and DGIWG
+validation before distributing. See `VERSION.txt`'s v0.30.23 entry.
 **Maintained for:** Multi-platform DGIWG-compliant geospatial data conversion
