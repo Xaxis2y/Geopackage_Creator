@@ -1,0 +1,3 @@
+GeoPackage Creator v0.34.2
+Release date: 2026-08-19
+See CHANGELOG.md for the consolidated release history.
