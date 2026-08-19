@@ -86,7 +86,23 @@ GeoPackage_Creator/
 
 ## Quick Start
 
-**Windows:** double-click `START_HERE.bat` and choose GUI or command line.
+### Windows: create the Conda environment first
+
+Open **Anaconda Prompt**, then run these commands from the project folder:
+
+```bat
+conda env create -f environment.yml
+conda activate geopackage
+```
+
+This installs the tested GDAL build plus lxml, reportlab, pytest, and the GUI
+dependency `ttkbootstrap`. If the environment already exists, use
+`conda env update -n geopackage -f environment.yml --prune` instead of creating
+it again. You can also double-click `Anaconda_Start.bat`; it creates and
+activates the same environment interactively.
+
+After activation, start the application with `START_HERE.bat` or one of the
+commands below. Do not use Anaconda's base environment for the application.
 
 **GUI:**
 ```bash
@@ -127,8 +143,8 @@ See **docs/USER_MANUAL.md** for full documentation and **docs/QUICKSTART.md** fo
 ## Testing
 
 ```bash
-pip install pytest
-pytest
+conda activate geopackage
+python -m pytest -q
 ```
 
 Note: most integration tests create real spatial data and therefore require GDAL to be installed. The metadata, config, validator, and embedding tests run without spatial data.
