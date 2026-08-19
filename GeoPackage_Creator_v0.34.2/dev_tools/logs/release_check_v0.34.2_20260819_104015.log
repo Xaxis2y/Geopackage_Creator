@@ -1,0 +1,165 @@
+
+==============================================================================
+  GeoPackage Creator v0.34.2 - RELEASE CHECK
+==============================================================================
+  started: 2026-08-19 10:40:15
+  log file: C:\Users\Son\Documents\ChatGPT\Geopackage_Creator\GeoPackage_Creator_v0.34.2_Clean\dev_tools\logs\release_check_v0.34.2_20260819_104015.log
+  (written incrementally - if this run dies mid-way, the log up to
+   that point is still on disk and is exactly what to send back)
+
+==============================================================================
+  STAGE 1: environment
+==============================================================================
+  python            : 3.11.15 (C:\ProgramData\Anaconda3\envs\geopackage\python.exe)
+  platform          : Windows-10-10.0.26200-SP0
+  conda env         : geopackage
+  project root      : C:\Users\Son\Documents\ChatGPT\Geopackage_Creator\GeoPackage_Creator_v0.34.2_Clean
+  [PASS] environment - conda env 'geopackage'
+
+==============================================================================
+  STAGE 2: libxml2 ABI (necessary, NOT sufficient alone - see stage 6)
+==============================================================================
+  lxml version              : 6.1.1
+  LIBXML_COMPILED_VERSION   : (2, 14, 6)
+  LIBXML_VERSION (runtime)  : (2, 14, 6)
+  [PASS] libxml2_abi - MATCH (2, 14, 6)
+
+==============================================================================
+  STAGE 3: GDAL
+==============================================================================
+  GDAL version      : 3.13.2 (pin expects 3.13.2)
+  GPKG driver       : available
+  [PASS] gdal - 3.13.2
+
+==============================================================================
+  STAGE 4: MetadataHandler() construction
+==============================================================================
+  [PASS] metadata_ctor - constructed <core.metadata_handler.MetadataHandler object at 0x0000022556EE5810>
+
+==============================================================================
+  STAGE 5: .schema is never cached (regression guard)
+==============================================================================
+  Confirms two reads of `handler.schema` return DIFFERENT compiled
+  objects. If this ever starts returning the SAME object twice, the
+  v0.30.23 fix has been silently reverted (e.g. by a future 'perf
+  cleanup' that reintroduces caching) - this stage exists to catch
+  that before it ships.
+  id(first access) : 2359430803792
+  id(second access): 2359395350800
+  [PASS] schema_no_cache - distinct objects
+
+==============================================================================
+  STAGE 6: 8-cycle real batch conversion (THE decisive check)
+==============================================================================
+  Real GDAL write + real MetadataHandler.generate_package_metadata()
+  + real .validate_schema(), repeated 8 times with ONE reused handler -
+  the actual shipped code, exercised the way the real tool calls it.
+
+  Run in a SUBPROCESS: if the fix did not work, this crashes the
+  interpreter outright rather than raising a Python exception. A
+  subprocess turns that into a negative/large exit code this parent
+  process can record without losing the log.
+    CYCLE 0: GDAL write
+    CYCLE 0: generate_package_metadata
+    CYCLE 0: validate_schema
+    CYCLE 0: OK
+    CYCLE 1: GDAL write
+    CYCLE 1: generate_package_metadata
+    CYCLE 1: validate_schema
+    CYCLE 1: OK
+    CYCLE 2: GDAL write
+    CYCLE 2: generate_package_metadata
+    CYCLE 2: validate_schema
+    CYCLE 2: OK
+    CYCLE 3: GDAL write
+    CYCLE 3: generate_package_metadata
+    CYCLE 3: validate_schema
+    CYCLE 3: OK
+    CYCLE 4: GDAL write
+    CYCLE 4: generate_package_metadata
+    CYCLE 4: validate_schema
+    CYCLE 4: OK
+    CYCLE 5: GDAL write
+    CYCLE 5: generate_package_metadata
+    CYCLE 5: validate_schema
+    CYCLE 5: OK
+    CYCLE 6: GDAL write
+    CYCLE 6: generate_package_metadata
+    CYCLE 6: validate_schema
+    CYCLE 6: OK
+    CYCLE 7: GDAL write
+    CYCLE 7: generate_package_metadata
+    CYCLE 7: validate_schema
+    CYCLE 7: OK
+    ALL 8 CYCLES OK
+    [stderr] Warning 3: Cannot find tms_NZTM2000.json (GDAL_DATA is not defined)
+  probe exit code: 0
+  [PASS] batch_conversion_cycle - all 8 cycles completed without crashing
+
+==============================================================================
+  STAGE 7: version strings
+==============================================================================
+  core/config.py TOOL_VERSION        0.34.2
+  core/__init__.py __version__       0.34.2
+  packaging/app_main.py              0.34.2
+  GUI APP_VERSION                    0.34.2
+  version_info FileVersion           0.34.2
+  README banner                      0.34.2
+  metadata_handler.py __version__    0.34.2
+  [PASS] version_strings - all agree at 0.34.2
+
+==============================================================================
+  STAGE: pytest_main
+==============================================================================
+  $ C:\ProgramData\Anaconda3\envs\geopackage\python.exe -m pytest tests/ --ignore=tests/test_concurrency.py -q --no-header -p no:cacheprovider --basetemp C:\Users\Son\Documents\ChatGPT\Geopackage_Creator\GeoPackage_Creator_v0.34.2_Clean\dev_tools\logs\pytest_tmp
+    ============================= test session starts =============================
+    collected 296 items
+    
+    tests\test_config.py ..................................                  [ 11%]
+    tests\test_converter.py ....................                             [ 18%]
+    tests\test_critical_fixes.py ....................                        [ 25%]
+    tests\test_dmf_metadata.py ..............                                [ 29%]
+    tests\test_gdal_conversion.py ..............................             [ 39%]
+    tests\test_gdb_domains.py .................                              [ 45%]
+    tests\test_handle_lifetime.py ...........                                [ 49%]
+    tests\test_integration.py ............                                   [ 53%]
+    tests\test_isolated_schema_validation.py ...                             [ 54%]
+    tests\test_metadata_embedding.py .......                                 [ 56%]
+    tests\test_metadata_handler.py ................................          [ 67%]
+    tests\test_metadata_standalone.py ......................                 [ 75%]
+    tests\test_schema_validation.py ........................................ [ 88%]
+    .                                                                        [ 88%]
+    tests\test_validators.py .................................               [100%]
+    
+    ============================ 296 passed in 33.30s =============================
+  last line: ============================ 296 passed in 33.30s =============================
+  [PASS] pytest_main - ============================ 296 passed in 33.30s =============================
+
+==============================================================================
+  STAGE: pytest_concurrency
+==============================================================================
+  $ C:\ProgramData\Anaconda3\envs\geopackage\python.exe -m pytest tests/test_concurrency.py -q --no-header -p no:cacheprovider --basetemp C:\Users\Son\Documents\ChatGPT\Geopackage_Creator\GeoPackage_Creator_v0.34.2_Clean\dev_tools\logs\pytest_tmp
+    ============================= test session starts =============================
+    collected 12 items
+    
+    tests\test_concurrency.py ............                                   [100%]
+    
+    ============================= 12 passed in 9.19s ==============================
+  last line: ============================= 12 passed in 9.19s ==============================
+  [PASS] pytest_concurrency - ============================= 12 passed in 9.19s ==============================
+
+==============================================================================
+  SUMMARY
+==============================================================================
+  PASS  environment            conda env 'geopackage'
+  PASS  libxml2_abi            MATCH (2, 14, 6)
+  PASS  gdal                   3.13.2
+  PASS  metadata_ctor          constructed <core.metadata_handler.MetadataHandler object at 0x0000022556EE5810>
+  PASS  schema_no_cache        distinct objects
+  PASS  batch_conversion_cycle all 8 cycles completed without crashing
+  PASS  version_strings        all agree at 0.34.2
+  PASS  pytest_main            ============================ 296 passed in 33.30s =============================
+  PASS  pytest_concurrency     ============================= 12 passed in 9.19s ==============================
+
+VERDICT: ALL STAGES PASSED - the schema-lifetime fix holds under a real 8-cycle batch simulation. Still do a real GDB->GPKG conversion + DGIWG validation on actual customer-shaped data before distributing.
+  finished in 47.3s
