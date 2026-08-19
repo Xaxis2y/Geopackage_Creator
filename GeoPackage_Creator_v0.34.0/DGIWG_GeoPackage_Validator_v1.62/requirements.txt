@@ -1,0 +1,5 @@
+# Full validation coverage.  The core CLI uses only the Python standard library.
+pyproj>=3.6,<4
+shapely>=2.0,<3
+Pillow>=10,<12
+lxml>=5,<7
