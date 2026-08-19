@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.33.44** | August 17, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.34.0** | August 17, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
 
 ## Overview
 
@@ -14,10 +14,10 @@ DGIWG (Defense Geospatial Information Working Group) is an international organiz
 
 ## Folder Contents
 
-The release source includes the application, schemas, bundled validator,
+The release source includes the application, schemas, bundled v1.62 validator,
 documentation, tests, and release-verification scripts. Generated build
-folders and verification logs are intentionally not part of the GitHub source
-archive.
+folders and verification logs are intentionally excluded from the GitHub
+source archive.
 
 ```
 GeoPackage_Creator/
@@ -42,7 +42,7 @@ GeoPackage_Creator/
 ├── schemas/                     # ISO 19115 / GML XSD schemas
 ├── tests/                       # Pytest suite
 ├── packaging/                   # Windows .exe build pipeline (PyInstaller)
-├── DGIWG_GeoPackage_Validator_v1.58/  # Bundled DGIWG GeoPackage Validator (v0.30.17+)
+├── DGIWG_GeoPackage_Validator_v1.62/  # Bundled DGIWG GeoPackage Validator
 ├── docs/                        # User-facing documentation
 │   ├── USER_MANUAL.md / .docx   # Detailed user manual
 │   ├── QUICKSTART.md            # 5-minute quick start
@@ -53,7 +53,8 @@ GeoPackage_Creator/
 │   ├── DEPENDENCIES.txt         # Dependency reference
 │   ├── QUICK_FIX_CONDA.txt      # Conda troubleshooting
 │   └── ROADMAP_RASTER.md        # Raster support roadmap
-└── changelogs/                  # Every CHANGELOG_vX.Y.Z.md, oldest to newest
+├── changelogs/                  # Every CHANGELOG_vX.Y.Z.md, oldest to newest
+└── changelogs/                  # Historical release notes
 ```
 
 ## Key Features
@@ -67,7 +68,6 @@ GeoPackage_Creator/
 - **R-Tree spatial indexes** — created on every layer (DGIWG-mandatory)
 - **DGIWG Metadata Foundation (DMF) record** *(new in v0.27)* — every GeoPackage carries a DMF 2.0 metadata row (`https://dgiwg.org/std/dmf/2.0`) so validator Req 18 fully PASSes
 - **DGIWG validator gate** *(new in v0.27)* — `--validate` runs the external DGIWG GeoPackage Validator (all 37 requirements) after conversion and embeds the per-requirement table in the reports
-- **Native stability isolation** *(v0.33.44)* — ISO 19115 XSD validation runs in an isolated helper process, keeping GDAL and lxml/libxml2 out of the same process; 12 sequential source and frozen-EXE conversions passed on Windows.
 - **Raster foundations** *(new in v0.27)* — tile/gridded CRS policy, 256×256 / zoom-factor-2 constants and validation helpers (`core/raster_support.py`); full raster conversion planned for v0.28 (see `ROADMAP_RASTER.md`)
 - **Conversion reports** — HTML, JSON, and PDF generated alongside the output
 - **Conversion profiles** — `default`, `military`, `civilian`, `high_security`
@@ -141,18 +141,17 @@ Note: most integration tests create real spatial data and therefore require GDAL
 - DGIWG Metadata Foundation (DMF) 2.0
 - ISO 639-2 (language codes), ISO 3166-1 alpha-3 (nation codes)
 
-### GeoPackage header
+### GeoPackage header compatibility
 
-Outputs use the OGC-required SQLite header values for GeoPackage 1.4:
-**`application_id = GPKG`** (`0x47504B47`) and **`user_version = 10400`**.
-The bundled DGIWG validator recognizes this standard 1.2+ encoding.
+Outputs use the standard OGC GeoPackage `application_id = GPKG`
+(`0x47504B47`) and `user_version = 10400` for GeoPackage 1.4.
 
 ## Version
 
-**Current:** v0.33.44.
-**Release status:** candidate. The v0.33.44 stability gate passed 12 sequential
-source conversions, 12 frozen-EXE conversions, and the full pytest suite
-(308 passed) on the target Windows/Anaconda environment. Before public
-distribution, run `dev_tools\verify_actual_gdb_v0.33.44.py` with a real GDB
-and retain its independent DGIWG validator report.
+**Current:** v0.34.0 — release candidate.
+
+v0.34.0 isolates both ISO metadata schema validation and bundled DGIWG v1.62
+validation from GDAL, avoiding the native GDAL/lxml shutdown crash. The
+release gate covers repeated source and frozen-EXE conversions plus an actual
+FileGDB conversion and independent validator verification.
 **Maintained for:** Multi-platform DGIWG-compliant geospatial data conversion
