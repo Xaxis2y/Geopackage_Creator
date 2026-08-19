@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dgiwg-geopackage-validator"
+version = "1.60"
+description = "DGIWG GeoPackage Profile compliance pre-validator"
+requires-python = ">=3.11"
+license = {text = "GPL-2.0-or-later"}
+readme = "README.md"
+authors = [{name = "Eui Soo SON"}]
+dependencies = ["pyproj>=3.6,<4", "shapely>=2.0,<3", "Pillow>=10,<12", "lxml>=5,<7"]
+
+[project.scripts]
+dgiwg-validator = "dgiwg_validator.main:main"
+
+[tool.setuptools]
+packages = ["dgiwg_validator"]

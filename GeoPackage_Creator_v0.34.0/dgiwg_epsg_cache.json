@@ -1,0 +1,777 @@
+{
+ "description": "Offline EPSG cache for the DGIWG GeoPackage Validator. Covers the 128 DGIWG STD-DP-19-005 v1.1 approved CRS codes (Tables 1-12). Generated from the EPSG database via pyproj.",
+ "generated_with": "pyproj/EPSG geodetic parameter dataset",
+ "schema": {
+  "entries": "{srs_id: {name, datum, deprecated, type}}"
+ },
+ "entries": {
+  "3395": {
+   "name": "WGS 84 / World Mercator",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "3857": {
+   "name": "WGS 84 / Pseudo-Mercator",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "4326": {
+   "name": "WGS 84",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Geographic 2D CRS"
+  },
+  "4978": {
+   "name": "WGS 84",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Geocentric CRS"
+  },
+  "4979": {
+   "name": "WGS 84",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Geographic 3D CRS"
+  },
+  "5041": {
+   "name": "WGS 84 / UPS North (E,N)",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "5042": {
+   "name": "WGS 84 / UPS South (E,N)",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "9518": {
+   "name": "WGS 84 + EGM2008 height",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Compound CRS"
+  },
+  "32601": {
+   "name": "WGS 84 / UTM zone 1N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32602": {
+   "name": "WGS 84 / UTM zone 2N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32603": {
+   "name": "WGS 84 / UTM zone 3N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32604": {
+   "name": "WGS 84 / UTM zone 4N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32605": {
+   "name": "WGS 84 / UTM zone 5N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32606": {
+   "name": "WGS 84 / UTM zone 6N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32607": {
+   "name": "WGS 84 / UTM zone 7N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32608": {
+   "name": "WGS 84 / UTM zone 8N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32609": {
+   "name": "WGS 84 / UTM zone 9N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32610": {
+   "name": "WGS 84 / UTM zone 10N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32611": {
+   "name": "WGS 84 / UTM zone 11N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32612": {
+   "name": "WGS 84 / UTM zone 12N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32613": {
+   "name": "WGS 84 / UTM zone 13N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32614": {
+   "name": "WGS 84 / UTM zone 14N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32615": {
+   "name": "WGS 84 / UTM zone 15N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32616": {
+   "name": "WGS 84 / UTM zone 16N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32617": {
+   "name": "WGS 84 / UTM zone 17N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32618": {
+   "name": "WGS 84 / UTM zone 18N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32619": {
+   "name": "WGS 84 / UTM zone 19N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32620": {
+   "name": "WGS 84 / UTM zone 20N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32621": {
+   "name": "WGS 84 / UTM zone 21N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32622": {
+   "name": "WGS 84 / UTM zone 22N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32623": {
+   "name": "WGS 84 / UTM zone 23N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32624": {
+   "name": "WGS 84 / UTM zone 24N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32625": {
+   "name": "WGS 84 / UTM zone 25N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32626": {
+   "name": "WGS 84 / UTM zone 26N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32627": {
+   "name": "WGS 84 / UTM zone 27N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32628": {
+   "name": "WGS 84 / UTM zone 28N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32629": {
+   "name": "WGS 84 / UTM zone 29N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32630": {
+   "name": "WGS 84 / UTM zone 30N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32631": {
+   "name": "WGS 84 / UTM zone 31N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32632": {
+   "name": "WGS 84 / UTM zone 32N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32633": {
+   "name": "WGS 84 / UTM zone 33N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32634": {
+   "name": "WGS 84 / UTM zone 34N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32635": {
+   "name": "WGS 84 / UTM zone 35N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32636": {
+   "name": "WGS 84 / UTM zone 36N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32637": {
+   "name": "WGS 84 / UTM zone 37N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32638": {
+   "name": "WGS 84 / UTM zone 38N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32639": {
+   "name": "WGS 84 / UTM zone 39N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32640": {
+   "name": "WGS 84 / UTM zone 40N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32641": {
+   "name": "WGS 84 / UTM zone 41N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32642": {
+   "name": "WGS 84 / UTM zone 42N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32643": {
+   "name": "WGS 84 / UTM zone 43N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32644": {
+   "name": "WGS 84 / UTM zone 44N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32645": {
+   "name": "WGS 84 / UTM zone 45N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32646": {
+   "name": "WGS 84 / UTM zone 46N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32647": {
+   "name": "WGS 84 / UTM zone 47N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32648": {
+   "name": "WGS 84 / UTM zone 48N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32649": {
+   "name": "WGS 84 / UTM zone 49N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32650": {
+   "name": "WGS 84 / UTM zone 50N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32651": {
+   "name": "WGS 84 / UTM zone 51N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32652": {
+   "name": "WGS 84 / UTM zone 52N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32653": {
+   "name": "WGS 84 / UTM zone 53N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32654": {
+   "name": "WGS 84 / UTM zone 54N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32655": {
+   "name": "WGS 84 / UTM zone 55N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32656": {
+   "name": "WGS 84 / UTM zone 56N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32657": {
+   "name": "WGS 84 / UTM zone 57N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32658": {
+   "name": "WGS 84 / UTM zone 58N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32659": {
+   "name": "WGS 84 / UTM zone 59N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32660": {
+   "name": "WGS 84 / UTM zone 60N",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32701": {
+   "name": "WGS 84 / UTM zone 1S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32702": {
+   "name": "WGS 84 / UTM zone 2S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32703": {
+   "name": "WGS 84 / UTM zone 3S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32704": {
+   "name": "WGS 84 / UTM zone 4S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32705": {
+   "name": "WGS 84 / UTM zone 5S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32706": {
+   "name": "WGS 84 / UTM zone 6S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32707": {
+   "name": "WGS 84 / UTM zone 7S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32708": {
+   "name": "WGS 84 / UTM zone 8S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32709": {
+   "name": "WGS 84 / UTM zone 9S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32710": {
+   "name": "WGS 84 / UTM zone 10S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32711": {
+   "name": "WGS 84 / UTM zone 11S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32712": {
+   "name": "WGS 84 / UTM zone 12S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32713": {
+   "name": "WGS 84 / UTM zone 13S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32714": {
+   "name": "WGS 84 / UTM zone 14S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32715": {
+   "name": "WGS 84 / UTM zone 15S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32716": {
+   "name": "WGS 84 / UTM zone 16S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32717": {
+   "name": "WGS 84 / UTM zone 17S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32718": {
+   "name": "WGS 84 / UTM zone 18S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32719": {
+   "name": "WGS 84 / UTM zone 19S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32720": {
+   "name": "WGS 84 / UTM zone 20S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32721": {
+   "name": "WGS 84 / UTM zone 21S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32722": {
+   "name": "WGS 84 / UTM zone 22S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32723": {
+   "name": "WGS 84 / UTM zone 23S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32724": {
+   "name": "WGS 84 / UTM zone 24S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32725": {
+   "name": "WGS 84 / UTM zone 25S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32726": {
+   "name": "WGS 84 / UTM zone 26S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32727": {
+   "name": "WGS 84 / UTM zone 27S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32728": {
+   "name": "WGS 84 / UTM zone 28S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32729": {
+   "name": "WGS 84 / UTM zone 29S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32730": {
+   "name": "WGS 84 / UTM zone 30S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32731": {
+   "name": "WGS 84 / UTM zone 31S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32732": {
+   "name": "WGS 84 / UTM zone 32S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32733": {
+   "name": "WGS 84 / UTM zone 33S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32734": {
+   "name": "WGS 84 / UTM zone 34S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32735": {
+   "name": "WGS 84 / UTM zone 35S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32736": {
+   "name": "WGS 84 / UTM zone 36S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32737": {
+   "name": "WGS 84 / UTM zone 37S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32738": {
+   "name": "WGS 84 / UTM zone 38S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32739": {
+   "name": "WGS 84 / UTM zone 39S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32740": {
+   "name": "WGS 84 / UTM zone 40S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32741": {
+   "name": "WGS 84 / UTM zone 41S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32742": {
+   "name": "WGS 84 / UTM zone 42S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32743": {
+   "name": "WGS 84 / UTM zone 43S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32744": {
+   "name": "WGS 84 / UTM zone 44S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32745": {
+   "name": "WGS 84 / UTM zone 45S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32746": {
+   "name": "WGS 84 / UTM zone 46S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32747": {
+   "name": "WGS 84 / UTM zone 47S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32748": {
+   "name": "WGS 84 / UTM zone 48S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32749": {
+   "name": "WGS 84 / UTM zone 49S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32750": {
+   "name": "WGS 84 / UTM zone 50S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32751": {
+   "name": "WGS 84 / UTM zone 51S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32752": {
+   "name": "WGS 84 / UTM zone 52S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32753": {
+   "name": "WGS 84 / UTM zone 53S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32754": {
+   "name": "WGS 84 / UTM zone 54S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32755": {
+   "name": "WGS 84 / UTM zone 55S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32756": {
+   "name": "WGS 84 / UTM zone 56S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32757": {
+   "name": "WGS 84 / UTM zone 57S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32758": {
+   "name": "WGS 84 / UTM zone 58S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32759": {
+   "name": "WGS 84 / UTM zone 59S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  },
+  "32760": {
+   "name": "WGS 84 / UTM zone 60S",
+   "datum": "World Geodetic System 1984 ensemble",
+   "deprecated": false,
+   "type": "Projected CRS"
+  }
+ }
+}
