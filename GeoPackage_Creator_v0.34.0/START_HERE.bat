@@ -8,11 +8,17 @@ REM GeoPackage Creator - Simple Launcher v0.34
 REM Always run from this script's own folder so 'core' imports resolve
 cd /d "%~dp0"
 
-REM Use the Anaconda Python that has GDAL/osgeo installed.
-REM Plain cmd.exe defaults to a system Python without osgeo, which fails.
-set "PYTHON=C:\ProgramData\anaconda3\python.exe"
+REM Prefer the dedicated conda environment. The base Anaconda Python can lack
+REM both GDAL and ttkbootstrap, so using it causes the GUI to fail at import.
+set "PYTHON=C:\ProgramData\anaconda3\envs\geopackage\python.exe"
 if not exist "%PYTHON%" (
-    echo WARNING: Anaconda Python not found at "%PYTHON%".
+    echo WARNING: The "geopackage" conda environment was not found.
+    echo Run Anaconda_Start.bat once to create it from environment.yml.
+    echo Falling back to the Anaconda base Python.
+    set "PYTHON=C:\ProgramData\anaconda3\python.exe"
+)
+if not exist "%PYTHON%" (
+    echo WARNING: Anaconda Python was not found at "%PYTHON%".
     echo Falling back to 'python' on PATH ^(run from an Anaconda Prompt^).
     set "PYTHON=python"
 )
@@ -64,10 +70,9 @@ if !errorlevel! neq 0 (
     echo Error: GUI failed to launch!
     echo ================================================================================
     echo.
-    echo This usually means GDAL/osgeo is not available to this Python.
+    echo This usually means a required dependency is not installed in this Python.
     echo Using: %PYTHON%
-    echo Make sure dependencies are installed:
-    echo   pip install -r requirements.txt
+    echo Run Anaconda_Start.bat once to create or repair the geopackage environment.
     echo.
 )
 
