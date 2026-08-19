@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.34.0** | August 17, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.34.2** | August 19, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
 
 ## Overview
 
@@ -19,16 +19,22 @@ documentation, tests, and release-verification scripts. Generated build
 folders and verification logs are intentionally excluded from the GitHub
 source archive.
 
+## Copyright and license
+
+Copyright (c) 2026 Eui Soo SON. This project is licensed under
+`GPL-2.0-or-later`; see [LICENSE](LICENSE) and [COPYRIGHT.md](COPYRIGHT.md).
+
 ```
 GeoPackage_Creator/
 ├── geopackage_creator.py        # Command-line interface
 ├── geopackage_creator_gui.py    # Graphical interface (tkinter + ttkbootstrap)
 ├── START_HERE.bat               # Windows launcher (GUI or CLI)
 ├── Anaconda_Start.bat           # Anaconda Prompt launcher (creates/activates the conda env)
-├── dev_tools/                   # Release verification scripts and diagnostics
+├── CHANGELOG.md                 # Consolidated release history
+├── dev_tools/                   # Current release verification scripts
 ├── environment.yml              # Conda environment spec (pinned GDAL version + pip: ttkbootstrap)
 ├── requirements.txt             # Pip requirements
-├── VERSION.txt                  # Full version history (all releases, newest first)
+├── VERSION.txt                  # Current version and pointer to CHANGELOG.md
 ├── core/                        # Library modules
 │   ├── config.py                # DGIWG constants, profiles, approved CRS
 │   ├── converter.py             # Main orchestrator (GeoPackageConverter)
@@ -43,18 +49,12 @@ GeoPackage_Creator/
 ├── tests/                       # Pytest suite
 ├── packaging/                   # Windows .exe build pipeline (PyInstaller)
 ├── DGIWG_GeoPackage_Validator_v1.62/  # Bundled DGIWG GeoPackage Validator
-├── docs/                        # User-facing documentation
-│   ├── USER_MANUAL.md / .docx   # Detailed user manual
-│   ├── QUICKSTART.md            # 5-minute quick start
-│   ├── GETTING_STARTED.md       # Developer-oriented guide
-│   ├── GUI_USAGE_GUIDE.md       # GUI guide (Korean)
-│   ├── INSTALLATION_GUIDE.md    # Install guide
+├── docs/                        # Technical setup and GUI documentation
+│   ├── GUI_USAGE_GUIDE.md       # GUI guide
 │   ├── GDAL_INSTALLATION.txt    # GDAL setup instructions
 │   ├── DEPENDENCIES.txt         # Dependency reference
-│   ├── QUICK_FIX_CONDA.txt      # Conda troubleshooting
 │   └── ROADMAP_RASTER.md        # Raster support roadmap
-├── changelogs/                  # Every CHANGELOG_vX.Y.Z.md, oldest to newest
-└── changelogs/                  # Historical release notes
+└── CHANGELOG.md                 # Consolidated release history
 ```
 
 ## Key Features
@@ -138,7 +138,7 @@ result = converter.convert(
 print(result["success"], result["metadata_embedded"])
 ```
 
-See **docs/USER_MANUAL.md** for full documentation and **docs/QUICKSTART.md** for a 5-minute walkthrough.
+See **USER_MANUAL.md** for full documentation and **QUICKSTART.md** for a 5-minute walkthrough.
 
 ## Testing
 
@@ -164,9 +164,9 @@ Outputs use the standard OGC GeoPackage `application_id = GPKG`
 
 ## Version
 
-**Current:** v0.34.0 — release candidate.
+**Current:** v0.34.2.
 
-v0.34.0 isolates both ISO metadata schema validation and bundled DGIWG v1.62
+v0.34.2 retains the v0.34.0 isolation of both ISO metadata schema validation and bundled DGIWG v1.62
 validation from GDAL, avoiding the native GDAL/lxml shutdown crash. The
 release gate covers repeated source and frozen-EXE conversions plus an actual
 FileGDB conversion and independent validator verification.
