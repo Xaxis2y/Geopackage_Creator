@@ -1,6 +1,0 @@
-DGIWG GeoPackage Compliance Validator
-Version   : 1.58 (pre-release)
-Standard  : DGIWG STD-DP-19-005 v1.1
-Packaged  : 2026-08-05 13:07:00
-License   : GPL-2.0-or-later
-Copyright : (c) 2026 Eui Soo SON
