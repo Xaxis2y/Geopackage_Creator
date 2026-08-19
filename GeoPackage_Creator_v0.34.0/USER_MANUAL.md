@@ -56,7 +56,30 @@ A GeoPackage is a single SQLite file. Any GIS application that supports OGC stan
 > helper processes. This keeps GDAL and lxml/libxml2 out of the same process,
 > preventing the Windows shutdown crash found in earlier releases.
 
-### 2.2 Installing GDAL
+### 2.2 Create the supported Conda environment (recommended)
+
+On Windows, open **Anaconda Prompt**, change to the GeoPackage Creator folder,
+and run:
+
+```bat
+conda env create -f environment.yml
+conda activate geopackage
+```
+
+This is the supported first-time setup. It installs the tested GDAL build and
+all Python dependencies, including `lxml`, `reportlab`, `pytest`, and
+`ttkbootstrap` for the GUI. Do not run the application from Anaconda's base
+environment. If the environment already exists, update it with:
+
+```bat
+conda env update -n geopackage -f environment.yml --prune
+conda activate geopackage
+```
+
+You may alternatively double-click `Anaconda_Start.bat`, which creates and
+activates the same environment interactively.
+
+### 2.3 Installing GDAL manually (alternative)
 
 GDAL includes native C++ libraries and cannot be installed with a simple `pip install`. Choose one method:
 
@@ -84,17 +107,18 @@ macOS (Homebrew): `brew install gdal`
 
 Full details are in `GDAL_INSTALLATION.txt`.
 
-### 2.3 Installing Python dependencies
+### 2.4 Installing Python dependencies manually
 
 From the GeoPackage Creator folder:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2.4 Verifying the installation
+### 2.5 Verifying the installation
 
 ```bash
 python -c "from osgeo import gdal; print('GDAL', gdal.__version__)"
+python -c "import ttkbootstrap; print('ttkbootstrap OK')"
 python geopackage_creator.py --help
 ```
 

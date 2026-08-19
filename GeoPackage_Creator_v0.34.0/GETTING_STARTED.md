@@ -1,8 +1,8 @@
 # Getting Started with GeoPackage Creator
 
-**Current Status:** ✅ Phase 1 Complete - Core Module Ready  
-**Last Updated:** June 9, 2026  
-**Current Version:** 0.26.0  
+**Current Status:** v0.34.0 release candidate  
+**Last Updated:** August 19, 2026  
+**Current Version:** 0.34.0  
 
 ---
 
@@ -37,16 +37,16 @@ geopackage_creator/
 
 ## 🚀 Quick Start (5 Minutes)
 
-### 1. Install Dependencies
+### 1. Create the Conda environment (Windows / Anaconda Prompt)
 ```bash
-# Install GDAL (required - system package)
-# Linux: sudo apt-get install gdal-bin python3-gdal
-# macOS: brew install gdal
-# Windows: Use OSGeo4W installer or conda
-
-# Install package in development mode
-pip install -e .
+conda env create -f environment.yml
+conda activate geopackage
 ```
+
+This is the supported setup: it installs GDAL and the GUI dependency
+`ttkbootstrap` together. Do not launch the project with Anaconda's base
+environment. On later updates use `conda env update -n geopackage -f
+environment.yml --prune`.
 
 ### 2. Basic Conversion
 ```python

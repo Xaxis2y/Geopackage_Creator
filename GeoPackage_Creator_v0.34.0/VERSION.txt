@@ -1,8 +1,998 @@
-DGIWG GeoPackage Compliance Validator
-Version   : 1.62 (release)
-Standard  : DGIWG STD-DP-19-005 v1.1
-Packaged  : 2026-08-13 14:53:58
-License   : GPL-2.0-or-later
-Copyright : (c) 2026 Eui Soo SON
+GeoPackage Creator v0.34.0
+============================
 
+NEW in v0.34.0 (release stability and validator refresh):
+- Bundled DGIWG GeoPackage Validator upgraded to v1.62.
+- DGIWG validation now executes in a helper process, preserving GDAL/lxml
+  native-library isolation.
+- FileGDB folder detection accepts `GEODATABASE_FILE_*` markers without a
+  `.gdb` suffix.
+- OGC `GPKG` / `user_version=10400` header behavior, release documentation,
+  GUI, CLI, and Windows version resources updated for v0.34.0.
 
+Previous release history follows.
+
+GeoPackage Creator v0.30.23
+Release date: 2026-08-14
+
+NEW in v0.30.23 (the actual root-cause fix for the crash open since v0.30.13 -
+see chain below):
+
+FULL CHAIN (so this fix's evidence stands on its own):
+  v0.30.13  ABI guard added - refuses to compile the XSD on a libxml2 version
+            mismatch. Correct diagnosis of a real defect, but blocked every
+            conversion outright.
+  v0.30.20  Pinned libxml2=2.14 in environment.yml, believing the VERSION
+            mismatch was the whole crash. Tested on the real machine: pin
+            worked (both tuples read (2,14,6)) and the SAME access violation
+            still happened. WRONG THEORY - corrected in that changelog.
+  v0.30.21  Diagnostic (8 subprocess probes, real machine): found the real
+            differential - an etree.XMLSchema created BEFORE a GDAL write and
+            still alive AFTER it crashes on next use or on being freed,
+            independent of libxml2 version agreement.
+  v0.30.22  Diagnostic (real machine): does GDAL disturb libxml2 state ONCE,
+            or on EVERY write? Answer: EVERY write. A schema compiled safely
+            after one write still crashes if a SECOND write happens before
+            it's used again (P9). Only compiling fresh immediately before
+            use and discarding immediately after survived 4 repeated cycles
+            (P10).
+  v0.30.23  (THIS RELEASE) Applies P10's proven-safe pattern to the shipped
+            code.
+
+- FIX (core/metadata_handler.py) - THE FIX. Removes the process-wide compiled-
+  schema cache (_SHARED_SCHEMA, live since v0.30.10). MetadataHandler.schema
+  is now a @property that compiles a brand-new etree.XMLSchema on EVERY
+  access rather than reusing one cached object; validate_schema() compiles it
+  inside the same lock as the parse/validate that follow, so its entire
+  lifetime is contained in one call and can never span a GDAL write. Only the
+  schema FILE's location is still cached (pure filesystem I/O, no libxml2
+  state, independently confirmed safe). Public API unchanged - same class,
+  same methods, same signatures. Performance cost: ~0.67ms per compile,
+  measured directly; negligible against a conversion that takes seconds.
+- NEW (dev_tools/run_release_check_v0.30.23.py) - adds a schema_no_cache
+  regression guard (confirms .schema returns a DIFFERENT object on every
+  access) and an 8-cycle real-batch-conversion stage that exercises the
+  actual MetadataHandler class - real GDAL write, real
+  generate_package_metadata(), real validate_schema(), repeated 8 times with
+  one reused handler - in a crash-safe subprocess. This is the most direct
+  real-machine test of this exact fix available short of a full conversion.
+
+VERIFIED (Linux container, GDAL 3.8.4, lxml 6.1.1/2.14.6 matched - does NOT
+  reproduce the crash regardless of this fix, see v0.30.20's entry for why):
+  Full suite 304 passed, 1 skipped, 0 failed - no regression. handler.schema
+  confirmed to return a DIFFERENT object on consecutive accesses (cache is
+  genuinely gone). run_release_check_v0.30.23.py runs clean end-to-end
+  including the new 8-cycle batch stage.
+
+NOT YET VERIFIED - REQUIRED BEFORE SHIPPING:
+  This fix has NOT been tested on the real Windows/Anaconda machine.
+  v0.30.20's version-pin theory also looked solid after container testing and
+  then failed on the real machine - a clean container run is necessary, not
+  sufficient. Run on the target machine:
+    conda activate geopackage
+    python dev_tools\run_release_check_v0.30.23.py
+  The stage that matters most is batch_conversion_cycle (stage 6) - 8 real
+  write+validate cycles through the actual shipped MetadataHandler. If it and
+  both pytest stages pass, the blocker open since v0.30.13 is very likely
+  finally closed. Still required after that: a real GDB->GPKG conversion and
+  DGIWG validation of the real output before distributing.
+
+GeoPackage Creator v0.30.20
+Release date: 2026-08-14
+
+NEW in v0.30.20 (3 real bugs fixed; the libxml2 "root cause" claim was
+DISPROVEN on the target machine - the blocker REMAINS OPEN):
+
+*** READ FIRST - CORRECTION (2026-08-14) ***
+  This release originally claimed the missing libxml2 pin was the root cause of
+  the ABI blocker. A release check on the real Windows/Anaconda machine
+  DISPROVED that. The pin works - LIBXML_COMPILED_VERSION and LIBXML_VERSION
+  now BOTH read (2,14,6) - and the Windows access violation still occurs, at
+  core/metadata_handler.py:526 (schema.validate), in test_converter.py,
+  test_concurrency.py, and in a standalone probe with no project code.
+  Version agreement was necessary but NOT sufficient.
+
+  Genuine progress: MetadataHandler() now constructs for the first time since
+  v0.30.13, because the ABI guard no longer fires. The crash therefore MOVED
+  from "blocked at construction" to the real fault site.
+
+  Leading hypothesis now: conda's lxml and conda's gdal each load their OWN
+  libxml2 DLL. Two copies of the SAME version still keep separate global state
+  (interned-string dicts, error-handler table), so a document from one copy
+  validated against a schema owned by the other dereferences a pointer that is
+  meaningless in the other's heap. Run dev_tools\diagnose_crash_v0.30.21.py -
+  its Probe 0 counts the distinct libxml2 images in one process. If it reports
+  2, the cause is settled.
+*** END CORRECTION ***
+
+- PARTIAL (environment.yml) - superseded, see CORRECTION above. Theory was:
+  conda-forge's GLOBAL pinning file pins libxml2 to 2.14, and every conda-forge
+  lxml binary is compiled against that - but conda-forge also publishes libxml2
+  2.15.x, and the lxml recipe declares NO libxml2 constraint and NO
+  run_exports. Nothing therefore stops the solver from installing libxml2
+  2.15.3 (pulled in transitively by gdal) next to an lxml compiled against
+  2.14.6 - exactly the observed LIBXML_COMPILED_VERSION (2,14,6) vs
+  LIBXML_VERSION (2,15,3) fingerprint. This also explains why
+  `conda env remove` + `conda env create` NEVER fixed it: a recreate re-runs
+  the same unconstrained solve and re-picks 2.15.x. v0.30.19 speculated the
+  env had simply never been genuinely recreated - that speculation was wrong.
+  environment.yml now pins libxml2=2.14 explicitly. CONFIRMED to make the
+  version tuples agree - and CONFIRMED INSUFFICIENT to stop the crash. The pin
+  is retained because a version mismatch would be a real defect stacked on top
+  of the actual one, but it is NOT the fix.
+- FIX (core/gdal_handler.py) - create_geopackage() raises TimeoutError on lock
+  contention, but its own trailing `except Exception` caught it and re-raised
+  it as ValidationError (TimeoutError is an OSError subclass, so it was
+  swallowed silently). Callers could not tell "another thread holds the write
+  lock, retry" from "this output path is broken". A dedicated
+  `except TimeoutError:` now re-raises it unchanged. NOTE: v0.30.19 listed the
+  corresponding test as "possibly just flakiness from its tight 0.1s timeout" -
+  it is NOT flaky, it failed 5/5 runs deterministically.
+- FIX (tests/test_gdb_domains.py) - test_multiple_domain_types passed
+  topic_category="utilities" and then asserted success. "utilities" is not in
+  the ISO 19115 MD_TopicCategoryCode codelist; the correct value is
+  "utilitiesCommunication", which core/config.py had right all along. The
+  validator was correct and the TEST was wrong.
+- HARDENING (defensive; does NOT manifest on the pinned GDAL 3.13.2) - dataset
+  handles were tested for truth value at 7 sites. On GDAL >= 3.13 ogr.Open()
+  and CreateDataSource() return a gdal.Dataset whose __bool__ is always True,
+  so `if not ds:` is fine. On GDAL <= 3.12 they return an ogr.DataSource, which
+  has __len__ (= GetLayerCount()) and NO __bool__ - so a valid, freshly created
+  0-layer GeoPackage evaluates FALSY, making create_geopackage() raise "Failed
+  to create GeoPackage" on success and close_geopackage() skip its whole close
+  path (leaking the handle AND holding the write lock). All 7 sites now use
+  `is None` / `is not None`. Separately, read_source_data() used
+  driver.ShortName, which exists on gdal.Driver (3.13.2, so it worked) but not
+  on ogr.Driver (<= 3.12, AttributeError reported as a misleading "Error
+  reading source data") - now uses driver.GetName(), present on both. These are
+  corrected because requirements.txt still admits GDAL >= 3.6.0 as a floor.
+
+TESTED ON THE REAL MACHINE (2026-08-14, GDAL 3.13.2, lxml 6.1.1, Win 10):
+  PASS environment / libxml2_abi MATCH (2,14,6) / gdal 3.13.2 /
+       metadata_ctor (first success since v0.30.13) / version_strings
+  FAIL gdal_lxml_interop  - NATIVE CRASH exit 3221225477 (0xC0000005)
+  FAIL pytest_main        - Windows fatal exception: access violation
+  FAIL pytest_concurrency - Windows fatal exception: access violation
+  VERDICT: DO NOT SHIP.
+
+  Crash site (reproducible):
+    core/metadata_handler.py:526  validate_schema -> schema.validate(doc)
+    core/metadata_handler.py:739  generate_package_metadata
+    core/converter.py:588         convert
+    tests/test_converter.py:143   test_convert_with_valid_shapefile
+
+  A standalone probe (lxml XSD compile -> one GDAL vector write -> one further
+  lxml call, NO project code) crashes identically, reproducing v0.30.12's
+  finding. This is an environment/DLL-topology defect, not a logic defect in
+  this codebase.
+
+ALSO VERIFIED (Linux container, GDAL 3.8.4): full suite 304 passed, 0 failed,
+  and the interop sequence does NOT crash there. That environment is NOT a
+  valid proxy for Windows: on Linux lxml uses its own statically linked
+  libxml2 while GDAL links the system one, so the two never share state. The
+  three non-libxml2 fixes in this release are ordinary Python defects and are
+  trustworthy; the libxml2 conclusion was not.
+
+STILL OPEN - NEXT STEP:
+  Run dev_tools\diagnose_crash_v0.30.21.py. Probe 0 counts the distinct
+  libxml2 images mapped into one process; probes P1-P8 isolate which exact
+  step is fatal, each in its own subprocess. If Probe 0 reports 2 images, the
+  fix is to make lxml and gdal share ONE libxml2 (single conda solve, no pip
+  lxml), or to move XSD validation into a subprocess, or to drop lxml
+  validation in favour of a pure-Python validator.
+  No real GDB->GPKG conversion has completed; no DGIWG validation of real
+  output; no GUI or frozen-.exe exercise.
+
+GeoPackage Creator v0.30.19
+Release date: 2026-08-06
+
+NEW in v0.30.19 (bookkeeping + licensing pass - NOT a fix for the open
+libxml2/GDAL ABI blocker, see "STILL OPEN" below):
+- FIX (core/report_generator.py): every JSON/HTML/PDF conversion report this
+  tool generates was hardcoding "0.30.9" in four places (module docstring,
+  the JSON 'version' field, the PDF title, the HTML h2/footer) - a real,
+  user-facing bug, not just a stale comment, since these strings ship inside
+  every report a user produces. Now reads core.config.TOOL_VERSION instead,
+  so it cannot drift out of sync with the tool's actual version again.
+- FIX (packaging/app_main.py, packaging/version_info.txt): the frozen .exe's
+  own `--version` output and its Windows Explorer Properties/Details tab
+  (FileVersion, ProductVersion, filevers, prodvers) were still stamped
+  0.30.9 / 0.30.6 respectively - would have shipped wrong version metadata
+  in the actual built binary.
+- FIX (docs/USER_MANUAL.docx, packaging/GeoPackage_Creator_Windows_
+  Packaging_Manual.docx): both Word manuals had stale version banners
+  ("0.26.0", "0.28.0") in document.xml and, for USER_MANUAL.docx, also in
+  the running page header (header1.xml) - caught only by rendering to PDF
+  and visually inspecting, since the header text lives in a separate XML
+  part from the title page. Windows Packaging Manual also had a stale
+  example GDAL version ("3.13.1" -> "3.13.2") and a stale DGIWG validator
+  folder name in its troubleshooting table (DGIWG_Validator_v1_55_updated
+  -> DGIWG_GeoPackage_Validator_v1.58) - same drift class fixed in the spec
+  file back in v0.30.18.
+- FIX (many stale version banners / broken file references): docs/
+  USER_MANUAL.md, docs/QUICKSTART.md (also pointed at a nonexistent
+  GeoPackage_Creator_User_Manual_v0.26.docx), docs/GDAL_INSTALLATION.txt,
+  docs/QUICK_FIX_CONDA.txt, docs/GUI_USAGE_GUIDE.md (pointed at
+  CHANGELOG_v0.26.2.md as "the latest changes"), packaging/BUILD_WINDOWS.md,
+  START_HERE.bat, Anaconda_Start.bat, environment.yml, packaging/
+  build_windows.ps1 and GeoPackageCreator.spec (header comments only, the
+  functional fixes were already in v0.30.18), core/crs_converter.py and
+  core/raster_support.py (module docstring headers), core/validation_gate.py
+  (a docstring example path). Anaconda_Start.bat and environment.yml were
+  also pointing at dev_tools/release_test_v0.30.6.py, dev_tools/
+  selftest_conversion.py, and run_prerelease_check_v0.30.13.py - none of
+  which exist anywhere in this tree - now point at the real
+  dev_tools/run_release_check_v0.30.18.py.
+- NEW (licensing): every .py/.bat/.ps1 source file under core/, tests/,
+  dev_tools/, packaging/, and the project root (45 files) now carries
+    SPDX-License-Identifier: GPL-2.0-or-later
+    Copyright (c) 2026 Eui Soo SON
+  as its first lines (REM-prefixed for .bat), matching the convention
+  already used throughout DGIWG_GeoPackage_Validator_v1.58/. Placement was
+  adjusted per file so nothing else broke: after the shebang on the 5 files
+  that have one, after GeoPackageCreator.spec's `coding: utf-8` declaration
+  (which must stay on line 1), inside build_windows.ps1's existing <# #>
+  comment-based-help block (so Get-Help still finds .SYNOPSIS), and after
+  `@echo off` (not before it) in all 6 .bat files, so the header doesn't
+  echo to the console before echo is suppressed.
+- NOT DONE (flagged, not fixed - bigger than a version bump): docs/
+  GETTING_STARTED.md describes an installable-package layout
+  (`pip install -e .`, `from geopackage_creator.core import ...`) from a
+  much earlier project phase that no longer matches this tree at all (no
+  setup.py/pyproject.toml exist); docs/ROADMAP_RASTER.md's "target: v0.28"
+  has already passed without raster conversion shipping; packaging/
+  GeoPackage_Creator_Windows_Packaging_Manual.docx and BUILD_WINDOWS.md
+  both document an Inno Setup installer step (packaging\installer\
+  GeoPackageCreator.iss) that does not exist anywhere in this tree.
+
+STILL OPEN - DO NOT SHIP (unchanged from v0.30.18, re-confirmed three times):
+  dev_tools/run_release_check_v0.30.18.py was run on the real Windows/
+  Anaconda machine three times on 2026-08-06 (10:50, 11:29, and the run
+  behind this packaging pass) and returned the IDENTICAL libxml2 ABI
+  mismatch each time - lxml LIBXML_COMPILED_VERSION (2, 14, 6) vs
+  LIBXML_VERSION at runtime (2, 15, 3), the same numbers CHANGELOG_v0.30.13
+  .md already documented. The fail-fast guard in core/metadata_handler.py
+  correctly blocks MetadataHandler() construction, which cascades into
+  ~145 of ~150 test failures across both suites (main: 80 failed / 147
+  passed / 66 errors; concurrency: 6 failed / 6 passed) - essentially every
+  failure traces back to this one root cause. One unrelated failure,
+  tests/test_critical_fixes.py::TestLockTimeout::
+  test_lock_timeout_prevents_indefinite_wait, is not yet root-caused
+  (possibly just flakiness from its tight 0.1s timeout threshold). No
+  GeoPackage conversion can run in this environment. This release remains a
+  SOURCE SNAPSHOT for bookkeeping/handoff purposes, not a verified,
+  shippable build - see RELEASE_INFO_v0.30.19.txt.
+
+GeoPackage Creator v0.30.18
+Release date: 2026-08-06
+
+NEW in v0.30.18 (GUI visual redesign + release-readiness pass):
+- GUI (geopackage_creator_gui.py) rebuilt on ttkbootstrap (theme
+  "bootstrap-light"): new header banner, tabbed layout (Files & Metadata /
+  CRS & Reports) with scrollable tab content, segmented outline-toolbutton
+  CRS-mode selector, round-toggle report checkboxes, role-styled buttons
+  (primary/info/success/secondary), a status line next to the progress bar.
+  Every business-logic method is unchanged from v0.30.9 - only widget
+  construction/layout changed. requirements.txt / environment.yml /
+  install_dependencies.bat+.ps1 / docs/DEPENDENCIES.txt updated for the new
+  ttkbootstrap==2.2.0 dependency (pip-only - confirmed NOT on conda-forge).
+- FIX (packaging/GeoPackageCreator.spec): still bundled the old
+  DGIWG_Validator_v1_55_updated folder by name - deleted as of the v0.30.16
+  reorganization, replaced by DGIWG_GeoPackage_Validator_v1.58 (v0.30.17).
+  A PyInstaller build against the old spec would have failed outright.
+  Fixed to bundle the real folder; also added ttkbootstrap to
+  hiddenimports/datas so the redesigned GUI packages correctly.
+- FIX (packaging/build_windows.ps1): build conda env pinned gdal=3.11.4,
+  matching neither the 3.13.1 nor 3.13.2 pin used everywhere else in the
+  project - flagged as an open item since CHANGELOG_v0.30.13.md, never
+  fixed until now. Moved to gdal=3.13.2; also installs ttkbootstrap into
+  the build env.
+- FIX (version/changelog bookkeeping): core/config.py and core/__init__.py
+  were already stamped 0.30.17 with no CHANGELOG_v0.30.17.md on disk -
+  written retroactively (see that file's own note). README.md's version
+  banner (still "0.27.0") and folder-contents diagram (describing a
+  dev_tools/archive/release_dist layout that did not match the actual
+  tree - neither archive/ nor release_dist/ currently exist) brought back
+  in sync with reality.
+- NEW (dev_tools/run_release_check_v0.30.18.py, .bat): the dev_tools/ QA
+  harness this project relied on through v0.30.16 (run_prerelease_check_
+  v0.30.13.py and siblings) is no longer present anywhere in the tree,
+  despite CHANGELOG_v0.30.16.md describing it as moved there intact. Fresh
+  replacement (not a byte-for-byte restoration): environment fingerprint
+  incl. the libxml2 LIBXML_COMPILED_VERSION vs LIBXML_VERSION check,
+  MetadataHandler() fail-fast-guard construction test, DGIWG validator
+  discovery, a new GUI construction smoke test, and the full pytest suite
+  split into not-concurrency/concurrency subprocesses per pytest.ini's own
+  documented reasoning. Explicit DO NOT SHIP / INCOMPLETE / ALL STAGES
+  PASSED verdict with matching exit code.
+- STILL OPEN: the libxml2/GDAL ABI mismatch that produced the last known
+  real-machine "DO NOT SHIP - FAILURES" verdict (CHANGELOG_v0.30.15.md's
+  context section) is NOT resolved by this release - it is a specific
+  machine's environment, not something fixable from source, and this
+  sandbox cannot independently re-check whether it is still present.
+  Run dev_tools\run_release_check_v0.30.18.bat on the real machine and
+  send back the logs before trusting this build.
+- Version bumped to 0.30.18 across all code, packaging and documentation
+  files.
+
+GeoPackage Creator v0.30.17
+Release date: 2026-08-05
+
+NEW in v0.30.17 (DGIWG Validator updated to v1.58):
+- Updated auto-detection logic to prioritize DGIWG_GeoPackage_Validator_v1.58
+  over legacy DGIWG_Validator_v1_55_updated.
+- core/validation_gate.py: added glob pattern support for new validator
+  naming convention (DGIWG_GeoPackage_Validator_v1.x).
+- packaging/runtime_paths.py: reordered validator search to try v1.58 first,
+  then fall back to v1_55_updated and other v1_5x versions, then glob search
+  for newer naming patterns.
+- No functional code changes - validator discovery and invocation logic
+  unchanged. Process that already had v1.58 installed will now use it
+  automatically by default.
+
+Previous release history
+========================
+
+GeoPackage Creator v0.30.16
+Release date: 2026-08-05
+
+NEW in v0.30.16 (project root reorganized into subfolders - no product
+code behaviour changed):
+- CONTEXT: the project root had grown to ~74 loose files (18 changelogs,
+  8 package_release_vX.py scripts, diagnostic/QA harnesses, generated
+  logs, two unrelated junk files) on top of the normal core/tests/docs
+  content, making it hard to find anything. Reorganized into docs/,
+  changelogs/, dev_tools/, and archive/, keeping core/, packaging/,
+  schemas/, tests/, DGIWG_Validator_v1_55_updated/, release_dist/, and
+  the product entry points (geopackage_creator.py,
+  geopackage_creator_gui.py) at the root as before.
+- docs/: all user-facing documentation moved here - USER_MANUAL.md/.docx,
+  QUICKSTART.md, GETTING_STARTED.md, GUI_USAGE_GUIDE.md,
+  INSTALLATION_GUIDE.md, GDAL_INSTALLATION.txt, DEPENDENCIES.txt,
+  QUICK_FIX_CONDA.txt, ROADMAP_RASTER.md. README.md stays at the root
+  (its folder-contents tree diagram and direct doc-path mentions were
+  updated to point at docs/; its stale v0.27.0 version/feature text was
+  NOT touched - out of scope for a folder reorg, flagged separately).
+- changelogs/: every CHANGELOG_v0.25.md through CHANGELOG_v0.30.16.md (20
+  files), plus CODE_REVIEW_v0.30.6.md and TEST_GUIDE_v0.24.md, moved here.
+  VERSION.txt itself stays at the root as the single consolidated,
+  prepend-only history (unchanged, never rewritten).
+- dev_tools/: every diagnostic/QA script moved here - diagnose_crash_
+  v0.30.12.py, verify_concurrency_v0.30.9.py, verify_lxml_threadsafety_
+  v0.30.10.py, run_gdal_tests.py, run_tests_v0.30.10.bat,
+  release_test_v0.30.6.py, selftest_conversion.py,
+  run_prerelease_check_v0.30.13.py/.bat, package_prerelease_check_
+  v0.30.13.py - plus every log/JSON artifact these already produced.
+  These scripts are now one directory level below the project root, so
+  each one's HERE/SCRIPT_DIR bootstrap logic was reviewed and split into
+  two variables: the script's own directory (still used for its LOG_PATH
+  and for sibling-script references, since these scripts moved together)
+  and a new PROJECT_ROOT one level up (now used for `sys.path.insert`,
+  SCHEMA_DIR, and the pytest `tests` argument). selftest_conversion.py
+  previously had NO path bootstrap at all (it only ever ran from the
+  project root); it now has one.
+- run_prerelease_check_v0.30.13.py's packaging_preflight stage previously
+  hardcoded "package_release_v0.30.13.py" - which would have broken the
+  moment that specific file was archived below. It now calls a new
+  _find_latest_package_release_script() helper that discovers the
+  highest-numbered package_release_vX.Y.Z.py at the project root instead,
+  so this stage keeps working across future releases without editing the
+  harness again. The same helper is used by the preconditions stage's
+  file check.
+- archive/ (nothing deleted, per explicit instruction): the two junk
+  files found during triage - "6.0" (stray pip-install console output
+  accidentally saved as a file) and "zissfcWB" (a stale 2026-06-18
+  full-project backup zip, v0.30.2/v0.30.3 era) - plus
+  diagnose_crash_v0.30.11.py (superseded by _v0.30.12.py, which
+  corrected its conclusions), package_release_v0.30.6.py through
+  package_release_v0.30.15.py (8 superseded packagers - v0.30.15.py
+  joins this list now that v0.30.16.py exists), and the old
+  release_dist/ zips + RELEASE_INFO for v0.30.13 and v0.30.14 (moved to
+  archive/release_dist_old/). release_dist/ at the root now holds only
+  the current v0.30.16 build.
+- core/config.py and core/metadata_handler.py: two comments and one
+  user-facing RuntimeError message (_verify_libxml2_abi()'s remediation
+  text - shown to a real user the moment the ABI guard fires) updated to
+  point at dev_tools/diagnose_crash_v0.30.12.log and
+  changelogs/CHANGELOG_v0.30.13.md instead of the old root-level paths.
+  This is the only behavioural-adjacent change in this release, and it
+  is text-only - the guard's logic is byte-for-byte unchanged.
+- VERIFICATION: every moved .py file was confirmed to still
+  `python -m py_compile` cleanly from its NEW location. Because this
+  sandbox still has no real GDAL (unchanged from every prior release
+  built here), minimal osgeo/lxml stand-in modules were used to exercise
+  the actual bootstrap chain end to end: `sys.path.insert(0,
+  str(PROJECT_ROOT))` followed by `from core import GeoPackageConverter`
+  succeeded from dev_tools/'s new location, and every SCHEMA_DIR,
+  sibling-script, and PROJECT_ROOT/tests path was confirmed to resolve
+  to the real, correct file - including _find_latest_package_release_
+  script() correctly finding package_release_v0.30.16.py. This proves
+  the path arithmetic is correct; it does not exercise real GDAL/lxml
+  behaviour, which is unchanged from v0.30.15 regardless. Recommended
+  before trusting this build on Windows: re-run
+  dev_tools\run_prerelease_check_v0.30.13.bat (no --recreate-env needed -
+  the conda environment itself did not change) and confirm it still
+  reaches the same verdict as the last real run.
+- Version bumped to 0.30.16 in core/config.py (TOOL_VERSION) and
+  core/__init__.py (__version__). package_release_v0.30.15.py ->
+  package_release_v0.30.16.py per this project's existing rename
+  convention, with REQUIRED_FILES/CONTENT_CHECKS updated for the new
+  docs/changelogs/ paths and EXCLUDE_DIRS updated to skip archive/ and
+  dev_tools/ (dev/QA tooling, not part of the shipped release). See
+  changelogs/CHANGELOG_v0.30.16.md.
+
+Previous release history
+========================
+
+GeoPackage Creator v0.30.15
+Release date: 2026-08-05
+
+NEW in v0.30.15 (two independent bugs found by the first real run of
+run_prerelease_check_v0.30.13.py on Windows - neither is the libxml2 ABI
+mismatch):
+- CONTEXT: the pre-release gate was run for the first time on a real
+  Anaconda/Windows machine. It confirmed both of v0.30.13's central claims
+  (the ABI mismatch is real on that machine; the fail-fast guard correctly
+  intercepts it - see the gate's own log for the full picture). Underneath
+  that, though, 155 individual pytest/harness failures needed triage. 152 of
+  them collapsed to the SAME already-understood cause (the guard correctly
+  firing on every MetadataHandler construction). The remaining 3 were a
+  second, unrelated, previously-unknown defect, and a full pytest_suite run
+  also surfaced a third, independent problem in this project's own test
+  tooling. Both are fixed here.
+- FIX (run_gdal_tests.py, Windows console encoding): the script's own
+  progress/summary output used a handful of non-ASCII symbols - most
+  significantly U+2717 ('✗') in the failed-tests summary loop and U+2192
+  ('→') in six success messages and the final "Log saved" line. Windows'
+  default Anaconda Prompt console uses the cp1252 codepage, which cannot
+  encode either character. print() raising UnicodeEncodeError on '✗' was
+  caught by run_test()'s own broad except Exception, which then
+  MISREPORTED an already-completed test run as an unrecoverable error - and
+  because it happened partway through printing the failure summary (BEFORE
+  gdal_test_results.json is written), the crash discarded every result from
+  the whole run. A real run confirmed this exactly: the console showed
+  "27 passed, 0 failed, 6 errors" but produced no JSON file at all. Of those
+  6 "errors," at least 3 were not real test failures either - the test
+  itself had already passed; only the harness's OWN print of the passing
+  message (which also contained '→') crashed afterward and got
+  misclassified as the test's error. Fixed two ways: (1) every '✗'/'→'
+  in a message that gets printed is now plain ASCII ('->', or a
+  '[STATUS]' tag instead of a symbol); (2) stdout is reconfigured with
+  errors="backslashreplace" at the top of the script, so any FUTURE
+  non-ASCII character added to a message degrades to a visible escape
+  sequence instead of silently discarding the entire run's results again.
+  Several other non-ASCII characters already in the file (em dash, middle
+  dot, ellipsis, multiplication sign) were checked against the cp1252
+  table and left alone - they are representable in cp1252 and did not
+  appear in the actual crash, so replacing them would be needless churn.
+- FIX (tests/test_gdb_domains.py): three tests asserted an exact geometry
+  type - e.g. `roads_layer.GetGeomType() == ogr.wkbLineString` - on a layer
+  read back from a File Geodatabase that the test's OWN fixture had just
+  written. On the real Windows run (GDAL 3.13.2), OpenFileGDB's write
+  driver reported these back as their Multi- equivalent
+  (wkbMultiLineString, wkbMultiPolygon) instead. This is a characteristic
+  of the OpenFileGDB format/driver - it does not preserve the OGC Simple
+  Features single-part/multi-part distinction the way GDAL's other vector
+  drivers do - not a defect in this project, and not version-specific to
+  3.13.2 as far as this release can tell (the drift is entirely on the
+  WRITE side, which only this test fixture exercises; the shipped tool only
+  ever READS .gdb inputs). Each assertion now accepts either the single- or
+  multi-part variant, with a comment recording why, so a future edit does
+  not "fix" it back to a strict equality check without understanding this.
+  The tests' actual purpose - verifying the expected domain-constrained
+  field names are present - is unchanged and unaffected.
+- NOT related to the libxml2 ABI mismatch: neither fix touches
+  core/metadata_handler.py, core/config.py, or anything in the v0.30.13
+  guard. Both are pre-existing issues that simply had never been exercised
+  before, because this project's own history repeatedly notes it was
+  developed and tested without GDAL or Windows available until now.
+- Version bumped to 0.30.15 in core/config.py (TOOL_VERSION) and
+  core/__init__.py (__version__). package_release_v0.30.14.py ->
+  package_release_v0.30.15.py per this project's existing rename
+  convention. See CHANGELOG_v0.30.15.md.
+
+Previous release history
+========================
+
+GeoPackage Creator v0.30.14
+Release date: 2026-08-05
+
+NEW in v0.30.14 (environment.yml now actually pins GDAL - closes a gap in
+the v0.30.13 fix's own remediation path):
+- CONTEXT: while building run_prerelease_check_v0.30.13.py (an automated
+  gate that verifies the v0.30.13 pre-release on a real Anaconda/Windows
+  machine for the first time), environment.yml was reviewed to confirm the
+  `conda env create -f environment.yml` remediation step that
+  core/metadata_handler.py's _verify_libxml2_abi() error message tells users
+  to run. It found that unlike every OTHER file documenting the GDAL
+  requirement - DEPENDENCIES.txt, requirements.txt, INSTALLATION_GUIDE.md,
+  install_dependencies.bat/.ps1, QUICK_FIX_CONDA.txt, all of which have said
+  "PIN THE VERSION" since v0.30.7 - environment.yml itself still listed
+  `gdal` with only a comment ("3.13.2 recommended"), not an actual pin.
+- WHY THIS MATTERS: an unpinned `gdal` line means conda's solver is free to
+  resolve a DIFFERENT GDAL than the tested 3.13.2 build the next time
+  someone runs `conda env create -f environment.yml` - the exact class of
+  drift that already turned a real bug in this codebase into an apparent
+  GDAL regression once before (the unpinned `conda install -c conda-forge
+  gdal` that silently moved the project from 3.13.1 to 3.13.2 between the
+  v0.30.6 build and its release test - see GDAL_KNOWN_BAD_VERSIONS in
+  core/config.py and CHANGELOG_v0.30.7.md). It also undermines the v0.30.13
+  fix specifically, since that remediation IS "recreate the environment from
+  this file."
+- FIX (environment.yml): `gdal` is now `gdal=3.13.2`, matching the pin
+  already documented everywhere else. `lxml` is deliberately left unpinned
+  on purpose, so conda's solver picks whichever lxml build is mutually
+  consistent with the pinned gdal in that SAME solve, rather than risking
+  forcing back together the exact mismatched pair the v0.30.13 guard exists
+  to catch.
+- FIX (core/__init__.py): __version__ was still "0.30.9" - stale since
+  v0.30.10 (four releases). core/config.py's TOOL_VERSION was bumped every
+  time; this module-level stamp was not. Brought into agreement. No
+  behavioural effect - nothing in this codebase reads core.__version__ at
+  runtime - but worth closing while the file was open for this release
+  rather than leaving a fifth release go by wrong.
+- NOT a functional code change: nothing that executes at runtime differs for
+  an environment that already had GDAL 3.13.2 installed, which is every
+  environment this project's own docs told someone to build. Only the
+  reliability of the `environment.yml`-based recovery path changes.
+- Version bumped to 0.30.14 in core/config.py (TOOL_VERSION) and
+  core/__init__.py (__version__). package_release_v0.30.13.py ->
+  package_release_v0.30.14.py per this project's existing rename convention.
+  See CHANGELOG_v0.30.14.md.
+
+Previous release history
+========================
+
+GeoPackage Creator v0.30.13
+Release date: 2026-08-05
+
+NEW in v0.30.13 (root cause of the Aug 4/5 crash CONFIRMED - not just
+diagnosed - plus a fail-fast guard and a GDAL pin change):
+- v0.30.10's thread-safety fix was real but did not stop the crash. It kept
+  reproducing single-threaded (pytest_main_v0.30.10.log died inside
+  test_convert_with_valid_shapefile, a test that starts no threads), and the
+  deliberately-racy v0.30.9 pattern would not crash on demand even at 4
+  threads x 40 iterations (verify_lxml_v0.30.10.log, phases old_unlocked /
+  old_unlocked_gdal: 0/5 each). The thread-safety diagnosis, while a genuine
+  improvement, was not the cause of THIS crash.
+- BISECT (diagnose_crash_v0.30.11.py, _v0.30.12.py): every experiment ran
+  single-threaded, in its own subprocess (an access violation terminates the
+  process rather than raising, so it cannot be caught - only isolated). Two
+  results settle it, run 5 times each:
+    * heavy_no_lxml - the full GeoPackageConverter pipeline (GDALHandler
+      open/copy/close, sqlite3 metadata embedding, DGIWG finalization -
+      everything a real conversion does) with the schema-compile
+      short-circuited and every metadata method stubbed, so lxml performs
+      LITERALLY ZERO parses/compiles anywhere in the process -> clean 5/5.
+    * gdal_then_schema - ~20 lines, ZERO project code: compile the bundled
+      XSD via etree.XMLSchema(), perform ONE GDAL vector write via plain
+      osgeo calls (ogr.Open + gdal.VectorTranslate), then make any further
+      lxml call -> CRASHED 5/5, identical Windows access violation every
+      time, at the first lxml call after the write.
+  Same machine, same GDAL build (3.13.1 at the time), only variable was
+  whether lxml compiled a schema before a GDAL write happened in the same
+  process. That is dispositive: the fault requires lxml, requires a GDAL
+  write, and requires nothing else - not threads, not this project's
+  pipeline beyond "a GDAL write happened."
+- ROOT CAUSE: an ABI mismatch confirmed by the environment fingerprint -
+      LIBXML_COMPILED_VERSION : (2, 14, 6)   <- what this lxml build expects
+      LIBXML_VERSION (runtime): (2, 15, 3)   <- the libxml2.dll actually loaded
+  Exactly ONE libxml2 image is mapped into the process (confirmed via a
+  corrected module-enumeration routine - the v0.30.10/11 harness's ctypes
+  call had no argtypes set and silently returned nothing). GDAL and lxml
+  share that single DLL; it is not two competing copies. lxml's compiled
+  extension was built against 2.14.6's internal structure layouts; the DLL
+  conda resolves at runtime is 2.15.3. Windows does not enforce ABI
+  compatibility at load time - the mismatched DLL loads and runs right up
+  until something dereferences a structure whose layout changed, which a
+  GDAL write reliably provokes.
+- TWO OF MY OWN INTERIM CONCLUSIONS WERE WRONG AND ARE CORRECTED HERE RATHER
+  THAN QUIETLY DROPPED: (1) an earlier "HOW TO READ THIS" table read
+  "lxml_first clean while gdal_then_lxml crashed -> priming lxml first is a
+  fix" - backwards. lxml_first (prime lxml, then GDAL write, then lxml
+  again) CRASHED 5/5 with an identical traceback every time; gdal_then_lxml
+  (lxml used ONLY after the write, never before) was the one that stayed
+  clean. Priming lxml before a GDAL write CAUSES the fault, it does not
+  avoid it. (2) exp_gdal_only's docstring claimed "if this crashes, lxml is
+  entirely innocent" - false on inspection, because GeoPackageConverter.
+  __init__ builds a MetadataHandler whose __init__ compiles the real XSD via
+  lxml BEFORE that experiment's monkeypatch ever runs. heavy_no_lxml is what
+  gdal_only was supposed to be and was not.
+- FIX (core/metadata_handler.py, module v0.30.13): MetadataHandler now
+  refuses to compile the XSD when etree.LIBXML_COMPILED_VERSION !=
+  etree.LIBXML_VERSION. `_verify_libxml2_abi()` runs immediately before the
+  ONE operation proven to trigger the fault, inside the same lock introduced
+  in v0.30.10, and raises RuntimeError with the exact remediation steps
+  (recreate the conda env from environment.yml) unless
+  config.ALLOW_LIBXML_ABI_MISMATCH has been explicitly set True. The check
+  is deliberately placed OUTSIDE the existing try/except that downgrades
+  schema-load failures to a warning - a silent downgrade here would defeat
+  the entire point of failing fast. A clear exception before any conversion
+  starts replaces what every user of this tool got until now: an opaque
+  native crash minutes in, or during interpreter shutdown, with no Python
+  traceback at all.
+- FIX (core/config.py): new ALLOW_LIBXML_ABI_MISMATCH flag (default False),
+  matching the existing ALLOW_CONCURRENT_CONVERSIONS opt-out pattern - safe
+  default, explicit opt-in only after independently verifying the specific
+  combination. GDAL_TESTED_VERSION moved to "3.13.2" (see below).
+  GDAL_KNOWN_BAD_VERSIONS note extended (not rewritten) to record that a GDAL
+  patch version has now been investigated TWICE in this project in
+  connection with an access violation, and BOTH times GDAL's version turned
+  out not to be the variable.
+- GDAL PIN MOVED: 3.13.1 -> 3.13.2, project-wide (core/config.py,
+  requirements.txt, environment.yml, DEPENDENCIES.txt, INSTALLATION_GUIDE.md,
+  install_dependencies.bat/.ps1, QUICK_FIX_CONDA.txt,
+  packaging/BUILD_WINDOWS.md, packaging/build_windows.ps1, USER_MANUAL.md,
+  core/__init__.py). Stated as plainly as possible: this is a support
+  decision, NOT a fix. It does not touch the lxml/libxml2 combination that is
+  the actual confirmed cause, and the crash is expected to reproduce under
+  3.13.2 exactly as it did under 3.13.1 until the environment's lxml and
+  libxml2 are realigned. The ABI guard above protects both versions equally.
+  Historical changelogs (CHANGELOG_v0.30.7.md, _v0.30.8.md) and old VERSION.txt
+  entries describing the PRIOR, unrelated 3.13.1-vs-3.13.2 investigation are
+  deliberately left untouched - they are accurate records of what was true
+  at the time and rewriting them would erase real project history.
+- NOTE (packaging/build_windows.ps1): the PyInstaller build environment's
+  actual `conda create` command pins `gdal=3.11.4`, which matches neither the
+  old 3.13.1 pin nor the new 3.13.2 one, and predates this change. Only the
+  script's documentation header was updated here (to 3.13.2, matching the
+  rest of the project) because changing the actual EXE-build pin without
+  knowing why 3.11.4 was chosen was judged out of scope and worth flagging
+  rather than guessing at.
+- COMPATIBILITY: no public API changed. A process whose lxml/libxml2 versions
+  already agree sees no behavior difference at all - the guard is one tuple
+  comparison, cached implicitly by the same _SCHEMA_LOADED gate that already
+  made schema compilation a once-per-process cost in v0.30.10.
+
+NEW in v0.30.10 (the v0.30.9 access violation was libxml2, not GDAL):
+- THE CRASH: `pytest tests/ -v` on v0.30.9 died at test 4 of 305 with a
+  Windows access violation at metadata_handler.py:125 (etree.fromstring),
+  reached from generate_package_metadata -> converter.convert:586. The other
+  301 tests produced no result, because a native crash kills the process
+  rather than failing a test.
+- READING THE DUMP: three facts in that thread dump rule GDAL out entirely.
+    * The other two worker threads were parked at converter.py:109, i.e.
+      `with global_conversion_lock():` - they had not entered convert(). The
+      v0.30.7 serialization was working exactly as designed.
+    * The faulting thread was past converter.py:574, where the GeoPackage is
+      closed and the write lock released. It held no dataset, and no other
+      thread held one either.
+    * The faulting frame is pure lxml.
+  One thread was in GDAL and it had already left. This was never a GDAL crash.
+- ROOT CAUSE (core/metadata_handler.py): MetadataHandler.__init__ compiled the
+  ISO 19139 XSD with etree.XMLSchema() on EVERY instantiation, and
+  GeoPackageConverter.__init__ (converter.py:217) builds a MetadataHandler -
+  inside each worker thread, before convert() is called and therefore OUTSIDE
+  the lock that serializes everything else. Three threads compiled an XML
+  Schema simultaneously. xmlSchemaParse() interns into shared string
+  dictionaries and installs the global structured-error handler; two at once
+  corrupts the heap. Heap corruption faults at the next allocation from that
+  arena, not where the damage occurred - which is why the visible crash was an
+  innocent etree.fromstring() a few hundred microseconds later. The window is
+  small, which is how v0.30.6 through v0.30.9 shipped with it open.
+- FIX 1 (core/metadata_handler.py): the compiled XSD is now a process-wide
+  singleton built exactly once under _LXML_LOCK with double-checked locking.
+  The second and third callers never enter etree.XMLSchema() at all, so the
+  race is closed rather than narrowed. Failed loads are cached too, instead of
+  re-walking the filesystem per handler. Side benefit: constructing a
+  converter no longer parses a 13 KB XSD, and the suite builds hundreds.
+- FIX 2 (core/metadata_handler.py): validate_schema() holds one acquisition of
+  _LXML_LOCK across parse, validate AND the error_log read. schema.error_log
+  is mutable state on the shared schema object - without the lock two threads
+  would report each other's validation errors even if libxml2 never faulted.
+  lxml_lock() is exported so other code can serialize against this module.
+  The stdlib ET.fromstring() well-formedness checks are left unlocked on
+  purpose: expat, independent parser per call, shares nothing with libxml2.
+- FIX 3 (core/metadata_handler.py): parsing now uses an explicit hardened
+  parser (no_network=True, resolve_entities=False, huge_tree=False), built
+  fresh per call rather than relying on lxml's implicit default parser. Removes
+  one more piece of shared mutable state and closes XXE and billion-laughs for
+  a tool that validates defense metadata.
+- FIX 4 (core/metadata_handler.py): validate_schema() no longer double-wraps
+  its own error. A schema failure previously surfaced as "Schema validation
+  error: ISO 19115 schema validation failed: ..." because the ValueError it
+  raised was caught by its own except Exception.
+- FIX (pytest.ini, tests/test_concurrency.py): registered a `concurrency`
+  marker and tagged the module, so the suite can run as two processes and a
+  native crash can no longer discard the results of the other 301 tests. The
+  tests are NOT deselected by default - silently skipping a crash-prone path
+  is how it stops being tested. tests/test_critical_fixes.py is deliberately
+  left unmarked; its background thread only takes a Python RLock.
+- NEW (run_tests_v0.30.10.bat): runs the two passes, reports both exit codes
+  and decodes them (-1073741819 = 0xC0000005 access violation).
+- NEW (verify_lxml_threadsafety_v0.30.10.py): a harness that TESTS the
+  diagnosis rather than asserting it. Every phase runs in its own subprocess,
+  because an access violation cannot be caught with try/except; racy phases
+  repeat 5 times, because a race that did not fire once has not been
+  disproved. Phases: env fingerprint, old_unlocked (expected to crash),
+  old_unlocked_gdal, new_locked, real_module, real_module_gdal, converter.
+  The env phase also rules out the one competing explanation - TWO libxml2
+  images mapped into one process, which happens when lxml comes from a pip
+  wheel (statically bundling its own libxml2) while GDAL comes from
+  conda-forge. It enumerates loaded modules and compares
+  LIBXML_COMPILED_VERSION against the runtime LIBXML_VERSION.
+- COMPATIBILITY: no public API changed. handler.schema is now the same object
+  on every handler in the process; lxml XMLSchema objects are immutable after
+  construction so this is invisible, and reset_schema_cache() is provided for
+  any test that needs a private one.
+
+NEW in v0.30.9 (triage of all 29 pre-existing test failures):
+- TRIAGE: the last release-test run that completed (2026-07-24 12:14) had 12
+  failures and 17 errors. All are now accounted for:
+    * 6 failures + 17 errors - "OGR Error: Corrupt data" from
+      CreateGeometryFromWkt. Cause: malformed WKT in the TESTS, coordinates
+      written without separating commas, e.g. "LINESTRING(0 0 1 1 2 0)" instead
+      of "LINESTRING(0 0, 1 1, 2 0)". GDAL >= 3.11 rejects what older builds
+      tolerated. ALREADY FIXED after that log - every WKT literal in tests/ now
+      carries commas.
+    * 2 failures - OutputValidator.verify_crs_in_srs_table AttributeError.
+      ALREADY FIXED, defined at core/validators.py:484.
+    * 2 failures - test_concurrency write-permission races on the fixed-name
+      ".gpkg_creator_test" probe. ALREADY FIXED by the mkstemp change in
+      validators.py (12:22, eight minutes after that run).
+    * 2 failures - TestLockTimeout. STILL LIVE; fixed below.
+- FIX (tests/test_critical_fixes.py): test_lock_timeout_prevents_indefinite_wait
+  ended with "handler1.close_geopackage(ds1)" - neither name exists in that
+  test. They were leftovers from the pre-v0.30.6 version, which built two
+  handlers on the same thread; the v0.30.6 rewrite correctly replaced that with
+  a background-thread lock holder but did not delete the trailing cleanup. The
+  test raised NameError and FAILED even though the timeout behaviour it checks
+  was working. (The WinError 32 symptom in the Jul 24 log is the older, separate
+  cause - that run predates the rewrite.)
+- FIX (LANDMINE) (core/gdal_handler_concurrency.py): a second, independent
+  395-line copy of GDALHandler was sitting in core/, imported by nothing, and
+  carried BOTH v0.30.7 defects verbatim - "del ds" on the loop variable in
+  close_all_datasets() (line 97) and "del ds" on the parameter in
+  close_geopackage() followed by an unconditional write-lock release in finally
+  (line 345). The latter is the exact cause of the access violation that killed
+  the v0.30.6 release test. Not live, but it SHIPPED in the release archive
+  under a filename that reads like the concurrency implementation, so the
+  obvious fix for a future concurrency problem would have been to import it and
+  reintroduce the crash. Now a forwarding shim that re-exports
+  core.gdal_handler and emits a DeprecationWarning. One canonical GDALHandler.
+- FIX (core/converter.py): _strip_z_from_2d_layers() closed its dataset with
+  "del ds". Unlike the two fixed in v0.30.7 this one WORKED - ds was a genuine
+  local holding the only reference - but it is now an explicit
+  _flush_and_close_dataset(ds). This is the last writer before DGIWG
+  finalization reopens the same file through sqlite3, so the flush should be
+  deterministic rather than refcount-timed, and the pattern should not read
+  like the broken ones. There are now ZERO "del ds" statements in core/ and
+  tests/.
+- CHANGE (tests/test_critical_fixes.py): uses the v0.30.7 close idiom
+  "ds = handler.close_geopackage(ds)" with assertions that it returns None. The
+  v0.30.6 comment claiming the file "stays locked until the last Python
+  reference is dropped (GDAL closes on garbage collection)" described the BUG,
+  not correct behaviour, and has been corrected.
+- VERIFIED: pyflakes across core/ and tests/ reports NO undefined names, so the
+  NameError above was the only one of its kind. del-ds sweep is clean. The
+  deprecation shim re-exports the canonical class and warns on import. 22
+  static checks and the 4 GDAL-free serialization tests pass.
+- STILL NOT EXECUTED: the 8 GDAL-dependent tests, the full 294-test suite and
+  verify_concurrency_v0.30.9.py. No GDAL, no root for libgdal-dev, no Windows
+  in the development environment. The four "already fixed" groups above are
+  inferred from current file contents, NOT from a passing run. Confirm before
+  release.
+- Version bumped to 0.30.9 across all code, packaging and documentation files.
+
+Previous release history
+========================
+
+GeoPackage Creator v0.30.8
+Release date: 2026-08-04
+
+NEW in v0.30.8 (regression tests for the v0.30.7 crash fix):
+- ADD (tests/test_handle_lifetime.py): 12 regression tests covering the
+  handle-lifetime defect fixed in v0.30.7. v0.30.7 fixed the crash but shipped
+  no test for it - verification lived only in a standalone script, so a future
+  edit could reintroduce the bug with the suite still green. That is exactly
+  how the original defect survived: test_concurrency.py asserted convert()
+  reported success, but never asserted the file had been RELEASED.
+  All 12 are single-threaded and deterministic; they fail on v0.30.6 and pass
+  on v0.30.7+ without needing a race to reproduce. Coverage:
+    * close_geopackage() returns None so callers can drop their reference
+    * closed dataset is untracked
+    * (Windows) os.remove() succeeds after close - the direct v0.30.6
+      reproducer, since an open GDAL handle blocks deletion on Windows
+    * sqlite3 can open and write the closed file, mirroring what convert()
+      does next during metadata embedding and DGIWG finalization
+    * write lock is recorded, owner-tracked, and genuinely re-acquirable
+    * double close is a safe no-op
+    * close_all_datasets() clears dataset and lock state
+    * ALLOW_CONCURRENT_CONVERSIONS defaults False; convert() is wrapped;
+      global lock is shared and reentrant
+    * the runtime opt-out is read at CALL time, not frozen by a from-import
+- FIX (core/converter.py): the above test caught a real defect introduced
+  during v0.30.7 - "from .config import ALLOW_CONCURRENT_CONVERSIONS" binds the
+  value once at import, so the documented runtime opt-out silently did nothing.
+  config is now imported as a module and the flag read per call.
+- RENAME: verify_concurrency_v0.30.7.py -> verify_concurrency_v0.30.8.py,
+  package_release_v0.30.7.py -> package_release_v0.30.8.py.
+- TEST STATUS: only the 4 TestConversionSerialization tests have actually been
+  executed (they need no GDAL and were run against a stubbed osgeo, 4 passed).
+  The 8 GDAL-dependent tests, the full 294-test suite and
+  verify_concurrency_v0.30.8.py have NOT been run - the development
+  environment has no GDAL, no root to install libgdal-dev, and no Windows.
+  Run them before trusting this build.
+- Version bumped to 0.30.8 across all code, packaging and documentation files.
+
+GeoPackage Creator v0.30.7
+Release date: 2026-08-04
+
+NEW in v0.30.7 (concurrency crash fix + retracted GDAL diagnosis):
+- RETRACTION: the "Windows fatal exception: access violation" first seen on
+  2026-08-04 was initially attributed to GDAL 3.13.2. That was wrong. The
+  environment had drifted from the pinned 3.13.1 to 3.13.2 at the same time
+  the crash appeared, and correlation was read as cause. Evidence against it:
+  core/validators.py was fixed at 12:22:03 on 2026-07-24, eight minutes AFTER
+  the 12:14 run that is the only release test ever to complete; before that
+  fix, concurrent threads aborted early on a fixed-filename write probe
+  (".gpkg_creator_test") and never reached concurrent GDAL work on ANY GDAL
+  version; the v0.30.6 per-thread source-copy mitigation changed nothing
+  because the defect is on the OUTPUT side; and GDAL 3.13.2's release notes
+  contain threading HARDENING, not a regression. GDAL_KNOWN_BAD_VERSIONS is
+  now empty. The 3.13.1 pin is kept for reproducibility only.
+- CRITICAL FIX (core/gdal_handler.py, core/converter.py): close_geopackage()
+  ended with "del ds". ds is a parameter, so this unbound a local name and did
+  NOT close the dataset - the caller's reference kept the GeoPackage open. In
+  convert(), that reference (out_ds) then stayed in scope for the whole rest of
+  the conversion, during which the same .gpkg is reopened through sqlite3 to
+  embed metadata and finalize DGIWG compliance. Two live handles on one file,
+  with the write lock ALREADY released so a second thread could start writing.
+  Single-threaded this risks corruption; multi-threaded it is an access
+  violation. close_geopackage() now flushes, calls FlushCache(), calls
+  Dataset.Close() where available, and returns None so the caller drops its
+  reference; convert() assigns that return over out_ds. The dataset is closed
+  BEFORE the write lock is released.
+- FIX (core/gdal_handler.py): close_all_datasets() had the same "del ds" no-op
+  inside a for loop, where it also rebound each iteration. Datasets are now
+  flushed and explicitly closed via _flush_and_close_dataset().
+- FIX (core/gdal_handler.py): write-lock release. Four copies of
+  "try: lock.release() except RuntimeError: pass" are replaced by
+  _release_write_lock(), which tracks the acquired lock object and owning
+  thread id. The swallowed exception hid two real bugs: releasing a lock the
+  thread never owned, and - when acquire() timed out before
+  _active_output_path was updated - releasing another conversion's lock.
+- FIX (core/gdal_handler.py): gdal.UseExceptions()/ogr.UseExceptions() moved
+  from GDALHandler.__init__ to module import. They mutate process-global
+  binding state and swap the CPL error handler, so every thread constructing a
+  handler raced on that global while other threads were inside GDAL.
+- ADD (core/converter.py, core/config.py): conversions are now serialized
+  process-wide via _serialize_conversions and a module-level lock, covering the
+  whole sequence (GDAL write + sqlite3 metadata + DGIWG finalization +
+  validation). OGR gives no guarantee two such sequences may run concurrently.
+  The GUI and CLI never run more than one conversion at a time, so this is
+  free. Opt out with config.ALLOW_CONCURRENT_CONVERSIONS = True.
+- FIX (packaging/docs): GDAL is pinned to 3.13.1 in requirements.txt,
+  DEPENDENCIES.txt, INSTALLATION_GUIDE.md, install_dependencies.bat/.ps1 and
+  QUICK_FIX_CONDA.txt (pip paths to GDAL==3.13.1). Every install command
+  previously omitted the version, which is how the environment drifted
+  unnoticed and misdirected the investigation.
+- ADD: verify_concurrency_v0.30.8.py - proves handle release single-threaded
+  (TEST A), lock ownership (TEST B), the serialized default (TEST C), and runs
+  the unserialized path in a SUBPROCESS so a native crash is reported rather
+  than fatal (TEST D).
+- NOT YET RUN: v0.30.7 was developed without GDAL or Windows available. It is
+  syntax-checked only. Run verify_concurrency_v0.30.8.py, then the release
+  harness, before trusting this build.
+- Version bumped to 0.30.7 across all code, packaging and documentation files.
+
+GeoPackage Creator v0.30.6
+Release date: 2026-07-24
+
+NEW in v0.30.6 (pre-release audit fixes):
+- CRITICAL FIX (core/converter.py): restored three public API methods on
+  GeoPackageConverter that were accidentally deleted during the v0.30.1
+  hot-fix for the unterminated get_active_profile_config docstring. The whole
+  method block was removed along with the broken docstring, leaving
+  list_available_profiles(), get_active_profile_config() and
+  get_supported_input_formats() undefined. This broke five unit tests in
+  tests/test_converter.py with AttributeError. The GUI and CLI never called
+  these methods, so the shipped app still ran, but the public API and test
+  suite were broken. All three are restored with their original behaviour.
+- FIX (core/gdal_handler.py): validate_geopackage_output() was missing the
+  finally clause and general-exception handler its own comment promised
+  ("BUG-18: use try/finally"). A non-GeoPackage input raised a raw GDAL
+  exception instead of a friendly ValidationError, and the datasource handle
+  was never explicitly released. Both are now restored.
+- FIX (core/report_generator.py): the HTML and PDF "Validation Results"
+  section read dictionary keys (ogc_compliant / dgiwg_compliant /
+  geometry_valid / metadata_valid) that OutputValidator.validate_gpkg_structure()
+  never produces, so the section always displayed failure even for a fully
+  valid, DGIWG-compliant GeoPackage. A normaliser now maps the real
+  structure-check keys (compliant, gdal_readable, dgiwg_spatial_indexes,
+  user_version_ok, metadata_tables) to the report flags, with backward-
+  compatible fallback to the legacy keys.
+- FIX (geopackage_creator_gui.py): the Security Level dropdown was missing
+  "RESTRICTED", one of the five valid ISO 19115 / DGIWG national levels.
+- FIX (core/dgiwg_compliance.py): full_compliance_check() return annotation
+  used the builtin `any` instead of typing.Any.
+- FIX (schemas/iso19139-gmd.xsd): the bundled ISO 19139 subset schema ordered
+  metadataConstraints BEFORE dataQualityInfo in MD_Metadata, the reverse of
+  real ISO 19139 and of what generate_package_metadata() emits. As a result
+  EVERY package-metadata schema validation failed (silently, as a warning in
+  the shipped tool) and all schema-validation unit tests failed. The element
+  order is corrected and the previously-undefined LI_Lineage type is added so
+  metadata carrying a lineage statement also validates.
+- FIX (core/config.py): GDAL_LAYER_OPTIONS now pins GEOMETRY_NAME=geom, making
+  explicit the geometry-column name that the DGIWG finalization step already
+  assumes (rtree_<table>_geom).
+- FIX (core/validators.py, concurrency bug): validate_output_path() probed
+  directory write access with a FIXED filename (".gpkg_creator_test"). When
+  several conversions targeted the SAME output directory concurrently, the
+  threads raced on that one probe file and one would spuriously fail with
+  "No write permission" / WinError 2. It now uses a unique per-call probe name
+  (tempfile.mkstemp), so concurrent conversions to one directory are safe.
+- ADD (core/validators.py): OutputValidator.verify_crs_in_srs_table(path, epsg)
+  - checks whether an EPSG code is present in gpkg_spatial_ref_sys. It was
+  referenced by the test suite but had never been implemented.
+- FIX (tests/test_concurrency.py, CRASH): test_concurrent_writes_different_files
+  spawned 3 threads that all called converter.convert() on the SAME source
+  shapefile concurrently. On GDAL 3.13 this reproducibly crashed the entire
+  pytest process with "Windows fatal exception: access violation" - a native
+  crash, not a catchable Python exception - which also aborted every test after
+  it in the run. GDAL/OGR does not support opening one file from multiple
+  threads at once. Fixed by giving each thread its own private copy of the
+  source file (extracted into a shared _copy_shapefile_for_thread() helper) in
+  all three tests that spawn threads: test_concurrent_writes_different_files,
+  test_concurrent_writes_same_file_serialized, and test_many_concurrent_threads.
+  This mirrors real deployment usage (N concurrent conversions have N distinct
+  source files) and is not a limitation of the shipped GUI/CLI, which never
+  runs more than one conversion thread at a time.
+- TESTS: modernised the pytest suite to match current (v0.27.0+) behaviour and
+  to be robust on Windows/GDAL 3.13 - per-data-type CRS policy, NULL-scoped
+  gpkg_metadata extension row, GDAL 3.13 error wording, datasource-lifetime and
+  temp-dir teardown handling, and a File-Geodatabase write-capability probe
+  that skips (instead of erroring) when the GDAL build cannot create a .gdb.
+- Version bumped to 0.30.6 across all code, packaging and documentation files.
+
+GeoPackage Creator v0.30.5
+Release date: 2026-06-18
+
+NEW in v0.30.1 (GDAL update + bug fix):
+- Updated GDAL to 3.13.1 (previously 3.11.4).
+- Fixed unterminated triple-quoted string literal in core/converter.py
+  (get_active_profile_config docstring was truncated, causing a SyntaxError
+  during PyInstaller builds and import-time failures).
+
+GeoPackage Creator v0.30.0
+Release date: 2026-06-18
+
+NEW in v0.30.0 (OGC + DGIWG compliance fixes):
+- Fix 1 (OGC): GPKG_APPLICATION_ID_DGIWG changed from 0x47503132 (GP12) to
+  0x47503134 (GP14), making it consistent with user_version=10400 (GeoPackage
+  1.4). A file claiming GP12 via application_id but 1.4 via user_version fails
+  OGC validation because both fields must agree on the spec version.
+- Fix 2 (DGIWG Req 13): WKT2 generation switched from WKT2_2019 to WKT2_2015
+  format. WKT2_2019 represents EPSG:4326 with ENSEMBLE["World Geodetic System
+  1984 ensemble",...]; the DGIWG Req 13 offline check expects the datum name
+  "World Geodetic System 1984" and does not alias the ensemble name, causing a
+  hard FAIL. WKT2_2015 uses DATUM["World Geodetic System 1984",...] which
+  passes the check while remaining fully WKT2-compliant.
+- DGIWG Validator (checks.py _r3): expanded _GP_VERS table to accept
+  0x47503133 (GP13, GeoPackage 1.3) and 0x47503134 (GP14, GeoPackage 1.4) as
+  conformant for DGIWG Req 3, since DGIWG STD-DP-19-005 requires 1.2 or later.
+- Version bumped to 0.30.0 across all files.
+
+GeoPackage Creator v0.29.1
+Release date: 2026-06-16
+
+NEW in v0.29.1 (documentation & build update):
+- USER_MANUAL.md fully rewritten: clearer program overview, GDAL 3.11.4
+  requirement explicitly documented, version history brought up to date.
+- GDAL minimum tested version updated to 3.11.4 (conda-forge) across all
+  documentation and build scripts.
+- Build scripts (build_windows.ps1/.bat) and PyInstaller spec updated to
+  reference v0.29.1.
+- No functional code changes from v0.29.0.
+
+GeoPackage Creator v0.29.0
+Release date: 2026-06-15
+
+NEW in v0.29.0 (false-failure fixes — files were already valid):
+- Fix: converter reported "success": false on fully successful runs. The
+  success flag is now set immediately BEFORE report generation, so every
+  *_report.json/html records the true outcome. (core/converter.py)
+- Fix (DGIWG Validator): Req 24 "Data Validity" false FAIL. The bundled
+  validator decoded Z/M dimensionality from the GeoPackage header flags byte,
+  whose bits 1-3 are the envelope indicator, NOT Z/M flags. Any 2D geometry
+  carrying an XY env

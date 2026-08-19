@@ -2,7 +2,28 @@
 
 ## How to Start
 
-### 1. **Using the GUI (Easiest - NEW!)**
+### 1. Create and activate the environment (Windows / Anaconda Prompt)
+
+Open **Anaconda Prompt**, change to this project folder, and run:
+
+```bat
+conda env create -f environment.yml
+conda activate geopackage
+```
+
+This is required before running the GUI or CLI: it installs GDAL, lxml,
+reportlab, pytest, and `ttkbootstrap`. If `geopackage` already exists, update
+it with:
+
+```bat
+conda env update -n geopackage -f environment.yml --prune
+conda activate geopackage
+```
+
+Alternatively, double-click `Anaconda_Start.bat` to create and activate the
+same environment. Do not run the tool from Anaconda's base environment.
+
+### 2. **Using the GUI (Easiest)**
 
 The simplest way - just run the GUI application:
 
@@ -20,7 +41,7 @@ Then:
 
 See `GUI_USAGE_GUIDE.md` for detailed instructions.
 
-### 2. **Basic Usage (Command Line)**
+### 3. **Basic Usage (Command Line)**
 
 The simplest way to convert data:
 
@@ -33,7 +54,7 @@ python geopackage_creator.py \
     --nation "USA"
 ```
 
-### 2. **What You Need to Provide**
+### 4. **What You Need to Provide**
 
 **Required:**
 - `--source` - Your data file (supports .gdb, .shp, .geojson, PostGIS)
@@ -48,7 +69,7 @@ python geopackage_creator.py \
 - `--security` - Classification (UNCLASSIFIED, CONFIDENTIAL, SECRET)
 - `--profile` - Conversion profile (default, military, civilian, high_security)
 
-### 3. **Example: Converting a Shapefile**
+### 5. **Example: Converting a Shapefile**
 
 ```bash
 python geopackage_creator.py \
@@ -63,7 +84,7 @@ python geopackage_creator.py \
     --profile military
 ```
 
-### 4. **Example: Converting a File Geodatabase (GDB)**
+### 6. **Example: Converting a File Geodatabase (GDB)**
 
 ```bash
 python geopackage_creator.py \

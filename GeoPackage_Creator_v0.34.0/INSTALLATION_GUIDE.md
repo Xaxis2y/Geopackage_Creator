@@ -1,6 +1,29 @@
 # GeoPackage Creator - Installation Guide
 
-## Quick Start (One-Click Installation)
+## Quick Start (Windows / Anaconda Prompt)
+
+From an **Anaconda Prompt**, change to the project folder and run:
+
+```bat
+conda env create -f environment.yml
+conda activate geopackage
+```
+
+The environment file installs the tested GDAL version and all required Python
+packages, including `ttkbootstrap` for the GUI. On later updates use:
+
+```bat
+conda env update -n geopackage -f environment.yml --prune
+conda activate geopackage
+```
+
+Do not use Anaconda's base environment to launch GeoPackage Creator. You may
+instead double-click `Anaconda_Start.bat`, which creates/activates this same
+environment interactively.
+
+---
+
+## Alternative installers
 
 ### Option 1: PowerShell Script (Recommended)
 ```powershell
