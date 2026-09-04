@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GCO (General Common Objects) Schema - Simplified for ISO 19115 -->
+<!-- Defines basic reusable types like CharacterString, Date, DateTime, Boolean -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:gco="http://www.isotc211.org/2005/gco"
+           targetNamespace="http://www.isotc211.org/2005/gco"
+           elementFormDefault="qualified">
+
+  <!-- CharacterString type - for text content -->
+  <xs:element name="CharacterString" type="xs:string"/>
+
+  <!-- Date type - for dates (YYYY-MM-DD format) -->
+  <xs:element name="Date" type="xs:date"/>
+
+  <!-- DateTime type - for timestamps (ISO 8601 format) -->
+  <xs:element name="DateTime" type="xs:dateTime"/>
+
+  <!-- Boolean type - for true/false values -->
+  <xs:element name="Boolean" type="xs:boolean"/>
+
+  <!-- Decimal type - for numeric values -->
+  <xs:element name="Decimal" type="xs:decimal"/>
+
+  <!-- Integer type - for whole numbers -->
+  <xs:element name="Integer" type="xs:integer"/>
+
+  <!-- Real type - for floating point numbers -->
+  <xs:element name="Real" type="xs:double"/>
+
+
+  <!-- Property types wrapping the basic elements (used by gmd schema) -->
+  <xs:complexType name="CharacterString_PropertyType">
+    <xs:sequence>
+      <xs:element ref="gco:CharacterString" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DateTime_PropertyType">
+    <xs:sequence>
+      <xs:element ref="gco:DateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Date_PropertyType">
+    <xs:sequence>
+      <xs:element ref="gco:Date" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Boolean_PropertyType">
+    <xs:sequence>
+      <xs:element ref="gco:Boolean" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

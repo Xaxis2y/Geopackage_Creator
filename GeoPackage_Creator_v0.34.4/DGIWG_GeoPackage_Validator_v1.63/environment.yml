@@ -1,0 +1,25 @@
+# DGIWG GeoPackage Compliance Validator v1.63
+# Conda environment definition — build/run environment for the validator
+# and for packaging it into a standalone .exe with PyInstaller.
+#
+# Create it in Anaconda Prompt with:
+#     conda env create -f environment.yml
+#
+# Update it later (after this file changes) with:
+#     conda env update -f environment.yml --prune
+#
+# Never install into the "base" environment.
+
+name: dgiwg
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - shapely
+      - Pillow
+      - pyproj
+      - lxml
+      - pyinstaller>=6.0

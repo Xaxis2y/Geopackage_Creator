@@ -1,0 +1,78 @@
+name: geopackage
+# Conda environment for GeoPackage Creator v0.34
+#
+# Create it with:
+#     conda env create -f environment.yml
+# or just run Anaconda_Start.bat / dev_tools\run_release_check_v0.30.23.py,
+# either of which creates it automatically.
+#
+# GDAL is the only hard runtime requirement besides lxml; pyproj and reportlab
+# are optional (pyproj = preferred WKT2 source with a GDAL fallback, reportlab =
+# PDF reports with an HTML fallback). pytest is included so the test suite and
+# dev_tools\run_release_check_v0.30.23.py can run in this environment.
+#
+# v0.30.14: gdal is now PINNED (gdal=3.13.2) instead of just commented as
+# recommended. Every OTHER file documenting the GDAL requirement -
+# DEPENDENCIES.txt, requirements.txt, INSTALLATION_GUIDE.md,
+# install_dependencies.bat/.ps1, QUICK_FIX_CONDA.txt - has said "PIN THE
+# VERSION" since v0.30.7; this file was the one place that still left gdal
+# unpinned, so `conda env create -f environment.yml` could resolve a
+# DIFFERENT GDAL than the one actually tested. That is the exact class of
+# drift that already turned a real bug in this codebase into an apparent
+# GDAL regression once before (see core/config.py, GDAL_KNOWN_BAD_VERSIONS,
+# and CHANGELOG_v0.30.7.md). It also matters specifically for the v0.30.13
+# fix: core/metadata_handler.py's _verify_libxml2_abi() error message tells
+# a user who hits the libxml2 ABI mismatch to run exactly this command to
+# get GDAL and lxml from one consistent conda solve - that remediation is
+# only as reliable as the pin below. See CHANGELOG_v0.30.14.md.
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - gdal=3.13.2   # PINNED (v0.30.14) - see DEPENDENCIES.txt "GDAL VERSION IS
+                  # PINNED" and the note above. Do not loosen this back to an
+                  # unpinned `gdal` without updating DEPENDENCIES.txt /
+                  # requirements.txt / core/config.py's GDAL_TESTED_VERSION
+                  # to match - they must all agree.
+  - libxml2=2.14  # PINNED (v0.30.20) - THIS IS THE FIX FOR THE ABI BLOCKER
+                  # that has been open since v0.30.13. Root cause: conda-forge
+                  # builds lxml against its GLOBAL PIN of libxml2 2.14
+                  # (conda-forge-pinning conda_build_config.yaml), but
+                  # conda-forge also publishes libxml2 2.15.x, and the lxml
+                  # feedstock declares NO libxml2 version constraint and NO
+                  # run_exports. Nothing therefore stops the solver from
+                  # installing 2.15.x - which gdal pulls in transitively -
+                  # next to an lxml compiled against 2.14. That is exactly the
+                  # observed fingerprint: LIBXML_COMPILED_VERSION (2,14,6) vs
+                  # LIBXML_VERSION (2,15,3).
+                  #
+                  # This is why `conda env remove` + `conda env create` never
+                  # fixed it: recreating the environment re-runs the SAME
+                  # unconstrained solve and re-picks 2.15.x. The mismatch is
+                  # in libxml2, which this file previously never mentioned.
+                  #
+                  # If a future conda-forge global pin moves to 2.15, this
+                  # pin must move WITH it (lxml will be rebuilt against 2.15
+                  # at that point). Verify after any change with:
+                  #   python -c "from lxml import etree; print(
+                  #       etree.LIBXML_COMPILED_VERSION, etree.LIBXML_VERSION)"
+                  # The two tuples MUST be equal.
+  - lxml          # ISO 19115 metadata XSD validation. Still NOT pinned - the
+                  # solver should pick whichever lxml build matches the
+                  # libxml2 pinned above, in the SAME solve. Pinning lxml too
+                  # would over-constrain; pinning libxml2 (above) is what
+                  # actually removes the ABI mismatch.
+  - pyproj        # optional: WKT2_2015 generation (GDAL osr is the fallback)
+  - reportlab     # optional: PDF report export (HTML is the fallback)
+  - pytest        # to run the unit tests / dev_tools\run_release_check_v0.30.23.py
+  - pip           # required so the pip: section below has something to run in
+  - pip:
+      - ttkbootstrap==2.2.0
+        # GUI theming (v0.30.18). NOT on conda-forge (checked 2026-08 -
+        # anaconda.org/conda-forge/ttkbootstrap 404s), so it cannot join the
+        # dependencies: list above - it has to come from pip, inside this
+        # same `conda env create`. Pure Python/Tcl widget theming with no
+        # native extension of its own, so - unlike lxml - there is no ABI to
+        # accidentally mismatch against GDAL; it is pinned only so the
+        # bootstyle strings in geopackage_creator_gui.py (tested against
+        # exactly this release) keep resolving the same way.

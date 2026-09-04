@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Start — DGIWG GeoPackage Compliance Validator v1.63</title>
+<style>
+  :root {
+    --ink:      #1f2933;
+    --ink-soft: #52606d;
+    --line:     #d9e2ec;
+    --bg:       #f5f7fa;
+    --card:     #ffffff;
+    --navy:     #1a3a5c;
+    --accent:   #2471a3;
+    --pass:     #2e7d4f;
+    --partial:  #b57314;
+    --fail:     #c0392b;
+    --skip:     #6b7785;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    line-height: 1.6; font-size: 15px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 64px; }
+
+  header {
+    background: linear-gradient(135deg, #14293f 0%, var(--navy) 60%, #27547f 100%);
+    color: #fff; padding: 38px 0 32px; margin-bottom: 32px;
+  }
+  header .wrap { padding-bottom: 0; }
+  header h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.2px; }
+  header .sub { margin: 0; font-size: 15px; color: #bcd4e8; }
+  header .badge {
+    display: inline-block; margin-top: 14px; background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.3); border-radius: 4px;
+    padding: 3px 11px; font-size: 12.5px; letter-spacing: .3px;
+  }
+
+  h2 {
+    font-size: 19px; margin: 40px 0 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--line); color: var(--navy);
+  }
+  h2 .n {
+    display: inline-block; width: 26px; height: 26px; line-height: 26px;
+    text-align: center; background: var(--navy); color: #fff;
+    border-radius: 5px; font-size: 14px; margin-right: 9px; vertical-align: 2px;
+  }
+  h3 { font-size: 15px; margin: 22px 0 8px; color: var(--ink); }
+  p  { margin: 10px 0; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 8px; padding: 18px 22px; margin: 14px 0;
+  }
+  .lede { font-size: 16px; }
+  .lede strong { color: var(--navy); }
+
+  code, pre { font-family: "Cascadia Mono", Consolas, "Courier New", monospace; }
+  code { background: #eef2f7; padding: 1.5px 5px; border-radius: 3px; font-size: 13px; }
+  pre {
+    background: #17222e; color: #e3ecf5; border-radius: 7px;
+    padding: 15px 18px; overflow-x: auto; font-size: 13.5px; line-height: 1.65;
+    margin: 12px 0;
+  }
+  pre .c { color: #8fa6bd; }        /* comment  */
+  pre .p { color: #7fd1a0; }        /* prompt   */
+
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; font-size: 14px; }
+  th { background: #eef2f7; color: var(--navy); font-weight: 600; }
+  td code { font-size: 12.5px; white-space: nowrap; }
+
+  .pill {
+    display: inline-block; color: #fff; border-radius: 4px;
+    padding: 2px 9px; font-size: 12px; font-weight: 700; white-space: nowrap;
+  }
+  .pill.pass    { background: var(--pass); }
+  .pill.partial { background: var(--partial); }
+  .pill.fail    { background: var(--fail); }
+  .pill.skip    { background: var(--skip); }
+
+  .note {
+    border-left: 4px solid var(--accent); background: #eaf2f8;
+    padding: 12px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 14px;
+  }
+  .warn {
+    border-left: 4px solid var(--partial); background: #fdf6e7;
+    padding: 12px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 14px;
+  }
+  .note strong, .warn strong { color: var(--navy); }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 16px 0; }
+  .steps > li {
+    counter-increment: s; position: relative;
+    padding: 0 0 4px 44px; margin-bottom: 20px;
+  }
+  .steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 0;
+    width: 29px; height: 29px; line-height: 29px; text-align: center;
+    background: var(--accent); color: #fff; border-radius: 50%;
+    font-weight: 700; font-size: 14px;
+  }
+  .steps h3 { margin-top: 2px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 14px; margin: 16px 0; }
+  .grid .card { margin: 0; }
+  .grid .card h3 { margin-top: 0; }
+  .grid .card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 0; }
+
+  .yes::before { content: "\2713"; color: var(--pass); font-weight: 700; margin-right: 8px; }
+  .no::before  { content: "\2715"; color: var(--fail); font-weight: 700; margin-right: 8px; }
+  ul.plain { list-style: none; padding-left: 2px; }
+  ul.plain li { margin: 7px 0; }
+
+  footer {
+    margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-soft); text-align: center;
+  }
+  footer .who { font-weight: 700; color: var(--navy); }
+
+  @media print {
+    body { background: #fff; font-size: 11.5pt; }
+    header { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre { background: #17222e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { page-break-after: avoid; }
+    .card, table, pre { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>&#128737; DGIWG GeoPackage Compliance Validator</h1>
+    <p class="sub">Quick Start &mdash; read this first. Five minutes end to end.</p>
+    <span class="badge">Version 1.63 &nbsp;&bull;&nbsp; DGIWG STD-DP-19-005 v1.1 (GeoPackage Profile 1.4, Ed. 1.1)</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">1</span>What this tool does</h2>
+
+<div class="card lede">
+  <p>You hand it a <strong>GeoPackage</strong> (<code>.gpkg</code>). It checks that file against the
+  <strong>37 numbered requirements</strong> of the DGIWG GeoPackage profile, grades each one, and writes
+  you a report that says what passed, what failed, why it failed, and how to confirm the finding
+  yourself in DB Browser for SQLite.</p>
+  <p style="margin-bottom:0;">Use it to decide whether a deliverable is fit to accept &mdash; before it is
+  accepted, not after.</p>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>&#128269; It inspects</h3>
+    <p>CRS definitions and WKT, extensions, tile pyramids, zoom levels, metadata documents,
+    geometry validity, bounding boxes.</p>
+  </div>
+  <div class="card">
+    <h3>&#128221; It produces</h3>
+    <p>An HTML report per file, a matching JSON file, and a roll-up HTML + CSV across a whole batch.</p>
+  </div>
+  <div class="card">
+    <h3>&#128274; It never writes</h3>
+    <p>The GeoPackage is opened strictly read-only. Your source file cannot be modified by this tool.</p>
+  </div>
+</div>
+
+<h3>What it can and cannot decide for you</h3>
+<ul class="plain">
+  <li class="yes">Checks 34 of the 37 requirements automatically.</li>
+  <li class="no">Req 1 and Req 2 (OGC base conformance) need the OGC CITE TeamEngine suites &mdash; reported as SKIPPED.</li>
+  <li class="no">Req 6 (conditional extensions) depends on your product profile &mdash; reported as SKIPPED.</li>
+</ul>
+<div class="note">
+  <strong>So a clean verdict is not a certificate.</strong> It means the 34 automatable requirements
+  are satisfied. Full conformance still requires the three checks above to be carried out separately.
+  Every report states this at the top.
+</div>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">2</span>Set up once (Anaconda Prompt)</h2>
+
+<div class="warn">
+  <strong>Never install into the <code>base</code> environment.</strong> Create a dedicated one.
+  Installing into <code>base</code> is the most common cause of dependency conflicts and
+  unexplained runtime failures on these machines.
+</div>
+
+<pre><span class="c"># Open Anaconda Prompt, then:</span>
+<span class="p">(base) &gt;</span> conda create -n dgiwg python=3.11 -y
+<span class="p">(base) &gt;</span> conda activate dgiwg
+<span class="p">(dgiwg) &gt;</span> pip install shapely Pillow pyproj lxml</pre>
+
+<p>Python 3.9+ is the only hard requirement &mdash; the core checks use the standard library alone.
+The four packages above unlock the deepest checks:</p>
+
+<table>
+  <thead><tr><th style="width:110px;">Package</th><th>Without it</th></tr></thead>
+  <tbody>
+    <tr><td><code>shapely</code></td><td>Req 24 geometry validity degrades to a partial pass</td></tr>
+    <tr><td><code>Pillow</code></td><td>Req 26 tile pixel-size decoding degrades to a partial pass</td></tr>
+    <tr><td><code>pyproj</code></td><td>Req 13 datum-name cross-check degrades to a partial pass</td></tr>
+    <tr><td><code>lxml</code></td><td>Req 18 metadata XSD structure check is skipped &mdash; the report says so explicitly</td></tr>
+  </tbody>
+</table>
+
+<p>Nothing breaks if they are missing. The affected requirement simply reports
+<span class="pill partial">PASS*</span> and tells you which library would have deepened the check.</p>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">3</span>Run it</h2>
+
+<ol class="steps">
+
+  <li>
+    <h3>Point it at a file or a folder</h3>
+    <pre><span class="p">(dgiwg) &gt;</span> cd C:\Users\Son\Documents\DGIWG\DGIWG_GeoPackage_Validator_v1.63
+
+<span class="c"># one file</span>
+<span class="p">(dgiwg) &gt;</span> python DGIWG_Validator_v1_63.py "C:\Data\my_file.gpkg"
+
+<span class="c"># every .gpkg in a folder</span>
+<span class="p">(dgiwg) &gt;</span> python DGIWG_Validator_v1_63.py "C:\Data\Project_Alpha"
+
+<span class="c"># no arguments at all -&gt; a file-picker window opens</span>
+<span class="p">(dgiwg) &gt;</span> python DGIWG_Validator_v1_63.py</pre>
+    <p style="font-size:14px;color:var(--ink-soft);">
+      <code>python -m dgiwg_validator</code> does exactly the same thing and works from any folder
+      once the package is on your path.</p>
+  </li>
+
+  <li>
+    <h3>Wait for the summary</h3>
+    <p>Progress is printed as it goes, then a per-file verdict:</p>
+    <pre>  Verdict : CONFORMANT — REDUCED COVERAGE
+  PASS    : 24
+  FAIL    : 0
+  PASS*   : 6
+  SKIPPED : 7
+
+  Coverage: incomplete on Req 13, Req 26
+            Install the optional library / supply the missing data, then re-run, or verify this requirement by hand.
+            Re-run with a larger --sample-size, or inspect the un-sampled rows/tiles by hand to close the gap.</pre>
+    <p>The <strong>Coverage</strong> lines (new in v1.61) only appear when a PASS* is genuinely holding
+    the file back from the top verdict — see below.</p>
+  </li>
+
+  <li>
+    <h3>Open the HTML report</h3>
+    <p>Reports land in a <code>reports\</code> subfolder next to your GeoPackage
+    (or wherever <code>--output-dir</code> points).</p>
+    <table>
+      <thead><tr><th style="width:44%;">File</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;name&gt;_DGIWG_Report.html</code></td>
+            <td><strong>Start here.</strong> Every requirement, its status, the evidence, the likely cause, and a ready-to-run SQL query to confirm it yourself.</td></tr>
+        <tr><td><code>&lt;name&gt;_DGIWG_Report.json</code></td>
+            <td>The same results, machine-readable, for scripting or archiving.</td></tr>
+        <tr><td><code>DGIWG_GPKG_FINAL_REPORT.html</code></td>
+            <td>Batch roll-up: every file side by side, a file &times; requirement matrix, confidence ratings.</td></tr>
+        <tr><td><code>DGIWG_GPKG_FINAL_REPORT.csv</code></td>
+            <td>The roll-up as a spreadsheet.</td></tr>
+      </tbody>
+    </table>
+  </li>
+
+</ol>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">4</span>Reading the result</h2>
+
+<table>
+  <thead><tr><th style="width:110px;">Status</th><th>What it means</th><th style="width:34%;">What you do</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="pill pass">PASS</span></td>
+      <td>Fully checked and met.</td>
+      <td>Nothing.</td>
+    </tr>
+    <tr>
+      <td><span class="pill partial">PASS*</span></td>
+      <td>Conditional pass. Every PASS* now carries one of three reasons (v1.61), shown as a small chip in the report:
+        <ul style="margin:6px 0 0 18px;padding:0;">
+          <li><strong>Sampled</strong> &mdash; only part of the data was examined (e.g. a tile/geometry sample). Coverage gap.</li>
+          <li><strong>Evidence missing</strong> &mdash; an optional library, row, or column the check needed was absent. Coverage gap.</li>
+          <li><strong>Advisory</strong> &mdash; the automated check is complete; this is an informational note or asks for a quick manual confirmation. Not a coverage gap.</li>
+        </ul>
+      </td>
+      <td>For Sampled/Evidence missing: close the gap (see the Coverage lines in the console output, or the remedy text in the report) or verify by hand. For Advisory: optional — review at your convenience.</td>
+    </tr>
+    <tr>
+      <td><span class="pill fail">FAIL</span></td>
+      <td>Checked and not met. The detail names the offending table, value or CRS.</td>
+      <td>Send it back to the producer. The tool is read-only &mdash; it cannot fix the file.</td>
+    </tr>
+    <tr>
+      <td><span class="pill skip">SKIPPED</span></td>
+      <td>Not applicable to this file (e.g. a vector-CRS check on a tiles-only file), or needs external context (Req 1, 2, 6).</td>
+      <td>For Req 1, 2 and 6 &mdash; verify separately.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>The file verdict</h3>
+<p>v1.61 replaced the old two-tier "CONFORMANT vs LIKELY CONFORMANT" split with a ladder that
+distinguishes a <em>coverage gap</em> (the tool genuinely could not gather full evidence) from an
+<em>advisory note</em> (the check is complete; the note is informational only). Only coverage gaps
+hold back the top verdict:</p>
+<table>
+  <thead><tr><th style="width:38%;">Verdict</th><th>Condition</th></tr></thead>
+  <tbody>
+    <tr><td><strong style="color:var(--pass);">CONFORMANT (automated scope)</strong></td>
+        <td>No FAIL and no coverage-gap PASS*. Any PASS* present is Advisory-only and does not affect the result.</td></tr>
+    <tr><td><strong style="color:var(--partial);">CONFORMANT — REDUCED COVERAGE</strong></td>
+        <td>No FAIL, but one or more PASS* is tagged Sampled or Evidence missing &mdash; the tool could not fully verify every requirement.</td></tr>
+    <tr><td><strong style="color:var(--fail);">NON-CONFORMANT</strong></td>
+        <td>One or more FAIL.</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  Running with <code>--offline</code>, omitting an optional library, or using the default
+  <code>--sample-size</code> on a large tile/feature table can tag a PASS* as Sampled or
+  Evidence missing, producing <strong>CONFORMANT &mdash; REDUCED COVERAGE</strong> instead of the
+  top verdict. That is expected and informative, not a problem with your file &mdash; the
+  Coverage lines in the console output (and the remedy text in each report row) say exactly
+  what would close the gap: installing a library, raising <code>--sample-size</code>, or
+  running online instead of <code>--offline</code>.
+</div>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">5</span>Options worth knowing</h2>
+
+<table>
+  <thead><tr><th style="width:32%;">Flag</th><th>Use it when</th></tr></thead>
+  <tbody>
+    <tr><td><code>--offline</code></td><td>Air-gapped or restricted network. Disables every internet check instead of waiting for timeouts.</td></tr>
+    <tr><td><code>--no-install</code></td><td>Locked-down machine. Suppresses the optional-library install prompts.</td></tr>
+    <tr><td><code>--recursive</code></td><td>The GeoPackages sit in nested subfolders.</td></tr>
+    <tr><td><code>--output-dir FOLDER</code></td><td>You want every report collected in one place.</td></tr>
+    <tr><td><code>--quiet</code></td><td>Batch QA. One summary line per file, nothing else &mdash; ideal piped to a log.</td></tr>
+    <tr><td><code>--fail-fast</code></td><td>Stop at the first non-conformant file. Exits with code 1, so it works in a script.</td></tr>
+    <tr><td><code>--sample-size N</code></td><td>Deeper geometry/tile sampling for Req 24 and Req 26 (default 25). Slower, broader.</td></tr>
+    <tr><td><code>--timeout SECONDS</code></td><td>Slow link (raise it) or unresponsive endpoints (lower it). Default 8s.</td></tr>
+    <tr><td><code>--version</code></td><td>Confirm which build you are running.</td></tr>
+  </tbody>
+</table>
+
+<h3>The two commands people actually use</h3>
+<pre><span class="c"># Air-gapped single-file check</span>
+<span class="p">(dgiwg) &gt;</span> python DGIWG_Validator_v1_63.py --offline "C:\Data\my_file.gpkg"
+
+<span class="c"># Batch QA: one line per file, all reports in one folder</span>
+<span class="p">(dgiwg) &gt;</span> python DGIWG_Validator_v1_63.py --offline --quiet ^
+             --output-dir "C:\QA\reports" "C:\Data\Project_Alpha"</pre>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">6</span>If something goes wrong</h2>
+
+<table>
+  <thead><tr><th style="width:42%;">Symptom</th><th>Cause and fix</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>ModuleNotFoundError: dgiwg_validator</code></td>
+      <td>The launcher was moved away from the <code>dgiwg_validator\</code> folder. Keep the two together.</td>
+    </tr>
+    <tr>
+      <td><em>File skipped &mdash; not a valid GeoPackage</em></td>
+      <td>The file is not SQLite, is truncated or encrypted, or has no <code>gpkg_contents</code> / <code>gpkg_spatial_ref_sys</code>. Batch runs continue past it.</td>
+    </tr>
+    <tr>
+      <td>The checks hang for a long time</td>
+      <td>Internet checks are timing out. Re-run with <code>--offline</code>, or lower <code>--timeout</code>.</td>
+    </tr>
+    <tr>
+      <td>No file-picker window appears</td>
+      <td><code>tkinter</code> is not present in that environment. Pass the file or folder path on the command line instead.</td>
+    </tr>
+    <tr>
+      <td>More <span class="pill partial">PASS*</span> than expected</td>
+      <td>An optional library is missing, or the run was offline. The report names the reason on each affected row.</td>
+    </tr>
+    <tr>
+      <td>Reports are not where you expect</td>
+      <td>The target folder was read-only, so reports went to a temp folder &mdash; the console prints the path it used.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Verify your install</h3>
+<p>The bundled self-test builds synthetic GeoPackages, validates them, and checks every result
+against an expectation table. It writes <code>local_test_log_&lt;timestamp&gt;.txt</code> next to itself.</p>
+<pre><span class="p">(dgiwg) &gt;</span> python run_local_tests.py</pre>
+<p style="font-size:14px;color:var(--ink-soft);">Expected on the last line:
+<code>ALL TESTS PASSED</code>. If not, send the log file for analysis.</p>
+
+<!-- ─────────────────────────────────────────────────────────── -->
+<h2><span class="n">7</span>Going deeper</h2>
+
+<div class="card">
+  <p style="margin-top:0;">This page is the five-minute version. The full
+  <strong>User Manual (v1.63, .docx)</strong> ships in the same folder and covers the complete
+  requirement-by-requirement coverage table, confidence ratings, the forensic source-software
+  detection, and the manual-confirmation workflow in detail.</p>
+  <p style="margin-bottom:0;">Every <span class="pill fail">FAIL</span> and
+  <span class="pill partial">PASS*</span> row in the HTML report already carries its own
+  <em>Manual Confirmation</em> panel: what to check, how to check it in DB Browser for SQLite,
+  and a SQL query you can paste straight in.</p>
+</div>
+
+<footer>
+  DGIWG GeoPackage Compliance Validator v1.63 &nbsp;|&nbsp; DGIWG STD-DP-19-005 v1.1 &nbsp;|&nbsp; GPL-2.0-or-later<br>
+  SPDX-License-Identifier: GPL-2.0-or-later &nbsp;|&nbsp; Copyright (c) 2026 Eui Soo SON
+</footer>
+
+</div>
+</body>
+</html>

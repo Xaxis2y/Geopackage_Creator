@@ -1,0 +1,178 @@
+================================================================================
+GEOPACKAGE CREATOR - REQUIRED DEPENDENCIES
+================================================================================
+
+CORE REQUIREMENTS
+================================================================================
+Python:           3.7+
+Disk Space:       ~500 MB
+OS:               Windows, macOS, or Linux
+
+PYTHON PACKAGES
+================================================================================
+1. lxml           >= 4.9.0     (XML validation) - from the SAME conda solve as GDAL, see below
+2. GDAL (osgeo)   == 3.13.2    (Geographic data processing) ⚠ Complex install
+3. ttkbootstrap   == 2.2.0     (GUI theming, v0.30.18+) - pip only, see below
+
+
+TTKBOOTSTRAP - PIP ONLY, NOT CONDA-FORGE (v0.30.18)
+================================================================================
+ttkbootstrap is NOT published on conda-forge (checked 2026-08 -
+anaconda.org/conda-forge/ttkbootstrap 404s), so it cannot be added to the
+"conda install gdal=3.13.2 lxml" command below. Install it with pip, same
+environment, after (or before - order does not matter for this one) GDAL/lxml:
+
+  pip install "ttkbootstrap==2.2.0"
+
+Unlike lxml, ttkbootstrap is pure Python/Tcl with no compiled extension of
+its own, so it has no libxml2/GDAL ABI to accidentally mismatch - the
+"install from one conda solve" caution below is specifically about lxml and
+does not apply to ttkbootstrap. environment.yml already lists it under a
+pip: section, so `conda env create -f environment.yml` installs it
+automatically; the two commands in METHOD 2 below only cover GDAL/lxml.
+
+
+⚠ GDAL VERSION IS PINNED - READ THIS (v0.30.7, updated v0.30.13)
+================================================================================
+Install GDAL 3.13.2 EXACTLY. Do not install "latest".
+
+  Required:   gdal=3.13.2     the build this release was tested against
+
+No GDAL version is currently known to be broken. The pin exists so that
+releases are reproducible and so that a test result means something - not
+because 3.13.1 (the previous pin) was found to be bad.
+
+Why this matters: every install command in this file used to read
+"conda install -c conda-forge gdal" with no version. That silently moved the
+project from GDAL 3.13.1 to 3.13.2 between the v0.30.6 build and its release
+test. When the suite then crashed, the version change was the obvious suspect
+and it was wrong - the crash was a defect in this codebase (a GeoPackage left
+open while the same file was reopened through sqlite3, fixed in v0.30.7).
+An unpinned dependency cost real time pointing at the wrong culprit.
+
+v0.30.13: a SECOND, unrelated access violation (2026-08-04/05) was bisected
+down to an ABI mismatch between the installed lxml build and the libxml2
+conda actually resolves at runtime - see core/metadata_handler.py's
+"LIBXML2 ABI FAIL-FAST GUARD" and CHANGELOG_v0.30.13.md. That crash reproduced
+under GDAL 3.13.1 and does not depend on which GDAL patch version is
+installed; moving the pin to 3.13.2 is a support decision, not a fix for it.
+What actually matters is that lxml and GDAL come from ONE consistent conda
+solve - prefer `conda env create -f environment.yml` over installing lxml via
+pip into an environment where GDAL already exists via conda. The tool itself
+now refuses to run with a mismatched lxml/libxml2 pair rather than crash
+silently (core.config.ALLOW_LIBXML_ABI_MISMATCH is the documented opt-out).
+
+Verify after installing:
+  python -c "from osgeo import gdal; print(gdal.__version__)"   -> 3.13.2
+  python -c "from lxml import etree; print(etree.LIBXML_COMPILED_VERSION, etree.LIBXML_VERSION)"   -> the two tuples must match
+
+
+INSTALLATION METHODS (Choose ONE)
+================================================================================
+
+METHOD 1: ONE-CLICK SCRIPTS (Windows)
+--------------------------------------
+✓ Fastest & Easiest
+✓ Run as Administrator
+
+  PowerShell:    .\install_dependencies.ps1
+  Batch:         install_dependencies.bat
+
+
+METHOD 2: CONDA (All Platforms - Recommended)
+--------------------------------------
+✓ Handles all dependencies automatically
+✓ Works on Windows, macOS, Linux
+
+  conda install -c conda-forge gdal=3.13.2 lxml
+
+Or in existing environment:
+  conda install -c conda-forge gdal=3.13.2 lxml
+
+(Install gdal and lxml together, in the SAME command. Adding lxml via pip
+after GDAL already exists in the environment is how the v0.30.13 libxml2 ABI
+mismatch happens - pip's lxml wheel does not know what libxml2 conda's GDAL
+build resolved to.)
+
+
+METHOD 3: OSGeo4W (Windows Only - Native)
+--------------------------------------
+✓ Windows native installation
+✓ GUI installer
+
+  1. Download: https://trac.osgeo.org/osgeo4w/
+  2. Install, select GDAL packages
+  3. Then: pip install "lxml>=4.9.0"
+
+
+METHOD 4: SYSTEM PACKAGE MANAGER
+--------------------------------------
+Ubuntu/Debian:
+  sudo apt-get install gdal-bin python3-gdal
+  pip install "lxml>=4.9.0"
+
+macOS (Homebrew):
+  brew install gdal
+  pip install "lxml>=4.9.0"
+
+
+METHOD 5: MANUAL PIP (Advanced - May Fail)
+--------------------------------------
+  pip install "lxml>=4.9.0" "GDAL==3.13.2"
+
+⚠ Note: GDAL pip install fails on many systems due to missing system libraries
+⚠ Note: a pip-installed lxml bundles its own libxml2, separate from whatever
+  GDAL uses. This method is more likely to hit the v0.30.13 libxml2 ABI
+  mismatch than conda (METHOD 2), which resolves both from one dependency
+  solve. Verify with:
+  python -c "from lxml import etree; print(etree.LIBXML_COMPILED_VERSION, etree.LIBXML_VERSION)"
+
+
+METHOD 6: PRE-BUILT WHEELS (Windows)
+--------------------------------------
+  1. Download matching wheel: https://www.lfd.uci.edu/~gohlke/pythonlibs/
+  2. Example: GDAL-3.7.0-cp311-cp311-win_amd64.whl
+  3. Install: pip install GDAL-3.7.0-cp311-cp311-win_amd64.whl
+  4. Then: pip install "lxml>=4.9.0"
+
+
+VERIFICATION
+================================================================================
+Check GDAL:   python -c "from osgeo import ogr; print('OK')"
+Check lxml:   python -c "from lxml import etree; print('OK')"
+Check Python: python --version
+
+
+QUICK TROUBLESHOOTING
+================================================================================
+Error: ModuleNotFoundError: No module named 'osgeo'
+  → Use conda or OSGeo4W instead of pip
+
+Error: ImportError: DLL load failed while importing _gdal
+  → Install Visual C++ Redistributables: https://support.microsoft.com/help/2977003
+
+GDAL pip install fails
+  → Use conda instead (most reliable)
+
+
+RECOMMENDED PATH
+================================================================================
+Windows User:      OSGeo4W or conda
+macOS User:        Homebrew or conda
+Linux User:        System package manager
+Any Platform:      Conda (most reliable)
+
+
+NEXT STEPS
+================================================================================
+1. Install dependencies using preferred method
+2. Verify installation (see VERIFICATION section)
+3. Run: python geopackage_creator_gui.py
+
+
+FOR DETAILED INSTRUCTIONS
+================================================================================
+See: INSTALLATION_GUIDE.md (in this directory)
+
+
+================================================================================
