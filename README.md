@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.34.4** | September 4, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.34.5** | October 15, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
 
 ## Overview
 
@@ -164,9 +164,9 @@ Outputs use the standard OGC GeoPackage `application_id = GPKG`
 
 ## Version
 
-**Current:** v0.34.4.
+**Current:** v0.34.5.
 
-v0.34.4 retains the v0.34.0 isolation of both ISO metadata schema validation and bundled DGIWG validator
+v0.34.5 adds DGIWG conformance fixes (full DMF 2.0 metadata for the package and every table, attributes tables and BLOB preservation for ArcGIS GDBs, Table 16 CRS values, exact bounding boxes; see CHANGELOG.md). It retains the v0.34.0 isolation of both ISO metadata schema validation and bundled DGIWG validator
 validation from GDAL, avoiding the native GDAL/lxml shutdown crash. The
 release gate covers repeated source and frozen-EXE conversions plus an actual
 FileGDB conversion and independent validator verification.
