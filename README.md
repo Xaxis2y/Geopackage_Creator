@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.34.5** | October 15, 2026 | OGC GeoPackage 1.4 & DGIWG Compliant
+**Version 0.34.6** | October 15, 2026 | OGC GeoPackage 1.4 & DGIWG profile pre-validation
 
 ## Overview
 
@@ -14,10 +14,12 @@ DGIWG (Defense Geospatial Information Working Group) is an international organiz
 
 ## Folder Contents
 
-The release source includes the application, schemas, bundled v1.62 validator,
-documentation, tests, and release-verification scripts. Generated build
-folders and verification logs are intentionally excluded from the GitHub
-source archive.
+The release source includes the application, schemas, bundled v1.63 validator,
+documentation, tests, and release-verification scripts. The GitHub-ready
+source-only archive excludes generated build folders, frozen executables,
+validation runs, logs, caches, compiled Python files, and sample geodatabase
+data. It contains source and documentation only so it can be committed to or
+uploaded to GitHub without carrying local build artifacts.
 
 ## Copyright and license
 
@@ -48,7 +50,7 @@ GeoPackage_Creator/
 ├── schemas/                     # ISO 19115 / GML XSD schemas
 ├── tests/                       # Pytest suite
 ├── packaging/                   # Windows .exe build pipeline (PyInstaller)
-├── DGIWG_GeoPackage_Validator_v1.62/  # Bundled DGIWG GeoPackage Validator
+├── DGIWG_GeoPackage_Validator_v1.63/  # Bundled DGIWG GeoPackage Validator source
 ├── docs/                        # Technical setup and GUI documentation
 │   ├── GUI_USAGE_GUIDE.md       # GUI guide
 │   ├── GDAL_INSTALLATION.txt    # GDAL setup instructions
@@ -149,6 +151,27 @@ python -m pytest -q
 
 Note: most integration tests create real spatial data and therefore require GDAL to be installed. The metadata, config, validator, and embedding tests run without spatial data.
 
+### Release validation
+
+Run the release validation from an activated, dedicated `geopackage` Conda
+environment. Do not install the dependencies into Anaconda's `base`
+environment.
+
+```bat
+python validate_geopackage_creator_v0346.py --samples "C:\path\to\GeoPackage_Creator_v0.34.5" --exe "C:\path\to\v0.34.6\dist\GeoPackageCreator.exe"
+```
+
+The validation runner records the full pytest suite, bundled DGIWG validator
+self-tests, independent FileGDB audits, full-coverage validator output, and
+frozen-EXE version/help checks in a timestamped `validation_runs` folder. The
+`--exe` value must be the actual v0.34.6 executable; an example or placeholder
+path is reported as a technical failure.
+
+The v0.34.6 validation evidence contains 346 passing application tests,
+84/84 passing bundled-validator assertions, and independent audits with zero
+reported failures for the SampleData and States FileGDB cases. These results
+are software pre-validation evidence, not formal DGIWG or OGC certification.
+
 ## Standards Compliance
 
 - OGC GeoPackage 1.4 (user_version 10400)
@@ -157,6 +180,17 @@ Note: most integration tests create real spatial data and therefore require GDAL
 - DGIWG Metadata Foundation (DMF) 2.0
 - ISO 639-2 (language codes), ISO 3166-1 alpha-3 (nation codes)
 
+### External acceptance boundaries
+
+The bundled validator cannot independently establish every external acceptance
+condition. Requirements 1 and 2 require OGC CITE/TeamEngine testing; the
+conditional-extension decision in Requirement 6 depends on the selected
+product profile; and Requirement 26 requires real tile data when raster
+coverage is claimed. A feature-only GeoPackage can legitimately report tile
+requirements as not applicable or evidence-missing. Formal DGIWG acceptance
+must therefore be confirmed against the applicable product profile and test
+authority.
+
 ### GeoPackage header compatibility
 
 Outputs use the standard OGC GeoPackage `application_id = GPKG`
@@ -164,10 +198,12 @@ Outputs use the standard OGC GeoPackage `application_id = GPKG`
 
 ## Version
 
-**Current:** v0.34.5.
+**Current:** v0.34.6.
 
-v0.34.5 adds DGIWG conformance fixes (full DMF 2.0 metadata for the package and every table, attributes tables and BLOB preservation for ArcGIS GDBs, Table 16 CRS values, exact bounding boxes; see CHANGELOG.md). It retains the v0.34.0 isolation of both ISO metadata schema validation and bundled DGIWG validator
-validation from GDAL, avoiding the native GDAL/lxml shutdown crash. The
-release gate covers repeated source and frozen-EXE conversions plus an actual
-FileGDB conversion and independent validator verification.
-**Maintained for:** Multi-platform DGIWG-compliant geospatial data conversion
+v0.34.6 retains the DGIWG conformance fixes introduced in v0.34.5 and adds the
+precision-aware Req. 24 RTree bounding-box check, expanded regression coverage,
+and a release validation runner that treats failed bundled-validator
+requirements and missing frozen-EXE evidence as technical failures. See
+`CHANGELOG.md` for the complete release history.
+**Maintained for:** Multi-platform GeoPackage conversion with DGIWG profile
+pre-validation and explicit external-acceptance boundaries.
