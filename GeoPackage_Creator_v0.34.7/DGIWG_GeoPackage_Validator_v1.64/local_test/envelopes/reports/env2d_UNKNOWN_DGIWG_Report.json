@@ -1,0 +1,356 @@
+{
+  "schema_version": "1.64",
+  "file": "env2d.gpkg",
+  "software": "UNKNOWN (confidence: Low)",
+  "verdict": "NON-CONFORMANT (automated checks)",
+  "counts": {
+    "PASS": 4,
+    "FAIL": 10,
+    "ERROR": 0,
+    "PASS*": 1,
+    "SKIPPED": 22,
+    "N/A": 0,
+    "WARNING": 0
+  },
+  "coverage": {
+    "gaps": [],
+    "advisory": [
+      13
+    ]
+  },
+  "requirements": {
+    "1": {
+      "name": "GeoPackage Base definition",
+      "identifier": "/req/geopackage/base",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 1 (GeoPackage Base definition — OGC Base conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "2": {
+      "name": "GeoPackage Options definition",
+      "identifier": "/req/geopackage/options",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 2 (GeoPackage Options definition — OGC Options conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "3": {
+      "name": "Mandatory Extensions",
+      "identifier": "/req/extensions/mandatory",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_extensions table is MISSING — no extensions are registered. Mandatory extension(s) required for data type(s) features: gpkg_crs_wkt, gpkg_metadata, gpkg_rtree_index"
+    },
+    "4": {
+      "name": "Optional Extensions",
+      "identifier": "/req/extensions/optional",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "No gpkg_extensions table — no optional extensions registered (optional extensions cannot fail by definition)"
+    },
+    "5": {
+      "name": "Extensions Not Allowed",
+      "identifier": "/req/extensions/not-allowed",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "gpkg_extensions table absent — no extensions registered, none disallowed ✓; gpkg_geom_ correctly absent for features\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: Extension behaviour is unpredictable from unknown tools. Any FAIL here requires full investigation — cannot assume known-artifact origin."
+    },
+    "6": {
+      "name": "Conditional Extensions",
+      "identifier": "/req/extensions/conditional",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Conditional extension check requires file-specific profile knowledge"
+    },
+    "7": {
+      "name": "Raster CRS Allowed",
+      "identifier": "/req/crs/raster-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix set table"
+    },
+    "8": {
+      "name": "CRS Raster Tile Matrix Set",
+      "identifier": "/req/crs/raster-tile-matrix-set",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix set"
+    },
+    "9": {
+      "name": "2D Vector CRS",
+      "identifier": "/req/crs/2d-vector",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "env_poly.geom: declared EPSG:4326; inspected all 4 non-NULL geometry header(s) ✓"
+    },
+    "10": {
+      "name": "3D Vector CRS",
+      "identifier": "/req/crs/3d-vector",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No 3D vector feature sets"
+    },
+    "11": {
+      "name": "Gridded 2D CRS",
+      "identifier": "/req/crs/gridded-crs-2d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "12": {
+      "name": "Gridded 3D CRS",
+      "identifier": "/req/crs/gridded-crs-3d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "13": {
+      "name": "WKT for CRS",
+      "identifier": "/req/crs/wkt",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "ADVISORY",
+      "detail": "srs_id=4326 (WGS 84): ✅ hard rules passed | ⚠️ WKT2 syntax detected; CRS axis order: 'geodetic latitude (Lat)' (NORTH) → 'geodetic longitude (Lon)' (EAST) — Latitude/North first ✓ (DGIWG-compliant order); ENSEMBLE='World Geodetic System 1984 ensemble' (no DATUM keyword — using ensemble name); WKT CRS type='geographic 2d crs' matches EPSG:4326 ✓; WKT AUTHORITY/ID=EPSG:4326 matches srs_id ✓; WKT CRS is mathematically equivalent to EPSG:4326 ✓ (name/format variations are acceptable); DATUM='World Geodetic System 1984 ensemble' matches EPSG:4326 ✓\nsrs_id=4326 (WGS 84) is DGIWG Tables 1–12 approved ✓\n⚠️ definition_12_063 absent — WKT2 column not present; using definition column only\n(PASS* = hard rules passed; full pyproj structural/datum cross-check completed; remaining notes above are informational)\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: WKT strings from unknown authoring tools carry higher risk of malformed or non-standard CRS definitions. Review definition strings carefull"
+    },
+    "14": {
+      "name": "Compound CRS Usage",
+      "identifier": "/req/crs/compound",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'env_poly': 2D (z=0), no COMPOUNDCRS ✓ — full compound CRS WKT structure check in Req 15"
+    },
+    "15": {
+      "name": "Compound CRS WKT",
+      "identifier": "/req/crs/crs-compound-wkt",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No compound CRS found for vector feature tables — Req 15 not applicable"
+    },
+    "16": {
+      "name": "Gridded Compound CRS WKT",
+      "identifier": "/req/crs/gridded-crs-compound-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded data — Req 16 not applicable"
+    },
+    "17": {
+      "name": "Gridded CRS Epoch WKT",
+      "identifier": "/req/crs/gridded-crs-epoch-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"
+    },
+    "18": {
+      "name": "GeoPackage Metadata DMF",
+      "identifier": "/req/metadata/dmf",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "19": {
+      "name": "GeoPackage Metadata Document",
+      "identifier": "/req/metadata/gpkg",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "20": {
+      "name": "Complete Row Metadata",
+      "identifier": "/req/metadata/row",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "21": {
+      "name": "User Row Metadata",
+      "identifier": "/req/metadata/user",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "22": {
+      "name": "Product Metadata",
+      "identifier": "/req/metadata/product",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "23": {
+      "name": "Product Partial Metadata",
+      "identifier": "/req/metadata/product-partial",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING — product partial metadata cannot be validated"
+    },
+    "24": {
+      "name": "Data Validity",
+      "identifier": "/req/validity/data-validity",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "'env_poly': spatial index 'rtree_env_poly_geom' MISSING — DGIWG extension gpkg_rtree_index is mandatory for feature tables\ngpkg_contents table exists ✓\nTable 'env_poly' exists ✓\nGeometry table 'env_poly' in gpkg_contents ✓\ngpkg_tile_matrix_set not present — not required for feature-only GeoPackage ✓\ngpkg_tile_matrix not present — not required for feature-only GeoPackage ✓\ngpkg_metadata not present — metadata tables optional, ATS 5.6 vacuously satisfied ✓\n'env_poly': no NULL geometries ✓\n'env_poly': INTEGER PRIMARY KEY 'fid' ✓\n'env_poly'.geom: geometry type consistent with declared 'POLYGON' ✓\n'env_poly'.geom [all 4 rows]: 4/4 sampled geometries all valid ✓\n'env_poly': full bbox check skipped (no such table: rtree_env_poly_geom) — RTree may not be present\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: Source software could not be determined. Perform full manual review of table naming consistency. Non-standard tools may introduce unexpected tables that are not declared in gpkg_cont"
+    },
+    "25": {
+      "name": "Tile Matrix Width/Height",
+      "identifier": "/req/tile/size-matrix",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile or gridded coverage tables present — Req 25 not applicable for feature/attribute-only GeoPackages ✓"
+    },
+    "26": {
+      "name": "Tile Pyramid Data Size",
+      "identifier": "/req/tile/size-data",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile or gridded coverage tables present — Req 26 not applicable for feature/attribute-only GeoPackages ✓"
+    },
+    "27": {
+      "name": "Zoom Level Factor",
+      "identifier": "/req/zoom/factor",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix table"
+    },
+    "28": {
+      "name": "Multiple Zoom Matrix Sets",
+      "identifier": "/req/zoom/matrix-sets-multiple",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix table"
+    },
+    "29": {
+      "name": "Single Zoom Matrix Set",
+      "identifier": "/req/zoom/matrix-sets-one",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix table"
+    },
+    "30": {
+      "name": "Tile Matrix Set CRS BBox",
+      "identifier": "/req/bbox/crs",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No tile matrix set"
+    },
+    "31": {
+      "name": "Tile Layer Metadata",
+      "identifier": "/req/metadata/tile",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "32": {
+      "name": "Feature Layer Metadata",
+      "identifier": "/req/metadata/feature",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "33": {
+      "name": "Gridded Extension Core",
+      "identifier": "/req/gridded/gridded-coverage-extension-core",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "34": {
+      "name": "Gridded Field Name Elevation",
+      "identifier": "/req/gridded/field-name-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "35": {
+      "name": "Gridded Center Value Elevation",
+      "identifier": "/req/gridded/center-value-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "36": {
+      "name": "Gridded Zoom Factor",
+      "identifier": "/req/gridded/zoom-factor",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "37": {
+      "name": "Gridded User Row Metadata",
+      "identifier": "/req/gridded/metadata-gridded-user",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data — Req 37 not applicable"
+    }
+  },
+  "forensic": {
+    "software": "UNKNOWN",
+    "confidence": "Low",
+    "signals": [
+      "No software-specific fingerprints detected"
+    ],
+    "hints": {
+      "24": "⚠️ UNKNOWN SOURCE: Source software could not be determined. Perform full manual review of table naming consistency. Non-standard tools may introduce unexpected tables that are not declared in gpkg_contents or gpkg_extensions.",
+      "13": "⚠️ UNKNOWN SOURCE: WKT strings from unknown authoring tools carry higher risk of malformed or non-standard CRS definitions. Review definition strings carefully.",
+      "5": "⚠️ UNKNOWN SOURCE: Extension behaviour is unpredictable from unknown tools. Any FAIL here requires full investigation — cannot assume known-artifact origin."
+    }
+  },
+  "internet_checks": {
+    "uri": [
+      null,
+      null,
+      "OFFLINE MODE — URI reachability check suppressed by --offline flag"
+    ],
+    "epsg": [
+      1,
+      1,
+      "1/1 srs_id entries match EPSG registry. srs_id=4326: EPSG:4326 name consistent with JSON cache ('WGS 84') — offline check ✓"
+    ],
+    "scale": [
+      0,
+      0,
+      "Scale denom check error: no such table: gpkg_tile_matrix_set",
+      true
+    ],
+    "dmf": [
+      0,
+      0,
+      "DMF XML check error: no such table: gpkg_metadata",
+      true
+    ]
+  },
+  "cascade_root_cause": "The following required table(s) are absent from this GeoPackage: 'gpkg_metadata' and 'gpkg_metadata_reference'. This single root cause is responsible for the FAIL result on: Req 18, Req 19, Req 20, Req 21, Req 22, Req 23, Req 31, Req 32. Restoring these table(s) will likely resolve all of the above failures."
+}

@@ -1,0 +1,374 @@
+{
+  "schema_version": "1.64",
+  "file": "good_tiles.gpkg",
+  "software": "UNKNOWN (confidence: Low)",
+  "verdict": "PRE-VALIDATION PASSED — REDUCED COVERAGE",
+  "counts": {
+    "PASS": 12,
+    "FAIL": 0,
+    "ERROR": 0,
+    "PASS*": 8,
+    "SKIPPED": 17,
+    "N/A": 0,
+    "WARNING": 0
+  },
+  "coverage": {
+    "gaps": [
+      {
+        "req": 5,
+        "reason": "SAMPLED"
+      },
+      {
+        "req": 8,
+        "reason": "EVIDENCE_MISSING"
+      },
+      {
+        "req": 18,
+        "reason": "EVIDENCE_MISSING"
+      },
+      {
+        "req": 26,
+        "reason": "SAMPLED"
+      }
+    ],
+    "advisory": [
+      13,
+      20,
+      23,
+      31
+    ]
+  },
+  "requirements": {
+    "1": {
+      "name": "GeoPackage Base definition",
+      "identifier": "/req/geopackage/base",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 1 (GeoPackage Base definition — OGC Base conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "2": {
+      "name": "GeoPackage Options definition",
+      "identifier": "/req/geopackage/options",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 2 (GeoPackage Options definition — OGC Options conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "3": {
+      "name": "Mandatory Extensions",
+      "identifier": "/req/extensions/mandatory",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "gpkg_metadata present for tiles\ngpkg_crs_wkt present for tiles\nscope='read-write' valid for 'gpkg_metadata' ✓\nscope='read-write' valid for 'gpkg_metadata' ✓\nscope='read-write' valid for 'gpkg_crs_wkt' ✓\nGeoPackage 1.4.x identifier confirmed: application_id=0x47504B47, user_version=10400 ✓\npage_size=4096 ✓\nencoding='UTF-8' ✓\njournal_mode='delete' (not WAL) ✓\ngpkg_contents 'osm_tiles': last_change='2026-08-01T00:00:00Z' ✓"
+    },
+    "4": {
+      "name": "Optional Extensions",
+      "identifier": "/req/extensions/optional",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "No optional extensions registered — nothing to verify (optional extensions cannot fail by definition)"
+    },
+    "5": {
+      "name": "Extensions Not Allowed",
+      "identifier": "/req/extensions/not-allowed",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "SAMPLED",
+      "detail": "gpkg_zoom_other correctly absent for tiles; gpkg_webp correctly absent for tiles; 'osm_tiles': 10 sampled tile(s) — no WEBP detected ✓ — tile-format scan read 10 of 21 stored tile BLOB(s); a WEBP tile outside the sample would not have been seen\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: Extension behaviour is unpredictable from unknown tools. Any FAIL here requires full investigation — cannot assume known-artifact origin."
+    },
+    "6": {
+      "name": "Conditional Extensions",
+      "identifier": "/req/extensions/conditional",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Conditional extension check requires file-specific profile knowledge"
+    },
+    "7": {
+      "name": "Raster CRS Allowed",
+      "identifier": "/req/crs/raster-allowed",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'osm_tiles' (srs_id=3857): CRS allowed ✓\n'osm_tiles' (srs_id=3857): all 3 zoom level(s) match OGC 17-083r4 scale sequence ✓"
+    },
+    "8": {
+      "name": "CRS Raster Tile Matrix Set",
+      "identifier": "/req/crs/raster-tile-matrix-set",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "EVIDENCE_MISSING",
+      "detail": "'osm_tiles' (srs_id=3857): all 3 zoom level(s) have 256×256 tiles ✓\nStructural subset passed. Full DGIWG Req 8 evidence still requires the OGC 17-083r2 Two Dimensional Tile Matrix Set ATS A.1-A.16 and well-known scale-set verification."
+    },
+    "9": {
+      "name": "2D Vector CRS",
+      "identifier": "/req/crs/2d-vector",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns found"
+    },
+    "10": {
+      "name": "3D Vector CRS",
+      "identifier": "/req/crs/3d-vector",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns found"
+    },
+    "11": {
+      "name": "Gridded 2D CRS",
+      "identifier": "/req/crs/gridded-crs-2d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "12": {
+      "name": "Gridded 3D CRS",
+      "identifier": "/req/crs/gridded-crs-3d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "13": {
+      "name": "WKT for CRS",
+      "identifier": "/req/crs/wkt",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "ADVISORY",
+      "detail": "srs_id=3857 (WGS 84 / Pseudo-Mercator): ✅ hard rules passed | ⚠️ WKT2 syntax detected; ENSEMBLE='World Geodetic System 1984 ensemble' (no DATUM keyword — using ensemble name); WKT CRS type='projected crs' matches EPSG:3857 ✓; WKT AUTHORITY/ID=EPSG:3857 matches srs_id ✓; WKT CRS is mathematically equivalent to EPSG:3857 ✓ (name/format variations are acceptable); DATUM='World Geodetic System 1984 ensemble' matches EPSG:3857 ✓\nsrs_id=3857 (WGS 84 / Pseudo-Mercator) is DGIWG Tables 1–12 approved ✓\n(PASS* = hard rules passed; full pyproj structural/datum cross-check completed; remaining notes above are informational)\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: WKT strings from unknown authoring tools carry higher risk of malformed or non-standard CRS definitions. Review definition strings carefully."
+    },
+    "14": {
+      "name": "Compound CRS Usage",
+      "identifier": "/req/crs/compound",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns and no compound CRS in SRS — compound CRS usage check not applicable to this file type"
+    },
+    "15": {
+      "name": "Compound CRS WKT",
+      "identifier": "/req/crs/crs-compound-wkt",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns — Req 15 not applicable"
+    },
+    "16": {
+      "name": "Gridded Compound CRS WKT",
+      "identifier": "/req/crs/gridded-crs-compound-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded data — Req 16 not applicable"
+    },
+    "17": {
+      "name": "Gridded CRS Epoch WKT",
+      "identifier": "/req/crs/gridded-crs-epoch-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"
+    },
+    "18": {
+      "name": "GeoPackage Metadata DMF",
+      "identifier": "/req/metadata/dmf",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "EVIDENCE_MISSING",
+      "detail": "metadata row id=1 (scope=series): ✅ All DMF field checks passed | md_standard_uri='https://dgiwg.org/std/dmf/2.0' ✓; XSD structural validation ✓; fileIdentifier='6ebecb32-3aff-4da2-a6f7-fe7426ffde68' ✓ (UUID); language='eng' ✓; characterSet='utf8' ✓; hierarchyLevel='dataset' ✓; organisationName='Test Org' ✓; contact/role='pointOfContact' ✓; dateStamp='2026-08-01' ✓\nℹ️ XSD structural validation: ENABLED (lxml present, bundled DMF schema loaded)\nOfficial DGIWG DMF schema and ATS validation is still required."
+    },
+    "19": {
+      "name": "GeoPackage Metadata Document",
+      "identifier": "/req/metadata/gpkg",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "metadata id=1: XML is well-formed ✓\n1 geopackage-scope reference row(s) confirmed ✓\nref id=1: geopackage/series combination valid per Table 36 ✓\nref id=2: table/series combination valid per Table 36 ✓"
+    },
+    "20": {
+      "name": "Complete Row Metadata",
+      "identifier": "/req/metadata/row",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "ADVISORY",
+      "detail": "Column 'id' present ✓; Column 'md_scope' present ✓; Column 'md_standard_uri' present ✓; Column 'metadata' present ✓; Column 'mime_type' present ✓; 1 metadata row(s) found ✓; geopackage-scope reference row present ✓. Automated column/row/mime_type checks complete; the geopackage-scope reference note above is informational only."
+    },
+    "21": {
+      "name": "User Row Metadata",
+      "identifier": "/req/metadata/user",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "ref id=1 (geopackage): geopackage/series ✓\nref id=2 (table): table/series ✓"
+    },
+    "22": {
+      "name": "Product Metadata",
+      "identifier": "/req/metadata/product",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "id=1 (md_scope=series): XML well-formed ✓ | 7 ISO 19115 element(s) found ✓ | uri='https://dgiwg.org/std/dmf/2.0'"
+    },
+    "23": {
+      "name": "Product Partial Metadata",
+      "identifier": "/req/metadata/product-partial",
+      "compliance": "C",
+      "status": "PASS*",
+      "reason": "ADVISORY",
+      "detail": "Found 1 geopackage-scope reference row(s) with NULL table/column/row ✓ — md_parent_id hierarchy not fully validated"
+    },
+    "24": {
+      "name": "Data Validity",
+      "identifier": "/req/validity/data-validity",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "gpkg_contents table exists ✓\nTable 'osm_tiles' exists ✓\ngpkg_geometry_columns not present — not required for tiles/gridded-only GeoPackage ✓\nTile matrix set table 'osm_tiles' in gpkg_contents ✓\nTile matrix table 'osm_tiles' in gpkg_contents ✓\nAll md_file_id values match gpkg_metadata.id ✓\n\n🔬 SOFTWARE AUDIT HINT [UNKNOWN]: ⚠️ UNKNOWN SOURCE: Source software could not be determined. Perform full manual review of table naming consistency. Non-standard tools may introduce unexpected tables that are not declared in gpkg_contents or gpkg_extensions."
+    },
+    "25": {
+      "name": "Tile Matrix Width/Height",
+      "identifier": "/req/tile/size-matrix",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "gpkg_tile_matrix_set columns: 'table_name' ✓; 'srs_id' ✓; 'min_x' ✓; 'min_y' ✓; 'max_x' ✓; 'max_y' ✓\n'osm_tiles': 3 contiguous zoom levels (0–2), all populated ✓"
+    },
+    "26": {
+      "name": "Tile Pyramid Data Size",
+      "identifier": "/req/tile/size-data",
+      "compliance": "M",
+      "status": "PASS*",
+      "reason": "SAMPLED",
+      "detail": "Pillow BLOB decode | 5 tile(s) sampled per zoom level | 1 tile table(s) checked\n\nTable 'osm_tiles' (3 zoom level(s)):\n  zoom 0: ✅ 1 tile(s) sampled — all 256×256 match declared 256×256\n  zoom 1: ✅ 4 tile(s) sampled — all 256×256 match declared 256×256\n  zoom 2: ✅ 5 tile(s) sampled — all 256×256 match declared 256×256\n\nCoverage: 10 of 21 stored tile BLOB(s) decoded (5 per zoom level). A wrong-sized tile outside the sample would not have been seen."
+    },
+    "27": {
+      "name": "Zoom Level Factor",
+      "identifier": "/req/zoom/factor",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'osm_tiles': all 2 zoom transition(s) are exact factor-of-2 ✓"
+    },
+    "28": {
+      "name": "Multiple Zoom Matrix Sets",
+      "identifier": "/req/zoom/matrix-sets-multiple",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'osm_tiles': pixel_x/y_size decreases with zoom level ✓"
+    },
+    "29": {
+      "name": "Single Zoom Matrix Set",
+      "identifier": "/req/zoom/matrix-sets-one",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "Tile dimensions consistent across zoom levels for table 'osm_tiles'"
+    },
+    "30": {
+      "name": "Tile Matrix Set CRS BBox",
+      "identifier": "/req/bbox/crs",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'osm_tiles' (srs_id=3857 WGS 84 / Pseudo-Mercator): bbox (-20037508.34,-20037508.34)→(20037508.34,20037508.34) within CRS extent ✓"
+    },
+    "31": {
+      "name": "Tile Layer Metadata",
+      "identifier": "/req/metadata/tile",
+      "compliance": "C",
+      "status": "PASS*",
+      "reason": "ADVISORY",
+      "detail": "gpkg_metadata_reference exists ✓ | all 1 tile layer(s) are linked by a reference_scope='table' row, but no metadata document declares md_scope='tile' or 'model' — confirm by hand that the linked documents do describe the tile layers"
+    },
+    "32": {
+      "name": "Feature Layer Metadata",
+      "identifier": "/req/metadata/feature",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No feature layers (data_type='features') in this GeoPackage — Req 32 not applicable"
+    },
+    "33": {
+      "name": "Gridded Extension Core",
+      "identifier": "/req/gridded/gridded-coverage-extension-core",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "34": {
+      "name": "Gridded Field Name Elevation",
+      "identifier": "/req/gridded/field-name-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "35": {
+      "name": "Gridded Center Value Elevation",
+      "identifier": "/req/gridded/center-value-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "36": {
+      "name": "Gridded Zoom Factor",
+      "identifier": "/req/gridded/zoom-factor",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "37": {
+      "name": "Gridded User Row Metadata",
+      "identifier": "/req/gridded/metadata-gridded-user",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data — Req 37 not applicable"
+    }
+  },
+  "forensic": {
+    "software": "UNKNOWN",
+    "confidence": "Low",
+    "signals": [
+      "No software-specific fingerprints detected"
+    ],
+    "hints": {
+      "24": "⚠️ UNKNOWN SOURCE: Source software could not be determined. Perform full manual review of table naming consistency. Non-standard tools may introduce unexpected tables that are not declared in gpkg_contents or gpkg_extensions.",
+      "13": "⚠️ UNKNOWN SOURCE: WKT strings from unknown authoring tools carry higher risk of malformed or non-standard CRS definitions. Review definition strings carefully.",
+      "5": "⚠️ UNKNOWN SOURCE: Extension behaviour is unpredictable from unknown tools. Any FAIL here requires full investigation — cannot assume known-artifact origin."
+    }
+  },
+  "internet_checks": {
+    "uri": [
+      null,
+      null,
+      "OFFLINE MODE — URI reachability check suppressed by --offline flag"
+    ],
+    "epsg": [
+      1,
+      1,
+      "1/1 srs_id entries match EPSG registry. srs_id=3857: EPSG:3857 name consistent with JSON cache ('WGS 84 / Pseudo-Mercator') — offline check ✓"
+    ],
+    "scale": [
+      null,
+      null,
+      "OFFLINE MODE — OGC scale denominator check suppressed by --offline flag. srs_id=3857: OFFLINE MODE — internet checks disabled (--offline flag)"
+    ],
+    "dmf": [
+      1,
+      1,
+      "1/1 metadata rows have valid ISO 19115/DMF XML structure. id=1 (scope=series, DMF URI): XML root=<MD_Metadata>. All required ISO 19115 elements present: ['fileIdentifier', 'language', 'characterSet', 'hierarchyLevel', 'contact', 'dateStamp', 'identificationInfo'] ✓"
+    ]
+  },
+  "cascade_root_cause": null
+}

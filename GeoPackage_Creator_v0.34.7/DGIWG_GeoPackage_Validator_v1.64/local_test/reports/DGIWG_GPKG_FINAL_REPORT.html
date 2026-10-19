@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DGIWG Integrated Validation Report — 3 GeoPackage(s)</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f0f2f5; color:#2c3e50; }
+  .header { background:linear-gradient(135deg,#1a252f,#2c3e50,#34495e); color:white; padding:32px 40px; }
+  .header h1 { margin:0 0 6px; font-size:24px; }
+  .header p  { margin:0; opacity:.7; font-size:14px; }
+  .content { padding:24px 40px; }
+  .section-title { font-size:18px;font-weight:bold;color:#2c3e50;
+    border-bottom:3px solid #3498db;padding-bottom:8px;margin:28px 0 16px; }
+  table { width:100%;border-collapse:collapse;background:white;
+    box-shadow:0 1px 6px rgba(0,0,0,.08);border-radius:8px;overflow:hidden; }
+  th { background:#2c3e50;color:white;padding:10px 8px;text-align:left;
+    font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px; }
+  td { border-bottom:1px solid #ecf0f1;vertical-align:top; }
+  tr:hover { filter:brightness(.97); }
+  .note { background:#fef9e7;border-left:4px solid #f39c12;padding:12px 16px;
+    margin:16px 0;border-radius:4px;font-size:13px; }
+  .footer { text-align:center;padding:20px;color:#95a5a6;font-size:12px;
+    border-top:1px solid #ddd;margin-top:32px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🛡 DGIWG GeoPackage — Integrated Validation Report</h1>
+  <p style="margin-top:6px;">3 GeoPackage(s) validated</p>
+</div>
+
+<div class="content">
+
+<div style="background:#eaf2f8;border:1px solid #aed6f1;border-left:5px solid #2980b9;
+            border-radius:6px;padding:12px 18px;margin:0 0 16px 0;font-size:13px;color:#21618c;">
+  <strong>&#8505;&#65039; Scope of these verdicts</strong><br>
+  Every verdict in this report covers the 34 requirements this tool can test automatically.
+  Req 1 and Req 2 (OGC base conformance) require the OGC CITE TeamEngine test suites, and
+  Req 6 (conditional extensions) depends on the applicable DGIWG product profile — all three
+  are reported as SKIPPED and must be verified separately before a deliverable is declared
+  fully conformant to STD-DP-19-005 v1.1.
+</div>
+
+<div class="note">
+  <strong>How to read this table:</strong>
+  <b>Validator Disputes</b> = how many GPKGs got FAIL from this script's automated checks.
+  <b>Cross-Checks &amp; Diagnosis</b> = probable root cause for each FAIL/PASS* result (by source software),
+  plus a collapsible auditor cross-check panel with known blind spots and caveats.
+  <b>PASS* &amp; Manual Verification</b> = automated PASS* confirmation count, plus expandable manual inspection notes.
+  <b>Confidence: High</b> = fully automated and confirmed; <b>Medium</b> = partial check or single known gap;
+  <b>Low</b> = known validator bug or cannot be automated.
+</div>
+
+<div class="section-title">📁 Per-File Summary</div>
+<table>
+  <thead><tr>
+    <th>File</th><th>Source Software</th><th>Verdict</th><th>PASS</th><th>FAIL</th><th>PASS*</th><th>PASS* (Manual Confirmed)</th><th>SKIPPED</th>
+  </tr></thead>
+  <tbody><tr><td style="padding:6px 10px;font-family:monospace;font-size:12px;"><a href="././bad_mixed_QGIS_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;font-weight:bold;" title="Open compliance report for bad_mixed.gpkg">bad_mixed.gpkg</a><div style="font-size:10px;color:#aaa;margin-top:1px;">→ open report</div></td><td style="padding:6px 10px;"><span style="background:#eafaf1;color:#1a6b3c;border:1px solid #1a6b3c;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:bold;">🟢 QGIS/GDAL</span><div style="font-size:10px;color:#999;margin-top:2px;">Medium conf.</div></td><td style="padding:6px 10px;color:#e74c3c;font-weight:bold;">NON-CONFORMANT (automated checks)</td><td style="padding:6px 10px;color:#27ae60;">5</td><td style="padding:6px 10px;color:#e74c3c;">16</td><td style="padding:6px 10px;color:#f39c12;">0</td><td style="padding:6px 10px;color:#95a5a6;">N/A</td><td style="padding:6px 10px;color:#95a5a6;">16</td></tr><tr><td style="padding:6px 10px;font-family:monospace;font-size:12px;"><a href="././features_UNKNOWN_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;font-weight:bold;" title="Open compliance report for features.gpkg">features.gpkg</a><div style="font-size:10px;color:#aaa;margin-top:1px;">→ open report</div></td><td style="padding:6px 10px;"><span style="background:#fff8e1;color:#7d5a00;border:1px solid #7d5a00;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:bold;">🟡 UNKNOWN</span><div style="font-size:10px;color:#999;margin-top:2px;">Low conf.</div></td><td style="padding:6px 10px;color:#e74c3c;font-weight:bold;">NON-CONFORMANT (automated checks)</td><td style="padding:6px 10px;color:#27ae60;">4</td><td style="padding:6px 10px;color:#e74c3c;">10</td><td style="padding:6px 10px;color:#f39c12;">1</td><td style="padding:6px 10px;font-weight:bold;"><span style="background:#27ae60;color:white;padding:2px 7px;border-radius:3px;">✅ 1 / 1</span></td><td style="padding:6px 10px;color:#95a5a6;">22</td></tr><tr><td style="padding:6px 10px;font-family:monospace;font-size:12px;"><a href="././good_tiles_UNKNOWN_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;font-weight:bold;" title="Open compliance report for good_tiles.gpkg">good_tiles.gpkg</a><div style="font-size:10px;color:#aaa;margin-top:1px;">→ open report</div></td><td style="padding:6px 10px;"><span style="background:#fff8e1;color:#7d5a00;border:1px solid #7d5a00;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:bold;">🟡 UNKNOWN</span><div style="font-size:10px;color:#999;margin-top:2px;">Low conf.</div></td><td style="padding:6px 10px;color:#f39c12;font-weight:bold;">PRE-VALIDATION PASSED — REDUCED COVERAGE</td><td style="padding:6px 10px;color:#27ae60;">12</td><td style="padding:6px 10px;color:#e74c3c;">0</td><td style="padding:6px 10px;color:#f39c12;">8</td><td style="padding:6px 10px;font-weight:bold;"><span style="background:#f39c12;color:white;padding:2px 7px;border-radius:3px;">⚠️ 6 / 8</span></td><td style="padding:6px 10px;color:#95a5a6;">17</td></tr></tbody>
+</table>
+
+
+<div class="section-title">🔍 Per-File Requirement Matrix (Req 3–37)</div>
+<div class="note" style="font-size:12px;">
+  Each cell shows the automated verdict for that file × requirement combination.
+  <strong style="color:#27ae60;">P</strong>=PASS &nbsp;
+  <strong style="color:#e74c3c;">F</strong>=FAIL &nbsp;
+  <strong style="color:#f39c12;">P*</strong>=PASS* (partial) &nbsp;
+  <strong style="color:#7f8c8d;">—</strong>=SKIPPED.
+  Hover over a cell for a brief detail snippet.
+</div>
+<div style="overflow-x:auto;">
+<table style="width:auto;min-width:100%;font-size:11px;">
+  <thead>
+    <tr>
+      <th style="padding:4px 6px;background:#2c3e50;color:white;font-size:11px;
+                 text-align:left;white-space:nowrap;">File</th>
+      <th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Mandatory Extensions">3</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Optional Extensions">4</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Extensions Not Allowed">5</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Conditional Extensions">6</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Raster CRS Allowed">7</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="CRS Raster Tile Matrix Set">8</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="2D Vector CRS">9</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="3D Vector CRS">10</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded 2D CRS">11</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded 3D CRS">12</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="WKT for CRS">13</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Compound CRS Usage">14</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Compound CRS WKT">15</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded Compound CRS WKT">16</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded CRS Epoch WKT">17</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="GeoPackage Metadata DMF">18</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="GeoPackage Metadata Document">19</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Complete Row Metadata">20</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="User Row Metadata">21</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Product Metadata">22</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Product Partial Metadata">23</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Data Validity">24</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Tile Matrix Width/Height">25</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Tile Pyramid Data Size">26</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Zoom Level Factor">27</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Multiple Zoom Matrix Sets">28</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Single Zoom Matrix Set">29</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Tile Matrix Set CRS BBox">30</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Tile Layer Metadata">31</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Feature Layer Metadata">32</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded Extension Core">33</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded Field Name Elevation">34</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded Center Value Elevation">35</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded Zoom Factor">36</th><th style="padding:4px 3px;font-size:10px;text-align:center;background:#2c3e50;color:white;white-space:nowrap;" title="Gridded User Row Metadata">37</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:4px 6px;font-family:monospace;font-size:11px;white-space:nowrap;"><a href="././bad_mixed_QGIS_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;">bad_mixed.gpkg</a></td><td style="padding:3px;text-align:center;" title="Req 3: FAIL&#10;gpkg_metadata MISSING (mandatory for tiles)
+gpkg_crs_wkt MISSING (mandatory for tiles)
+Invalid scope=&#x27;bogus-scope&#x27; for e"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 4: PASS&#10;No optional extensions registered — nothing to verify (optional extensions cannot fail by definition)"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 5: FAIL&#10;WEBP tile(s) detected in &#x27;uk_tiles&#x27; (blob index(es): [2]) — WEBP is NOT allowed by DGIWG; only PNG and JPEG are permitte"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 6: SKIPPED&#10;Conditional extension check requires file-specific profile knowledge"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 7: FAIL&#10;&#x27;uk_tiles&#x27; (srs_id=27700): srs_id=27700 (OSGB36 / British National Grid) NOT in DGIWG raster CRS list (allowed: 3395, 38"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 8: FAIL&#10;&#x27;uk_tiles&#x27; (srs_id=27700): non-standard tile dimensions at 2 zoom level(s): zoom 0: 512×512 (expected 256×256); zoom 2: "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 9: SKIPPED&#10;No vector geometry columns found"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 10: SKIPPED&#10;No vector geometry columns found"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 11: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 12: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 13: FAIL&#10;srs_id=27700 (OSGB36 / British National Grid) is NOT in DGIWG-approved CRS list (STD-DP-19-005 v1.1 Tables 1–12) — non-s"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 14: SKIPPED&#10;No vector geometry columns and no compound CRS in SRS — compound CRS usage check not applicable to this file type"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 15: SKIPPED&#10;No vector geometry columns — Req 15 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 16: SKIPPED&#10;No gridded data — Req 16 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 17: SKIPPED&#10;gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 18: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 19: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 20: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 21: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 22: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 23: FAIL&#10;gpkg_metadata_reference table is MISSING — product partial metadata cannot be validated"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 24: PASS&#10;gpkg_contents table exists ✓
+Table &#x27;uk_tiles&#x27; exists ✓
+gpkg_geometry_columns not present — not required for tiles/gridde"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 25: FAIL&#10;gpkg_tile_matrix_set columns: &#x27;table_name&#x27; ✓; &#x27;srs_id&#x27; ✓; &#x27;min_x&#x27; ✓; &#x27;min_y&#x27; ✓; &#x27;max_x&#x27; ✓; &#x27;max_y&#x27; ✓
+&#x27;uk_tiles&#x27;: gpkg_ti"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 26: FAIL&#10;Pillow BLOB decode | 5 tile(s) sampled per zoom level | 1 tile table(s) checked
+
+Table &#x27;uk_tiles&#x27; (2 zoom level(s)):
+  z"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 27: FAIL&#10;&#x27;uk_tiles&#x27;: factor-of-2 FAILED at 2 transition(s): zoom 0→2: pixel_x ratio=0.333333 (expected 0.5, deviation=1.67e-01); "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 28: PASS&#10;&#x27;uk_tiles&#x27;: pixel_x/y_size decreases with zoom level ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 29: PASS&#10;Tile dimensions consistent across zoom levels for table &#x27;uk_tiles&#x27;"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 30: PASS&#10;&#x27;uk_tiles&#x27; (srs_id=27700 OSGB36 / British National Grid): bbox sanity OK (0.00,0.00)→(700000.00,1300000.00) ✓ | CRS not "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 31: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 32: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 33: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 34: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 35: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 36: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 37: SKIPPED&#10;No gridded coverage data — Req 37 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td></tr><tr><td style="padding:4px 6px;font-family:monospace;font-size:11px;white-space:nowrap;"><a href="././features_UNKNOWN_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;">features.gpkg</a></td><td style="padding:3px;text-align:center;" title="Req 3: FAIL&#10;gpkg_extensions table is MISSING — no extensions are registered. Mandatory extension(s) required for data type(s) featur"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 4: PASS&#10;No gpkg_extensions table — no optional extensions registered (optional extensions cannot fail by definition)"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 5: PASS&#10;gpkg_extensions table absent — no extensions registered, none disallowed ✓; gpkg_geom_ correctly absent for features
+
+🔬 "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 6: SKIPPED&#10;Conditional extension check requires file-specific profile knowledge"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 7: SKIPPED&#10;No tile matrix set table"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 8: SKIPPED&#10;No tile matrix set"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 9: PASS&#10;parcels.geom: declared EPSG:4326; inspected all 2 non-NULL geometry header(s) ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 10: SKIPPED&#10;No 3D vector feature sets"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 11: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 12: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 13: PASS*&#10;srs_id=4326 (WGS 84): ✅ hard rules passed | ⚠️ WKT2 syntax detected; CRS axis order: &#x27;geodetic latitude (Lat)&#x27; (NORTH) →"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 14: PASS&#10;&#x27;parcels&#x27;: 2D (z=0), no COMPOUNDCRS ✓ — full compound CRS WKT structure check in Req 15"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 15: SKIPPED&#10;No compound CRS found for vector feature tables — Req 15 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 16: SKIPPED&#10;No gridded data — Req 16 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 17: SKIPPED&#10;gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 18: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 19: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 20: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 21: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 22: FAIL&#10;gpkg_metadata table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 23: FAIL&#10;gpkg_metadata_reference table is MISSING — product partial metadata cannot be validated"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 24: FAIL&#10;&#x27;parcels&#x27;: spatial index &#x27;rtree_parcels_geom&#x27; MISSING — DGIWG extension gpkg_rtree_index is mandatory for feature tables"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 25: SKIPPED&#10;No tile or gridded coverage tables present — Req 25 not applicable for feature/attribute-only GeoPackages ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 26: SKIPPED&#10;No tile or gridded coverage tables present — Req 26 not applicable for feature/attribute-only GeoPackages ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 27: SKIPPED&#10;No tile matrix table"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 28: SKIPPED&#10;No tile matrix table"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 29: SKIPPED&#10;No tile matrix table"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 30: SKIPPED&#10;No tile matrix set"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 31: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 32: FAIL&#10;gpkg_metadata_reference table is MISSING"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#e74c3c;color:white;border-radius:3px;">F</span></td><td style="padding:3px;text-align:center;" title="Req 33: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 34: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 35: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 36: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 37: SKIPPED&#10;No gridded coverage data — Req 37 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td></tr><tr><td style="padding:4px 6px;font-family:monospace;font-size:11px;white-space:nowrap;"><a href="././good_tiles_UNKNOWN_DGIWG_Report.html" style="color:#2471a3;text-decoration:none;">good_tiles.gpkg</a></td><td style="padding:3px;text-align:center;" title="Req 3: PASS&#10;gpkg_metadata present for tiles
+gpkg_crs_wkt present for tiles
+scope=&#x27;read-write&#x27; valid for &#x27;gpkg_metadata&#x27; ✓
+scope=&#x27;rea"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 4: PASS&#10;No optional extensions registered — nothing to verify (optional extensions cannot fail by definition)"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 5: PASS*&#10;gpkg_zoom_other correctly absent for tiles; gpkg_webp correctly absent for tiles; &#x27;osm_tiles&#x27;: 10 sampled tile(s) — no W"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 6: SKIPPED&#10;Conditional extension check requires file-specific profile knowledge"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 7: PASS&#10;&#x27;osm_tiles&#x27; (srs_id=3857): CRS allowed ✓
+&#x27;osm_tiles&#x27; (srs_id=3857): all 3 zoom level(s) match OGC 17-083r4 scale sequenc"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 8: PASS*&#10;&#x27;osm_tiles&#x27; (srs_id=3857): all 3 zoom level(s) have 256×256 tiles ✓
+Structural subset passed. Full DGIWG Req 8 evidence "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 9: SKIPPED&#10;No vector geometry columns found"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 10: SKIPPED&#10;No vector geometry columns found"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 11: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 12: SKIPPED&#10;No gridded coverage tables found in gpkg_contents"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 13: PASS*&#10;srs_id=3857 (WGS 84 / Pseudo-Mercator): ✅ hard rules passed | ⚠️ WKT2 syntax detected; ENSEMBLE=&#x27;World Geodetic System 1"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 14: SKIPPED&#10;No vector geometry columns and no compound CRS in SRS — compound CRS usage check not applicable to this file type"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 15: SKIPPED&#10;No vector geometry columns — Req 15 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 16: SKIPPED&#10;No gridded data — Req 16 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 17: SKIPPED&#10;gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 18: PASS*&#10;metadata row id=1 (scope=series): ✅ All DMF field checks passed | md_standard_uri=&#x27;https://dgiwg.org/std/dmf/2.0&#x27; ✓; XSD"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 19: PASS&#10;metadata id=1: XML is well-formed ✓
+1 geopackage-scope reference row(s) confirmed ✓
+ref id=1: geopackage/series combinat"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 20: PASS*&#10;Column &#x27;id&#x27; present ✓; Column &#x27;md_scope&#x27; present ✓; Column &#x27;md_standard_uri&#x27; present ✓; Column &#x27;metadata&#x27; present ✓; Col"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 21: PASS&#10;ref id=1 (geopackage): geopackage/series ✓
+ref id=2 (table): table/series ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 22: PASS&#10;id=1 (md_scope=series): XML well-formed ✓ | 7 ISO 19115 element(s) found ✓ | uri=&#x27;https://dgiwg.org/std/dmf/2.0&#x27;"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 23: PASS*&#10;Found 1 geopackage-scope reference row(s) with NULL table/column/row ✓ — md_parent_id hierarchy not fully validated"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 24: PASS&#10;gpkg_contents table exists ✓
+Table &#x27;osm_tiles&#x27; exists ✓
+gpkg_geometry_columns not present — not required for tiles/gridd"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 25: PASS&#10;gpkg_tile_matrix_set columns: &#x27;table_name&#x27; ✓; &#x27;srs_id&#x27; ✓; &#x27;min_x&#x27; ✓; &#x27;min_y&#x27; ✓; &#x27;max_x&#x27; ✓; &#x27;max_y&#x27; ✓
+&#x27;osm_tiles&#x27;: 3 cont"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 26: PASS*&#10;Pillow BLOB decode | 5 tile(s) sampled per zoom level | 1 tile table(s) checked
+
+Table &#x27;osm_tiles&#x27; (3 zoom level(s)):
+  "><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 27: PASS&#10;&#x27;osm_tiles&#x27;: all 2 zoom transition(s) are exact factor-of-2 ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 28: PASS&#10;&#x27;osm_tiles&#x27;: pixel_x/y_size decreases with zoom level ✓"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 29: PASS&#10;Tile dimensions consistent across zoom levels for table &#x27;osm_tiles&#x27;"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 30: PASS&#10;&#x27;osm_tiles&#x27; (srs_id=3857 WGS 84 / Pseudo-Mercator): bbox (-20037508.34,-20037508.34)→(20037508.34,20037508.34) within CR"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#27ae60;color:white;border-radius:3px;">P</span></td><td style="padding:3px;text-align:center;" title="Req 31: PASS*&#10;gpkg_metadata_reference exists ✓ | all 1 tile layer(s) are linked by a reference_scope=&#x27;table&#x27; row, but no metadata docu"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#f39c12;color:white;border-radius:3px;">P*</span></td><td style="padding:3px;text-align:center;" title="Req 32: SKIPPED&#10;No feature layers (data_type=&#x27;features&#x27;) in this GeoPackage — Req 32 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 33: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 34: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 35: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 36: SKIPPED&#10;No gridded coverage data"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td><td style="padding:3px;text-align:center;" title="Req 37: SKIPPED&#10;No gridded coverage data — Req 37 not applicable"><span style="display:inline-block;width:22px;height:18px;line-height:18px;font-size:9px;font-weight:bold;background:#bdc3c7;color:white;border-radius:3px;">—</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+
+<div class="section-title">📊 Requirement Rollup — DGIWG Validator (Req 3–37)</div>
+<table>
+  <thead><tr>
+    <th style="width:38px;">Req</th>
+    <th style="width:145px;">Requirement</th>
+    <th style="width:40px;">Type</th>
+    <th style="width:155px;">Validator Disputes</th>
+    <th style="width:230px;">Cross-Checks &amp; Diagnosis</th>
+    <th style="width:160px;">PASS* &amp; Manual Verification</th>
+    <th style="width:115px;">Confidence Level</th>
+  </tr></thead>
+  <tbody>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">1</td>
+          <td style="padding:8px;">GeoPackage Base definition
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/geopackage/base</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Confirm the current DGIWG profile and conformance class externally.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">2</td>
+          <td style="padding:8px;">GeoPackage Options definition
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/geopackage/options</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Run the official DGIWG/OGC ATS and schema evidence checks.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">3</td>
+          <td style="padding:8px;">Mandatory Extensions
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/extensions/mandatory</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Required extension(s) missing from gpkg_extensions. GDAL may not register all DGIWG-required extensions automatically — add missing rows manually.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Required extension(s) missing or incorrectly scoped in gpkg_extensions.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">2 disputes out of 3 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">4</td>
+          <td style="padding:8px;">Optional Extensions
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/extensions/optional</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">5</td>
+          <td style="padding:8px;">Extensions Not Allowed
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/extensions/not-allowed</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fef9e7;color:#e67e22;font-weight:bold;font-size:13px;">
+            1 dispute out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">GDAL automatically injects &#x27;gdal_nw&#x27; (No-Write lock) into gpkg_extensions at creation. This is a known GDAL artifact — not intentional non-conformance. Fix: DELETE FROM gpkg_extensions WHERE extension_name=&#x27;gdal_nw&#x27;; before delivery.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Disallowed extension found. Identify its origin and remove it from gpkg_extensions before delivery.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">2 disputes out of 3 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#fdedec;vertical-align:top;">
+            <span style="background:#e74c3c;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">❌ 0 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">6</td>
+          <td style="padding:8px;">Conditional Extensions
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/extensions/conditional</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Confirm intended product type and profile applicability.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">7</td>
+          <td style="padding:8px;">Raster CRS Allowed
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/raster-allowed</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            1 dispute out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Pixel size drift most likely caused by reprojection during GeoTIFF→GeoPackage conversion. Use gdalwarp with a target resolution matched exactly to OGC 17-083r4 values for the target CRS.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">8</td>
+          <td style="padding:8px;">CRS Raster Tile Matrix Set
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/raster-tile-matrix-set</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            1 dispute out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Scale denominators in gpkg_tile_matrix do not match OGC 17-083r4 for this CRS. Likely caused by reprojection introducing pixel size drift. Re-export using gdalwarp with exact target resolution.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Scale denominators deviate from OGC 17-083r4 expected values for this CRS.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Run OGC 17-083r2 TMS ATS A.1-A.16 and well-known scale-set checks.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 1 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">9</td>
+          <td style="padding:8px;">2D Vector CRS
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/2d-vector</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 1 applicable GPKG
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">10</td>
+          <td style="padding:8px;">3D Vector CRS
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/3d-vector</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">11</td>
+          <td style="padding:8px;">Gridded 2D CRS
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/gridded-crs-2d-allowed</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">12</td>
+          <td style="padding:8px;">Gridded 3D CRS
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/gridded-crs-3d-allowed</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">13</td>
+          <td style="padding:8px;">WKT for CRS
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/wkt</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fef9e7;color:#e67e22;font-weight:bold;font-size:13px;">
+            1 dispute out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">WKT check passed for most CRS entries. Any mismatch is typically a datum name alias — review the flagged srs_id entry manually.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Hard WKT rules passed. pyproj not installed — datum name cross-check could not be run. Install pyproj for full automated verification.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 2 / 2</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 2</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">14</td>
+          <td style="padding:8px;">Compound CRS Usage
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/compound</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 1 applicable GPKG
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">15</td>
+          <td style="padding:8px;">Compound CRS WKT
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/crs-compound-wkt</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">16</td>
+          <td style="padding:8px;">Gridded Compound CRS WKT
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/gridded-crs-compound-wkt</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">17</td>
+          <td style="padding:8px;">Gridded CRS Epoch WKT
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/crs/gridded-crs-epoch-wkt</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">18</td>
+          <td style="padding:8px;">GeoPackage Metadata DMF
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/dmf</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">DMF metadata not added after export. GDAL/QGIS does not automatically create DGIWG DMF metadata records. Must be added manually to gpkg_metadata with the correct URI and XML structure.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">DMF metadata row absent or XML field values (UUID, language code, role codes, date format) do not meet DGIWG requirements.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">No DMF URI row found — structural check only. Add a gpkg_metadata row with URI containing &#x27;dgiwg+dmf&#x27; and valid DMF XML content.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Validate metadata with the official DGIWG DMF schema set and ATS.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 1 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">19</td>
+          <td style="padding:8px;">GeoPackage Metadata Document
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/gpkg</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">gpkg_metadata_reference missing, not well-formed XML, or missing geopackage-scope reference row. Verify that a row with reference_scope=&#x27;geopackage&#x27; exists in gpkg_metadata_reference.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">gpkg_metadata_reference missing required geopackage-scope row or contains malformed XML.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">20</td>
+          <td style="padding:8px;">Complete Row Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/row</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Required columns confirmed present. Verify that a geopackage-scope reference row exists in gpkg_metadata_reference with NULL table/column/row values.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 1 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">21</td>
+          <td style="padding:8px;">User Row Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/user</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">gpkg_metadata_reference contains invalid md_scope/reference_scope pairings per DGIWG Table 36, or orphan md_file_id references. Review and correct the reference table.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Invalid Table 36 scope pairings or orphaned metadata references detected.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">22</td>
+          <td style="padding:8px;">Product Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/product</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Product metadata XML missing or ISO 19115 elements absent. Product metadata must be added manually after GDAL export.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Product metadata row absent or required ISO 19115 elements missing from XML.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">2 disputes out of 3 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">23</td>
+          <td style="padding:8px;">Product Partial Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/product-partial</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">geopackage-scope NULL reference row missing in gpkg_metadata_reference for product metadata.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">geopackage-scope NULL reference row missing for product metadata.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">geopackage-scope NULL reference row missing for product metadata.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 1 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">24</td>
+          <td style="padding:8px;">Data Validity
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/validity/data-validity</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fef9e7;color:#e67e22;font-weight:bold;font-size:13px;">
+            1 dispute out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Referential integrity failure or OGC geometry validity violation detected.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">1 dispute out of 3 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">25</td>
+          <td style="padding:8px;">Tile Matrix Width/Height
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/tile/size-matrix</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            1 dispute out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Tile matrix declared dimensions are not 256×256. This is unusual for GDAL — verify gpkg_tile_matrix rows for this table.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">1 dispute out of 2 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">26</td>
+          <td style="padding:8px;">Tile Pyramid Data Size
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/tile/size-data</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            1 dispute out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Actual tile BLOB pixel dimensions do not match 256×256, or tile encoding could not be verified. Check for non-standard tile generation during GDAL conversion.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Declared tile dimensions are 256×256. Install Pillow to verify actual BLOB pixel dimensions.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#eafaf1;vertical-align:top;">
+            <span style="background:#27ae60;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">✅ 1 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">27</td>
+          <td style="padding:8px;">Zoom Level Factor
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/zoom/factor</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            1 dispute out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Zoom level pixel sizes do not follow an exact factor-of-2 sequence. Likely caused by reprojection introducing fractional pixel size drift. Re-export with pixel sizes matched exactly to OGC 17-083r4 scale sequence.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">28</td>
+          <td style="padding:8px;">Multiple Zoom Matrix Sets
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/zoom/matrix-sets-multiple</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">29</td>
+          <td style="padding:8px;">Single Zoom Matrix Set
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/zoom/matrix-sets-one</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">30</td>
+          <td style="padding:8px;">Tile Matrix Set CRS BBox
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/bbox/crs</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">M</span>
+          </td>
+          <td style="padding:8px;background:#eafaf1;color:#27ae60;font-weight:bold;font-size:13px;">
+            0 disputes out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#27ae60;font-size:12px;font-weight:bold;">✅ No disputes</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">31</td>
+          <td style="padding:8px;">Tile Layer Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/tile</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 3 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Tile layer metadata row missing or XML does not contain required ISO 19115 elements. Add metadata rows for tile tables to gpkg_metadata and gpkg_metadata_reference.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Tile layer metadata absent or ISO 19115 elements missing.</div></div><div style="padding:5px 8px;background:#fffbf0;border-left:3px solid #f39c12;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#9a6500;margin-bottom:2px;">🔎 PASS* — verify manually</div><div style="font-size:11px;color:#555;">Tile layer metadata row present. Verify ISO 19115 mandatory elements are populated.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#27ae60;font-weight:bold;">No disputes</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#fdedec;vertical-align:top;">
+            <span style="background:#e74c3c;color:white;padding:3px 8px;border-radius:4px;font-weight:bold;font-size:13px;">❌ 0 / 1</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 1</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fef9e7;">
+            <span style="background:#f39c12;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Medium</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">32</td>
+          <td style="padding:8px;">Feature Layer Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/metadata/feature</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#fdedec;color:#e74c3c;font-weight:bold;font-size:13px;">
+            2 disputes out of 2 applicable GPKGs
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟢 QGIS/GDAL</div><div style="font-size:11px;color:#555;">Feature layer metadata row missing or XML does not contain required ISO 19115 elements.</div></div><div style="margin-bottom:5px;padding:5px 8px;background:#fff5f5;border-left:3px solid #e74c3c;border-radius:3px;"><div style="font-size:10px;font-weight:bold;color:#c0392b;margin-bottom:2px;">🔴 FAIL — 🟡 UNKNOWN</div><div style="font-size:11px;color:#555;">Feature layer metadata absent or ISO 19115 elements missing.</div></div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#e67e22;font-weight:bold;">2 disputes out of 2 applicable GPKGs</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#eafaf1;">
+            <span style="background:#27ae60;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">High</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">33</td>
+          <td style="padding:8px;">Gridded Extension Core
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/gridded/gridded-coverage-extension-core</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">34</td>
+          <td style="padding:8px;">Gridded Field Name Elevation
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/gridded/field-name-elevation</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">35</td>
+          <td style="padding:8px;">Gridded Center Value Elevation
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/gridded/center-value-elevation</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">36</td>
+          <td style="padding:8px;">Gridded Zoom Factor
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/gridded/zoom-factor</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px;font-weight:bold;white-space:nowrap;">37</td>
+          <td style="padding:8px;">Gridded User Row Metadata
+            <div style="font-size:11px;color:#888;margin-top:2px;">/req/gridded/metadata-gridded-user</div>
+          </td>
+          <td style="padding:8px;text-align:center;">
+            <span style="background:#2c3e50;color:white;padding:2px 7px;border-radius:3px;font-size:11px;">C</span>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;color:#95a5a6;font-weight:bold;font-size:13px;">
+            Not applicable (all SKIPPED)
+          </td>
+          <td style="padding:8px;vertical-align:top;">
+            <span style="color:#ccc;font-size:12px;">—</span>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 🔍 Cross-check guidance
+                &nbsp;<span style="color:#95a5a6;">N/A</span>
+              </summary>
+              <ul style="margin:5px 0 0 0;padding-left:16px;font-size:11px;color:#555;">
+                <li>Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.</li>
+              </ul>
+            </details>
+          </td>
+          <td style="padding:8px;background:#f4f4f4;vertical-align:top;">
+            <span style="color:#95a5a6;font-size:12px;">N/A (no PASS*)</span>
+            <div style="font-size:10px;color:#888;margin-top:3px;">PASS* GPKGs: 0</div>
+            <details style="margin-top:6px;">
+              <summary style="cursor:pointer;font-size:11px;font-weight:bold;color:#555;
+                              list-style:none;display:flex;align-items:center;gap:4px;
+                              user-select:none;">
+                <span style="font-size:10px;">▶</span> 📋 Manual Verification
+              </summary>
+              <div style="margin-top:5px;font-size:12px;color:#444;">
+                Review current per-file details and Manual Confirmation panels; no historical corpus evidence is applied.
+              </div>
+            </details>
+          </td>
+          <td style="padding:8px;text-align:center;background:#fdedec;">
+            <span style="background:#e74c3c;color:white;padding:4px 10px;border-radius:4px;font-weight:bold;font-size:12px;">Low</span>
+            <div style="font-size:10px;color:#666;margin-top:4px;">Confidence is derived only from the current batch results.</div>
+          </td>
+        </tr></tbody>
+</table>
+
+<div class="section-title">📌 Legend</div>
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td style="padding:8px;font-weight:bold;">Validator Disputes</td>
+        <td style="padding:8px;">Number of GeoPackages where this script returned FAIL for this requirement, out of total applicable GPKGs (non-SKIPPED)</td></tr>
+    <tr><td style="padding:8px;font-weight:bold;">Cross-Checks &amp; Diagnosis</td>
+        <td style="padding:8px;">
+          <strong>Probable Cause</strong> — the likely root cause for any FAIL or PASS* result,
+          broken down by source software (QGIS/GDAL vs ArcGIS) where relevant.<br>
+          <strong>▶ Cross-check guidance</strong> (expandable) — current-run review guidance,
+          misimplementations, or false-result risks for this requirement. Count shows how many
+          applicable GPKGs were affected (FAIL or PASS* only).
+        </td></tr>
+    <tr><td style="padding:8px;font-weight:bold;">PASS* &amp; Manual Verification</td>
+        <td style="padding:8px;">
+          <strong>PASS* Manual Confirmed</strong> — how many of this requirement's PASS* results
+          were subsequently confirmed by hands-on manual inspection.<br>
+          <strong>▶ Manual Verification</strong> (expandable) — findings and notes from
+          hands-on session analysis of the GeoPackage database.
+        </td></tr>
+    <tr><td style="padding:8px;font-weight:bold;color:#27ae60;">High Confidence</td>
+        <td style="padding:8px;">Check fully implements the ATS requirement, no known bugs, result confirmed manually</td></tr>
+    <tr><td style="padding:8px;font-weight:bold;color:#f39c12;">Medium Confidence</td>
+        <td style="padding:8px;">Partial check (PASS*) or one known gap — result is likely correct but not fully verified</td></tr>
+    <tr><td style="padding:8px;font-weight:bold;color:#e74c3c;">Low Confidence</td>
+        <td style="padding:8px;">Known validator bug, logic error, or requirement cannot be automated — treat result with caution</td></tr>
+    <tr><td style="padding:8px;font-weight:bold;">PASS*</td>
+        <td style="padding:8px;"><strong>Partial automated validation</strong> — structural or presence checks passed but content not fully verified. Two distinct causes: (1) the check is technically possible but this script only does part of it (e.g. WKT presence without content validation); (2) the check cannot be fully automated at all (e.g. Req 6, 13 content, 15 WKT structure, 17 epoch WKT, 18 XML values). See the ⚠️ section above for the full list of non-automatable requirements.</td></tr>
+    <tr><td style="padding:8px;font-weight:bold;">SKIPPED</td>
+        <td style="padding:8px;">Requirement not applicable to this file (e.g. vector CRS check on a gridded-only file), OR the check was deliberately not automated because it requires external context (Req 6: product profile).</td></tr>
+  </tbody>
+</table>
+
+</div>
+<div class="footer">
+  DGIWG GeoPackage — Integrated Validation Report &nbsp;|&nbsp;
+  Req 1–2 (OGC Base) require OGC CITE TeamEngine, and Req 6 (conditional extensions)
+  requires the product profile — none of the three are automated by this script.
+  <div style="margin-top:8px;font-size:11px;color:#7f8c8d !important;">SPDX-License-Identifier: GPL-2.0-or-later &nbsp;|&nbsp; Copyright (c) 2026 Eui Soo SON</div>
+</div>
+</body></html>

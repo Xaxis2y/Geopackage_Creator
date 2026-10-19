@@ -1,0 +1,38 @@
+Req,Requirement,Compliance Type,Applicable GPKGs,Validator Disputes,Auditor Disputes,PASS* Count,PASS* Manual Confirmed,Dispute Rate %
+1,GeoPackage Base definition,M,0,0,0,0,0,N/A
+2,GeoPackage Options definition,M,0,0,0,0,0,N/A
+3,Mandatory Extensions,M,1,1,1,0,0,100
+4,Optional Extensions,C,1,0,0,0,0,0
+5,Extensions Not Allowed,M,1,1,1,0,0,100
+6,Conditional Extensions,C,0,0,0,0,0,N/A
+7,Raster CRS Allowed,M,1,1,0,0,0,100
+8,CRS Raster Tile Matrix Set,M,1,1,0,0,0,100
+9,2D Vector CRS,M,0,0,0,0,0,N/A
+10,3D Vector CRS,M,0,0,0,0,0,N/A
+11,Gridded 2D CRS,M,0,0,0,0,0,N/A
+12,Gridded 3D CRS,M,0,0,0,0,0,N/A
+13,WKT for CRS,M,1,1,0,0,0,100
+14,Compound CRS Usage,C,0,0,0,0,0,N/A
+15,Compound CRS WKT,M,0,0,0,0,0,N/A
+16,Gridded Compound CRS WKT,C,0,0,0,0,0,N/A
+17,Gridded CRS Epoch WKT,C,0,0,0,0,0,N/A
+18,GeoPackage Metadata DMF,M,1,1,0,0,0,100
+19,GeoPackage Metadata Document,M,1,1,0,0,0,100
+20,Complete Row Metadata,M,1,1,0,0,0,100
+21,User Row Metadata,C,1,1,0,0,0,100
+22,Product Metadata,C,1,1,1,0,0,100
+23,Product Partial Metadata,C,1,1,0,0,0,100
+24,Data Validity,M,1,0,0,0,0,0
+25,Tile Matrix Width/Height,M,1,1,1,0,0,100
+26,Tile Pyramid Data Size,M,1,1,0,0,0,100
+27,Zoom Level Factor,M,1,1,0,0,0,100
+28,Multiple Zoom Matrix Sets,C,1,0,0,0,0,0
+29,Single Zoom Matrix Set,C,1,0,0,0,0,0
+30,Tile Matrix Set CRS BBox,M,1,0,0,0,0,0
+31,Tile Layer Metadata,C,1,1,0,0,0,100
+32,Feature Layer Metadata,C,1,1,1,0,0,100
+33,Gridded Extension Core,C,0,0,0,0,0,N/A
+34,Gridded Field Name Elevation,C,0,0,0,0,0,N/A
+35,Gridded Center Value Elevation,C,0,0,0,0,0,N/A
+36,Gridded Zoom Factor,C,0,0,0,0,0,N/A
+37,Gridded User Row Metadata,C,0,0,0,0,0,N/A

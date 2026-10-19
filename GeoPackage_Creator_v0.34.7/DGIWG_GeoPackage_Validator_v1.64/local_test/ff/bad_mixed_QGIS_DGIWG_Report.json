@@ -1,0 +1,353 @@
+{
+  "schema_version": "1.64",
+  "file": "bad_mixed.gpkg",
+  "software": "QGIS/GDAL (confidence: Medium)",
+  "verdict": "NON-CONFORMANT (automated checks)",
+  "counts": {
+    "PASS": 5,
+    "FAIL": 16,
+    "ERROR": 0,
+    "PASS*": 0,
+    "SKIPPED": 16,
+    "N/A": 0,
+    "WARNING": 0
+  },
+  "coverage": {
+    "gaps": [],
+    "advisory": []
+  },
+  "requirements": {
+    "1": {
+      "name": "GeoPackage Base definition",
+      "identifier": "/req/geopackage/base",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 1 (GeoPackage Base definition — OGC Base conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "2": {
+      "name": "GeoPackage Options definition",
+      "identifier": "/req/geopackage/options",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Req 2 (GeoPackage Options definition — OGC Options conformance class): Requires OGC CITE TeamEngine — not automatable"
+    },
+    "3": {
+      "name": "Mandatory Extensions",
+      "identifier": "/req/extensions/mandatory",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata MISSING (mandatory for tiles)\ngpkg_crs_wkt MISSING (mandatory for tiles)\nInvalid scope='bogus-scope' for extension 'gdal_nw' — must be 'read-write' or 'write-only'\napplication_id=0x47503132 (GP12) is invalid for GeoPackage 1.4; expected 0x47504B47 ('GPKG')\ngpkg_contents 'uk_tiles': last_change='not-a-date' is not a valid ISO 8601 datetime\npage_size=4096 ✓\nencoding='UTF-8' ✓\njournal_mode='delete' (not WAL) ✓"
+    },
+    "4": {
+      "name": "Optional Extensions",
+      "identifier": "/req/extensions/optional",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "No optional extensions registered — nothing to verify (optional extensions cannot fail by definition)"
+    },
+    "5": {
+      "name": "Extensions Not Allowed",
+      "identifier": "/req/extensions/not-allowed",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "WEBP tile(s) detected in 'uk_tiles' (blob index(es): [2]) — WEBP is NOT allowed by DGIWG; only PNG and JPEG are permitted\n\n🔬 SOFTWARE AUDIT HINT [QGIS/GDAL]: ⚠️ KNOWN GDAL ARTIFACT: The 'gdal_nw' (No-Write lock) extension is automatically injected by GDAL/QGIS at file creation. This FAIL is expected behaviour for GDAL-authored files and does NOT indicate intentional non-compliance. Remediation: run DELETE FROM gpkg_extensions WHERE extension_name='gdal_nw'; before final delivery."
+    },
+    "6": {
+      "name": "Conditional Extensions",
+      "identifier": "/req/extensions/conditional",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "Conditional extension check requires file-specific profile knowledge"
+    },
+    "7": {
+      "name": "Raster CRS Allowed",
+      "identifier": "/req/crs/raster-allowed",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "'uk_tiles' (srs_id=27700): srs_id=27700 (OSGB36 / British National Grid) NOT in DGIWG raster CRS list (allowed: 3395, 3857, 4326, 4979, 5041, 5042, UTM zones 32601-32660 / 32701-32760, and Lambert Conformal Conic (per-product code))"
+    },
+    "8": {
+      "name": "CRS Raster Tile Matrix Set",
+      "identifier": "/req/crs/raster-tile-matrix-set",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "'uk_tiles' (srs_id=27700): non-standard tile dimensions at 2 zoom level(s): zoom 0: 512×512 (expected 256×256); zoom 2: 512×512 (expected 256×256)"
+    },
+    "9": {
+      "name": "2D Vector CRS",
+      "identifier": "/req/crs/2d-vector",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns found"
+    },
+    "10": {
+      "name": "3D Vector CRS",
+      "identifier": "/req/crs/3d-vector",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns found"
+    },
+    "11": {
+      "name": "Gridded 2D CRS",
+      "identifier": "/req/crs/gridded-crs-2d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "12": {
+      "name": "Gridded 3D CRS",
+      "identifier": "/req/crs/gridded-crs-3d-allowed",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage tables found in gpkg_contents"
+    },
+    "13": {
+      "name": "WKT for CRS",
+      "identifier": "/req/crs/wkt",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "srs_id=27700 (OSGB36 / British National Grid) is NOT in DGIWG-approved CRS list (STD-DP-19-005 v1.1 Tables 1–12) — non-standard CRS used\nsrs_id=27700 (OSGB36 / British National Grid): WKT CRS is NOT mathematically equivalent to EPSG:27700 — datum, ellipsoid, or projection parameters mismatch; DATUM name mismatch: WKT has 'Ordnance_Survey_of_Great_Britain_1936' but EPSG:27700 official datum is 'Ordnance Survey of Great Britain 1936'\n⚠️ definition_12_063 absent — WKT2 column not present; using definition column only\n\n🔬 SOFTWARE AUDIT HINT [QGIS/GDAL]: ✅ GDAL EXPECTATION: GDAL/QGIS generally produces well-formed WKT2:2019 strings. A PASS here is the expected outcome for GDAL-authored files."
+    },
+    "14": {
+      "name": "Compound CRS Usage",
+      "identifier": "/req/crs/compound",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns and no compound CRS in SRS — compound CRS usage check not applicable to this file type"
+    },
+    "15": {
+      "name": "Compound CRS WKT",
+      "identifier": "/req/crs/crs-compound-wkt",
+      "compliance": "M",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No vector geometry columns — Req 15 not applicable"
+    },
+    "16": {
+      "name": "Gridded Compound CRS WKT",
+      "identifier": "/req/crs/gridded-crs-compound-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded data — Req 16 not applicable"
+    },
+    "17": {
+      "name": "Gridded CRS Epoch WKT",
+      "identifier": "/req/crs/gridded-crs-epoch-wkt",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "gpkg_spatial_ref_sys.epoch column not present — Req 17 not applicable"
+    },
+    "18": {
+      "name": "GeoPackage Metadata DMF",
+      "identifier": "/req/metadata/dmf",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "19": {
+      "name": "GeoPackage Metadata Document",
+      "identifier": "/req/metadata/gpkg",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "20": {
+      "name": "Complete Row Metadata",
+      "identifier": "/req/metadata/row",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "21": {
+      "name": "User Row Metadata",
+      "identifier": "/req/metadata/user",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "22": {
+      "name": "Product Metadata",
+      "identifier": "/req/metadata/product",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata table is MISSING"
+    },
+    "23": {
+      "name": "Product Partial Metadata",
+      "identifier": "/req/metadata/product-partial",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING — product partial metadata cannot be validated"
+    },
+    "24": {
+      "name": "Data Validity",
+      "identifier": "/req/validity/data-validity",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "gpkg_contents table exists ✓\nTable 'uk_tiles' exists ✓\ngpkg_geometry_columns not present — not required for tiles/gridded-only GeoPackage ✓\nTile matrix set table 'uk_tiles' in gpkg_contents ✓\nTile matrix table 'uk_tiles' in gpkg_contents ✓\ngpkg_metadata not present — metadata tables optional, ATS 5.6 vacuously satisfied ✓\nNOTES (informational): Table37#2: srs_id=27700 description is null/empty/unknown/tbd\n\n🔬 SOFTWARE AUDIT HINT [QGIS/GDAL]: ℹ️ GDAL NOTE: The table 'gpkg_ogr_contents' is a GDAL/OGR internal schema table, NOT a registered extension. Some validators incorrectly flag it as a data validity issue. This generator correctly ignores it in extension checks. No action required."
+    },
+    "25": {
+      "name": "Tile Matrix Width/Height",
+      "identifier": "/req/tile/size-matrix",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_tile_matrix_set columns: 'table_name' ✓; 'srs_id' ✓; 'min_x' ✓; 'min_y' ✓; 'max_x' ✓; 'max_y' ✓\n'uk_tiles': gpkg_tile_matrix zoom gaps (declared range 0–2): missing levels [1]"
+    },
+    "26": {
+      "name": "Tile Pyramid Data Size",
+      "identifier": "/req/tile/size-data",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "Pillow BLOB decode | 5 tile(s) sampled per zoom level | 1 tile table(s) checked\n\nTable 'uk_tiles' (2 zoom level(s)):\n  zoom 0: ❌ MISMATCH in 1/1 sampled tile(s) — declared 512×512: tile 1: stored 512×512 matches declared but DGIWG requires 256×256\n  zoom 2: ❌ MISMATCH in 1/1 sampled tile(s) — declared 512×512: tile 1: stored 512×512 matches declared but DGIWG requires 256×256"
+    },
+    "27": {
+      "name": "Zoom Level Factor",
+      "identifier": "/req/zoom/factor",
+      "compliance": "M",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "'uk_tiles': factor-of-2 FAILED at 2 transition(s): zoom 0→2: pixel_x ratio=0.333333 (expected 0.5, deviation=1.67e-01); zoom 0→2: pixel_y ratio=0.333333 (expected 0.5, deviation=1.67e-01)"
+    },
+    "28": {
+      "name": "Multiple Zoom Matrix Sets",
+      "identifier": "/req/zoom/matrix-sets-multiple",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'uk_tiles': pixel_x/y_size decreases with zoom level ✓"
+    },
+    "29": {
+      "name": "Single Zoom Matrix Set",
+      "identifier": "/req/zoom/matrix-sets-one",
+      "compliance": "C",
+      "status": "PASS",
+      "reason": null,
+      "detail": "Tile dimensions consistent across zoom levels for table 'uk_tiles'"
+    },
+    "30": {
+      "name": "Tile Matrix Set CRS BBox",
+      "identifier": "/req/bbox/crs",
+      "compliance": "M",
+      "status": "PASS",
+      "reason": null,
+      "detail": "'uk_tiles' (srs_id=27700 OSGB36 / British National Grid): bbox sanity OK (0.00,0.00)→(700000.00,1300000.00) ✓ | CRS not in extent lookup — range cross-check skipped"
+    },
+    "31": {
+      "name": "Tile Layer Metadata",
+      "identifier": "/req/metadata/tile",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "32": {
+      "name": "Feature Layer Metadata",
+      "identifier": "/req/metadata/feature",
+      "compliance": "C",
+      "status": "FAIL",
+      "reason": null,
+      "detail": "gpkg_metadata_reference table is MISSING"
+    },
+    "33": {
+      "name": "Gridded Extension Core",
+      "identifier": "/req/gridded/gridded-coverage-extension-core",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "34": {
+      "name": "Gridded Field Name Elevation",
+      "identifier": "/req/gridded/field-name-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "35": {
+      "name": "Gridded Center Value Elevation",
+      "identifier": "/req/gridded/center-value-elevation",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "36": {
+      "name": "Gridded Zoom Factor",
+      "identifier": "/req/gridded/zoom-factor",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data"
+    },
+    "37": {
+      "name": "Gridded User Row Metadata",
+      "identifier": "/req/gridded/metadata-gridded-user",
+      "compliance": "C",
+      "status": "SKIPPED",
+      "reason": null,
+      "detail": "No gridded coverage data — Req 37 not applicable"
+    }
+  },
+  "forensic": {
+    "software": "QGIS/GDAL",
+    "confidence": "Medium",
+    "signals": [
+      "GDAL extension(s) in gpkg_extensions: ['gdal_nw']"
+    ],
+    "hints": {
+      "5": "⚠️ KNOWN GDAL ARTIFACT: The 'gdal_nw' (No-Write lock) extension is automatically injected by GDAL/QGIS at file creation. This FAIL is expected behaviour for GDAL-authored files and does NOT indicate intentional non-compliance. Remediation: run DELETE FROM gpkg_extensions WHERE extension_name='gdal_nw'; before final delivery.",
+      "24": "ℹ️ GDAL NOTE: The table 'gpkg_ogr_contents' is a GDAL/OGR internal schema table, NOT a registered extension. Some validators incorrectly flag it as a data validity issue. This generator correctly ignores it in extension checks. No action required.",
+      "13": "✅ GDAL EXPECTATION: GDAL/QGIS generally produces well-formed WKT2:2019 strings. A PASS here is the expected outcome for GDAL-authored files."
+    }
+  },
+  "internet_checks": {
+    "uri": [
+      null,
+      null,
+      "OFFLINE MODE — URI reachability check suppressed by --offline flag"
+    ],
+    "epsg": [
+      null,
+      null,
+      "OFFLINE MODE — EPSG registry check suppressed by --offline flag. srs_id=27700: EPSG:27700 not in offline JSON cache — install pyproj for full check"
+    ],
+    "scale": [
+      null,
+      null,
+      "NETWORK ERROR — OGC TileMatrixSet definitions could not be reached (not a data problem). srs_id=27700: No OGC TileMatrixSet defined for srs_id=27700 — scale denom check N/A"
+    ],
+    "dmf": [
+      0,
+      0,
+      "DMF XML check error: no such table: gpkg_metadata",
+      true
+    ]
+  },
+  "cascade_root_cause": "The following required table(s) are absent from this GeoPackage: 'gpkg_metadata' and 'gpkg_metadata_reference'. This single root cause is responsible for the FAIL result on: Req 18, Req 19, Req 20, Req 21, Req 22, Req 23, Req 31, Req 32. Restoring these table(s) will likely resolve all of the above failures."
+}

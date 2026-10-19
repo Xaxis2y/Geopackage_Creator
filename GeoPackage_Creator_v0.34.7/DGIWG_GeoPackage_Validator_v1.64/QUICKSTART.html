@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DGIWG GeoPackage Validator v1.64 — Quick Start</title>
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;max-width:980px;margin:32px auto;padding:0 22px;color:#243447;line-height:1.55}
+    h1{color:#123b5d;border-bottom:4px solid #2b7a9b;padding-bottom:10px}h2{color:#1d5d7b;margin-top:30px}
+    pre,code{font-family:Consolas,monospace}pre{background:#102a43;color:#e6f1f7;padding:14px;border-radius:7px;overflow:auto}
+    .notice{background:#fff4d6;border-left:5px solid #e6a700;padding:12px 16px;margin:18px 0}.ok{background:#eaf7ee;border-left-color:#26854a}
+    table{border-collapse:collapse;width:100%}th,td{border:1px solid #cfd8df;padding:9px;text-align:left;vertical-align:top}th{background:#eaf2f7}
+    footer{margin-top:36px;border-top:1px solid #ccd6dd;padding-top:14px;color:#647784;font-size:.9em}
+  </style>
+</head>
+<body>
+  <h1>DGIWG GeoPackage Validator v1.64</h1>
+  <p>Operational pre-validation for DGIWG STD-DP-19-005 v1.1. The tool produces per-file HTML/JSON reports and batch HTML/CSV rollups.</p>
+  <div class="notice"><strong>Scope:</strong> This tool does not issue DGIWG or OGC certification. Requirements 1, 2, and 6 need external evidence. Requirements 8 and 18 retain explicit external ATS/schema work even after their automated screening passes.</div>
+
+  <h2>1. Create the dedicated environment</h2>
+  <p>Open <strong>Anaconda Prompt</strong>. Never install these packages into the base environment.</p>
+  <pre>cd /d C:\Users\Son\Documents\DGIWG\DGIWG_GeoPackage_Validator_v1.64
+conda env create -f environment.yml
+conda activate dgiwg
+python run_local_tests.py</pre>
+  <p>If the environment already exists:</p>
+  <pre>conda activate dgiwg
+conda env update -f environment.yml --prune
+python run_local_tests.py</pre>
+
+  <h2>2. Validate GeoPackages</h2>
+  <pre>python DGIWG_Validator_v1_64.py C:\Data\example.gpkg
+python -m dgiwg_validator --recursive C:\Data\GeoPackages
+python -m dgiwg_validator --offline --no-install --quiet --output-dir C:\QA\reports C:\Data</pre>
+  <p>Run without a path to open the file picker. Use <code>--help</code> for every option.</p>
+
+  <h2>3. Read results correctly</h2>
+  <table>
+    <tr><th>Status or verdict</th><th>Meaning</th></tr>
+    <tr><td><code>PASS</code></td><td>The implemented check completed and found no violation.</td></tr>
+    <tr><td><code>FAIL</code></td><td>The input violates a deterministic automated check.</td></tr>
+    <tr><td><code>ERROR</code></td><td>The validator could not complete the check; treat the run as invalid until resolved.</td></tr>
+    <tr><td><code>PASS*</code></td><td>No violation was found, but sampled, missing, or advisory evidence remains. Read the reason chip.</td></tr>
+    <tr><td><code>SKIPPED</code></td><td>Not applicable or external evidence is required.</td></tr>
+    <tr><td><code>VALIDATION ERROR</code></td><td>At least one internal check or file-processing error occurred.</td></tr>
+    <tr><td><code>NON-CONFORMANT (automated checks)</code></td><td>At least one deterministic data failure was found.</td></tr>
+    <tr><td><code>PRE-VALIDATION PASSED — REDUCED COVERAGE</code></td><td>No FAIL/ERROR, but blocking PASS* evidence gaps remain.</td></tr>
+    <tr><td><code>PRE-VALIDATION PASSED — EXTERNAL CHECKS REQUIRED</code></td><td>Automated checks are clean, but external requirements remain.</td></tr>
+  </table>
+
+  <h2>4. Exit codes</h2>
+  <table>
+    <tr><th>Code</th><th>Meaning</th></tr>
+    <tr><td>0</td><td>No automated FAIL or ERROR.</td></tr>
+    <tr><td>1</td><td>One or more automated FAIL results.</td></tr>
+    <tr><td>2</td><td>Validator ERROR or a file could not be processed.</td></tr>
+  </table>
+
+  <h2>5. Build release artifacts</h2>
+  <pre>conda activate dgiwg
+python package_release.py
+pyinstaller --clean --noconfirm DGIWG_Validator.spec
+dist\DGIWG_Validator_v1_64.exe --version</pre>
+  <div class="notice ok"><strong>Outputs:</strong> <code>dist\DGIWG_GeoPackage_Validator_v1.64.zip</code> is the clean source release. <code>dist\DGIWG_Validator_v1_64.exe</code> is the separate standalone Windows executable.</div>
+
+  <h2>6. Mandatory external completion work</h2>
+  <ul>
+    <li>Confirm requirements 1, 2, and 6 with the applicable authority and official evidence.</li>
+    <li>For Req 8, run OGC 17-083r2 TMS ATS A.1-A.16 and verify the selected well-known scale set.</li>
+    <li>For Req 18, run the official DGIWG DMF schema and ATS validation.</li>
+    <li>Review every PASS* reason and close any sampled or missing-evidence item before a formal conformity claim.</li>
+  </ul>
+
+  <footer>DGIWG GeoPackage Validator v1.64 — SPDX-License-Identifier: GPL-2.0-or-later — Copyright (c) 2026 Eui Soo SON</footer>
+</body>
+</html>
