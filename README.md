@@ -1,6 +1,6 @@
 # GeoPackage Creator (DGIWG-Compliant)
 
-**Version 0.34.6** | October 15, 2026 | OGC GeoPackage 1.4 & DGIWG profile pre-validation
+**Version 0.34.7** | October 19, 2026 | OGC GeoPackage 1.4 & DGIWG profile pre-validation
 
 ## Overview
 
@@ -14,7 +14,7 @@ DGIWG (Defense Geospatial Information Working Group) is an international organiz
 
 ## Folder Contents
 
-The release source includes the application, schemas, bundled v1.63 validator,
+The release source includes the application, schemas, bundled v1.64 validator,
 documentation, tests, and release-verification scripts. The GitHub-ready
 source-only archive excludes generated build folders, frozen executables,
 validation runs, logs, caches, compiled Python files, and sample geodatabase
@@ -50,7 +50,7 @@ GeoPackage_Creator/
 ├── schemas/                     # ISO 19115 / GML XSD schemas
 ├── tests/                       # Pytest suite
 ├── packaging/                   # Windows .exe build pipeline (PyInstaller)
-├── DGIWG_GeoPackage_Validator_v1.63/  # Bundled DGIWG GeoPackage Validator source
+├── DGIWG_GeoPackage_Validator_v1.64/  # Bundled DGIWG GeoPackage Validator source
 ├── docs/                        # Technical setup and GUI documentation
 │   ├── GUI_USAGE_GUIDE.md       # GUI guide
 │   ├── GDAL_INSTALLATION.txt    # GDAL setup instructions
@@ -158,19 +158,20 @@ environment. Do not install the dependencies into Anaconda's `base`
 environment.
 
 ```bat
-python validate_geopackage_creator_v0346.py --samples "C:\path\to\GeoPackage_Creator_v0.34.5" --exe "C:\path\to\v0.34.6\dist\GeoPackageCreator.exe"
+python validate_geopackage_creator_v0347.py --samples "C:\path\to\GeoPackage_Creator_v0.34.7" --exe "C:\path\to\v0.34.7\dist\GeoPackageCreator.exe"
 ```
 
 The validation runner records the full pytest suite, bundled DGIWG validator
 self-tests, independent FileGDB audits, full-coverage validator output, and
 frozen-EXE version/help checks in a timestamped `validation_runs` folder. The
-`--exe` value must be the actual v0.34.6 executable; an example or placeholder
+`--exe` value must be the actual v0.34.7 executable; an example or placeholder
 path is reported as a technical failure.
 
-The v0.34.6 validation evidence contains 346 passing application tests,
-84/84 passing bundled-validator assertions, and independent audits with zero
-reported failures for the SampleData and States FileGDB cases. These results
-are software pre-validation evidence, not formal DGIWG or OGC certification.
+Regenerate the v0.34.7 evidence after building the executable. The evidence
+must include the application test suite, the v1.64 bundled-validator
+self-tests, independent SampleData and States FileGDB audits, full-coverage
+validator output, and frozen-EXE version/help checks. These results are
+software pre-validation evidence, not formal DGIWG or OGC certification.
 
 ## Standards Compliance
 
@@ -198,12 +199,12 @@ Outputs use the standard OGC GeoPackage `application_id = GPKG`
 
 ## Version
 
-**Current:** v0.34.6.
+**Current:** v0.34.7.
 
-v0.34.6 retains the DGIWG conformance fixes introduced in v0.34.5 and adds the
-precision-aware Req. 24 RTree bounding-box check, expanded regression coverage,
-and a release validation runner that treats failed bundled-validator
-requirements and missing frozen-EXE evidence as technical failures. See
-`CHANGELOG.md` for the complete release history.
+v0.34.7 keeps the v0.34.6 Req. 24 precision-aware RTree bounding-box fix and
+validation evidence gate, and upgrades the bundled validator to
+`DGIWG_GeoPackage_Validator_v1.64`. The release validation runner now invokes
+the v1.64 launcher and writes v0.34.7 evidence paths. See `CHANGELOG.md` for
+the complete release history.
 **Maintained for:** Multi-platform GeoPackage conversion with DGIWG profile
 pre-validation and explicit external-acceptance boundaries.
